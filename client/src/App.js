@@ -1,7 +1,15 @@
 import logo from './assets/logo.svg';
 import './styles/App.css';
+import { io } from 'socket.io-client';
+const socket = io('http://localhost:5000');
+
+
 
 function App() {
+    socket.on('scoreUpdate', data => {
+        console.log('Live update:', data);
+    });
+
   return (
     <div className="App">
       <header className="App-header">
