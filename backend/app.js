@@ -5,7 +5,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config({path: __dirname + '/.env'});
+require('dotenv').config({ path: __dirname + '/.env' });    //use just .config(); if in backend folder
 
 //app set up
 const app = express();
