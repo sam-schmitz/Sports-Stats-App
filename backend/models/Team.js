@@ -33,6 +33,9 @@ const TeamSchema = new mongoose.Schema({
     },
     logoUrl: {
         type: String    //Optional: store team logos
+    },
+    stadium: {
+        type: String
     }
 }, { timestamps: true });
 
