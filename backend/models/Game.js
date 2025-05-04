@@ -4,6 +4,37 @@
 
 const mongoose = require('mongoose');
 
+// Subschema for player performance in a game
+const PlayerStatSchema = new mongoose.Schema({
+    player_id: {
+        type: String,
+        ref: 'Player',
+        required: true
+    },
+    team_id: {
+        type: String,
+        ref: 'Team',
+        required: True
+    },
+    name: String,
+    position: String,
+    minutes: Number,
+    points: Number,
+    goals: Number,
+    assists: Number,
+    rebounds: Number,
+    steals: Number,
+    rebounds: Number,
+    blocks: Number,
+    turnovers: Number,
+    yellow_cards: Number,
+    red_cards: Number,
+    saves: Number,
+    passing_yards: Number,
+    rushing_yards: Number,
+    receiving_yards: Number
+} { _id: false });  
+
 const GameSchema = new mongoose.Schema({
     sport = {
         type: String,
