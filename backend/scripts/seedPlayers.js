@@ -5,10 +5,11 @@
 const mongoose = require('mongoose');
 const axios = require('axios');
 const Player = require('../models/Player');
+const Team = require('../models/Team');
 require('dotenv').config();
 
-const fetchPlayersForTeam = async (teamID) => {
-    const url = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_players.php?id${teamID}`;
+const fetchPlayersForTeam = async (teamId) => {    
+    const url = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_players.php?id=${teamId}`;    
     const res = await axios.get(url);
     return res.data.player || [];
 };
@@ -16,7 +17,7 @@ const fetchPlayersForTeam = async (teamID) => {
 const formatPlayer = (p, teamId) => ({
     _id: p.idPlayer,
     name: p.strPlayer,
-    team_id: teamID,
+    team_id: teamId,
     sport: 'basketball',    // will need to be updated when other sports are added. 
     nationality: p.strNationality,
     position: p.strPosition,
@@ -32,20 +33,33 @@ const seed = async () => {
         await mongoose.connect(process.env.MONGO_URI);
 
         const nbaTeams = await Team.find({ sport: 'basketball' }).select('_id');
-        const teamIds = nbaTeam.map(team => team._id);
+        const teamIds = nbaTeams.map(team => team._id);
 
         await Player.deleteMany({ sport: 'basketball' });   //clear old player data
 
         for (const teamId of teamIds) {
             const players = await fetchPlayersForTeam(teamId);
-            const formatted = players.map(p => formatPlayer(p, teamId));
-            await Player.insertMany(formatted, { ordered: false });
+
+            if (!Array.isArray(players)) {
+                console.warn(`No players found for team ${teamId}`);
+                continue;
+            }
+
+            for (const p of players) {
+                const formatted = formatPlayer(p, teamId);
+                await Player.updateOne(
+                    { _id: formatted._id },
+                    { $set: formatted },
+                    { upsert: true }
+                );
+            }
+            
             console.log(`Seeded players for team ${teamId}`);
         }
         console.log('All NBA players seeded successfully. ');
         mongoose.disconnect();
     } catch (err) {
-        console.lerror('Error seeding players:', err.message);
+        console.error('Error seeding players:', err.message);
         process.exit(1);
     }
 };
