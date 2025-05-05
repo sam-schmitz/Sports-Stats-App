@@ -5,7 +5,7 @@
 const mongoose = require('mongoose');
 const axios = require('axios');
 const Game = require('../models/Game');
-const Team = requrie('../models/Team');
+const Team = require('../models/Team');
 require('dotenv').config();
 
 // The NBA season ID for 2024-25 in TheSportsDB
@@ -29,7 +29,7 @@ const getTeamIdMap = async () => {
 
 formatGame = (event, teamIdMap) => {
     const homeTeam = teamIdMap[event.strHomeTeam?.toLowerCase()];
-    const awayTeam = teanIdMap[event.strAwayTeam?.toLowerCase()];
+    const awayTeam = teamIdMap[event.strAwayTeam?.toLowerCase()];
     if (!homeTeam || !awayTeam) return null;
 
     return {
