@@ -8,7 +8,7 @@ const Team = require('../models/Team');
 require('dotenv').config();
 
 const fetchNBATeams = async () => {
-    const url = 'https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=NBA';
+    const url = 'https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=NBA';
     const response = await axios.get(url);
     return response.data.teams || [];
 };
