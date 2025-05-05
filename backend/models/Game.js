@@ -14,7 +14,7 @@ const PlayerStatSchema = new mongoose.Schema({
     team_id: {
         type: String,
         ref: 'Team',
-        required: True
+        required: true
     },
     name: String,
     position: String,
@@ -33,10 +33,10 @@ const PlayerStatSchema = new mongoose.Schema({
     passing_yards: Number,
     rushing_yards: Number,
     receiving_yards: Number
-} { _id: false });  
+}, { _id: false });  
 
 const GameSchema = new mongoose.Schema({
-    sport = {
+    sport: {
         type: String,
         required: true,
         enum: ['basketball', 'soccer', 'football', 'baseball', 'hockey']
