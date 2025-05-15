@@ -32,6 +32,20 @@ formatGame = (event, teamIdMap) => {
     const awayTeam = teamIdMap[event.strAwayTeam?.toLowerCase()];
     if (!homeTeam || !awayTeam) return null;
 
+    //extract game_type
+    let gameType = 'Regular Season';
+    if (event.strDescriptionEN?.toLowerCase().inculdes('playoff')) {
+        gameType = 'Playoffs';
+    }
+
+    //Infer overtime (basic game)
+    let overtime = null;
+    const ststusText = event.strDescriptionEN || event.strStatus || '';
+    const otMatch = statusText.match(/(\d?OT)/i);
+    if (otMatch) {
+        overtime = otMatch[1].toUpperCase();
+    }
+
     return {
         _id: event.idEvent,
         sport: 'basketball',
@@ -42,7 +56,9 @@ formatGame = (event, teamIdMap) => {
         away_score: event.intAwayScore != null ? parseInt(event.intAwayScore) : null,
         venue: event.strVenue,
         status: event.strStatus,
-        season: SEASON_YEAR
+        season: SEASON_YEAR,
+        game_type: gameType,
+        overtime: overtime
     };
 };
 
