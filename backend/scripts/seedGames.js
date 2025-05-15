@@ -34,13 +34,13 @@ formatGame = (event, teamIdMap) => {
 
     //extract game_type
     let gameType = 'Regular Season';
-    if (event.strDescriptionEN?.toLowerCase().inculdes('playoff')) {
+    if (event.strDescriptionEN?.toLowerCase().includes('playoff')) {
         gameType = 'Playoffs';
     }
 
     //Infer overtime (basic game)
     let overtime = null;
-    const ststusText = event.strDescriptionEN || event.strStatus || '';
+    const statusText = event.strDescriptionEN || event.strStatus || '';
     const otMatch = statusText.match(/(\d?OT)/i);
     if (otMatch) {
         overtime = otMatch[1].toUpperCase();

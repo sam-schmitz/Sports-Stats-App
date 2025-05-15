@@ -61,7 +61,7 @@ const GameSchema = new mongoose.Schema({
     },
     home_score: Number,
     away_score: Number,
-    location: String,   // stadium/arena
+    venue: String,   // stadium/arena
     status: String,
     season: String,
     game_type: String,
