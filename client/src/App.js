@@ -1,9 +1,33 @@
 import logo from './assets/logo.svg';
 import './styles/App.css';
 import { io } from 'socket.io-client';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 const socket = io('http://localhost:5000');
 
+function TeamsList() {
+    const [teams, setTeams] = useState([]);
 
+    useEffect(() => {
+        axios.get('http://localhost:5000/teams')
+            .then(res => setTeams(res.data))
+            .catch(err => console.error('Error fetching teams:', err));
+    }, []);
+
+    return (
+        <div>
+            <h2>NBA Teams</h2>
+            <ul>
+                {teams.map(team => (
+                    <li key={team._id}>
+                        {team.name} ({team.abbreviation})
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
 
 function App() {
     socket.on('scoreUpdate', data => {
@@ -30,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default TeamsList;
