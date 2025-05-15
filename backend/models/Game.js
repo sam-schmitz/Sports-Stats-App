@@ -62,6 +62,10 @@ const GameSchema = new mongoose.Schema({
     home_score: Number,
     away_score: Number,
     location: String,   // stadium/arena
+    status: String,
+    season: String,
+    game_type: String,
+    overtime: String,
     players: [PlayerStatSchema] // Embedded stats per player
 }, { timestamps: true });
 
