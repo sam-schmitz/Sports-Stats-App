@@ -1,35 +1,14 @@
-import logo from './assets/logo.svg';
+// App.js
+// By: Sam Schmitz
+// Handles the routing for the front end
+
 import './styles/App.css';
 import { io } from 'socket.io-client';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/Home';
+import TeamsList from './components/TeamsList';
 
 const socket = io('http://localhost:5000');
-
-function TeamsList() {
-    const [teams, setTeams] = useState([]);
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/teams')
-            .then(res => setTeams(res.data))
-            .catch(err => console.error('Error fetching teams:', err));
-    }, []);
-
-    return (
-        <div>
-            <h2>NBA Teams</h2>
-            <ul>
-                {teams.map(team => (
-                    <li key={team._id}>
-                        {team.name} ({team.abbreviation})
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-}
 
 function App() {
     socket.on('scoreUpdate', data => {
