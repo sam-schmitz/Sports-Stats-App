@@ -3,6 +3,7 @@ import './styles/App.css';
 import { io } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 const socket = io('http://localhost:5000');
 
@@ -34,24 +35,24 @@ function App() {
         console.log('Live update:', data);
     });
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <nav style={{ marginBottom: '1rem' }}>
+                <Link to="/">Home</Link> |{" "}
+                <Link to="/teams">Teams</Link> |{" "}
+                <Link to="/players">Players</Link> |{" "}
+                <Link to="/games">Games</Link>
+            </nav>
+
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/teams" element={<TeamsList />} />
+                <Route path="/players" element={<PlatersList />} />
+                <Route path="/games" element={<GamesList />} />
+            </Routes>
+        </Router>
+    );
+  
 }
 
-export default TeamsList;
+export default App;
