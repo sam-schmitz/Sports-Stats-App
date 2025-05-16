@@ -9,12 +9,14 @@ require('dotenv').config({ path: __dirname + '/.env' });    //use just .config()
 const http = require('http');
 const { Server } = require('socket.io');
 const teamsRouter = require('./routes/teams');
+const playerRouter = require('./routes/players');
 
 //app set up
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/teams', teamsRouter);
+app.use('/players', playersRouter);
 
 //MongoDB connection
 console.log('MONGO_URI:', process.env.MONGO_URI);
