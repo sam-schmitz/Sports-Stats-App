@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function PlayersList() {
-    const [teams, setTeams] = useState([]);
+    const [players, setPlayers] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:5000/players')
-            .then(res => setTeams(res.data))
+            .then(res => setPlayers(res.data))
             .catch(err => console.error('Error fetching players:', err));
     }, []);
 
@@ -17,7 +17,7 @@ function PlayersList() {
         <div>
             <h2>NBA Players</h2>
             <ul>
-                {teams.map(player => (
+                {players.map(player => (
                     <li key={player._id}>
                         {player.name}
                     </li>
