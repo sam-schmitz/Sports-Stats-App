@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Home from './components/Home';
 
 const socket = io('http://localhost:5000');
 
