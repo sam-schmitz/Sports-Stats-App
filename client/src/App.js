@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/Home';
 import TeamsList from './components/TeamsList';
+import PlayersList from './components/PlayersList';
 
 const socket = io('http://localhost:5000');
 
@@ -27,7 +28,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/teams" element={<TeamsList />} />
-                <Route path="/players" element={<PlatersList />} />
+                <Route path="/players" element={<PlayersList />} />
                 <Route path="/games" element={<GamesList />} />
             </Routes>
         </Router>
