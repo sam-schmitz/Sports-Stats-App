@@ -1,6 +1,9 @@
 // components/TeamsList.js
 // By: Sam Schmitz
 
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 function TeamsList() {
     const [teams, setTeams] = useState([]);
 
