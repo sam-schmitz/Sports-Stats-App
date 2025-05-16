@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/Home';
 import TeamsList from './components/TeamsList';
 import PlayersList from './components/PlayersList';
+import GamesList from './components/GamesList';
 
 const socket = io('http://localhost:5000');
 
