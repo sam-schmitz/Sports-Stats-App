@@ -27,4 +27,4 @@ function TeamsList() {
     );
 }
 
-export default TeamsList();
+export default TeamsList;

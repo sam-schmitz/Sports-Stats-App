@@ -3,7 +3,9 @@
 
 function Home() {
     return (
-        <h1>Welcome to the Sports Stats App</h1>
+        <div className="Homepage">
+            <h1>Welcome to the Sports Stats App</h1>
+        </div>        
     );
 }
 
