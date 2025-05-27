@@ -74,4 +74,25 @@ router.get('/season/:season', async (req, res) => {
     }
 });
 
+router.get('/team/:team', async (req, res) => {
+    try {
+        const team_id = req.params.team;
+        const games = await Game.find({
+            $or: [
+                { home_team_id: { $regex: new RegExp(`^${team_id}$`, 'i') } },
+                { away_team_id: { $regex: new RegExp(`^${team_id}$`, 'i') } }
+            ]
+        }).sort({ date: 1 });   //sort oldest to newest
+
+        if (!games || games.length === 0) {
+            return res.status(404).json({ error: 'Game not found' });
+        }
+
+        res.json(games);
+    } catch (err) {
+        console.error('Error fetching game', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+})
+
 module.exports = router
