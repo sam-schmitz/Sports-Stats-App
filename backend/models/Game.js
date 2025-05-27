@@ -36,6 +36,10 @@ const PlayerStatSchema = new mongoose.Schema({
 }, { _id: false });  
 
 const GameSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        required: true
+    },
     sport: {
         type: String,
         required: true,

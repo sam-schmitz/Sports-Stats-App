@@ -28,9 +28,13 @@ const getTeamIdMap = async () => {
 }
 
 formatGame = (event, teamIdMap) => {
-    const homeTeam = teamIdMap[event.strHomeTeam?.toLowerCase()];
-    const awayTeam = teamIdMap[event.strAwayTeam?.toLowerCase()];
-    if (!homeTeam || !awayTeam) return null;
+    // Get info about the teams from the event obj
+    //console.log(event.strHomeTeam?.toLowerCase());
+    const homeTeamID = teamIdMap[event.strHomeTeam?.toLowerCase()];
+    const awayTeamID = teamIdMap[event.strAwayTeam?.toLowerCase()];
+    if (!homeTeamID || !awayTeamID) return null;
+    const homeTeam = event.strHomeTeam?.toLowerCase();
+    const awayTeam = event.strAwayTeam?.toLowerCase();
 
     //extract game_type
     let gameType = 'Regular Season';
@@ -50,8 +54,10 @@ formatGame = (event, teamIdMap) => {
         _id: event.idEvent,
         sport: 'basketball',
         date: event.dateEvent ? new Date(event.dateEvent) : null,
-        home_team_id: homeTeam,
-        away_team_id: awayTeam,
+        //home_team_id: homeTeamID,
+        //away_team_id: awayTeamID,
+        home_team: homeTeam,
+        away_team: awayTeam,
         home_score: event.intHomeScore != null ? parseInt(event.intHomeScore) : null,
         away_score: event.intAwayScore != null ? parseInt(event.intAwayScore) : null,
         venue: event.strVenue,
@@ -68,15 +74,28 @@ const seed = async () => {
         const events = await fetchGames();
         const teamIdMap = await getTeamIdMap();
 
+        const games1 = await Game.find().limit(5);
+        console.log('Sample games: ', games1);        
+
         await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
+        console.log("deleted old games");
 
         const formattedGames = events
             .map(event => formatGame(event, teamIdMap))
             .filter(game => game !== null);
+        //console.log(formattedGames[0]);        
 
-        await Game.insertMany(formattedGames, { ordered: false });
+        await Game.insertMany(formattedGames)
+            .then(() => console.log('Games inserted successfully'))
+            .catch(err => {
+                console.error('Insert error:', err);
+            });
 
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
+
+        const games = await Game.find().limit(5);
+        console.log('Sample games: ', games);        
+
         mongoose.disconnect();
     } catch (err) {
         console.error('error seeding games:', err.message);
