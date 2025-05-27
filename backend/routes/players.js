@@ -22,7 +22,23 @@ router.get('/name/:name', async (req, res) => {
         const player = await Player.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
 
         if (!player) {
-            return res.status(404).json({ error: 'Player not founf' });
+            return res.status(404).json({ error: 'Player not found' });
+        }
+
+        res.json(player);
+    } catch (err) {
+        console.error('Error fetching player', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+router.get('/id/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const player = await Player.findOne({ _id: { $regex: new RegExp(`^${id}$`, 'i') } });
+
+        if (!player) {
+            return res.status(404).json({ error: 'Player not found' });
         }
 
         res.json(player);
