@@ -15,7 +15,7 @@ function PlayerPage() {
         const uri = `http://localhost:5000/players/name/` + uriName;        
         axios.get(uri)
             .then(res => setPlayer(res.data))
-            .catch(err => console.error('Error fetching players:', err));
+            .catch(err => console.error('Error fetching players:', err));        
     }, [name]);
 
 
@@ -24,7 +24,7 @@ function PlayerPage() {
             <h1> {name}</h1>
             {player ? (
                 <>
-                    <p>Team: {player.team }</p>
+                    <p>Team: {player.team_id}</p>
                     <p>Number: {player.jersey_number}</p>
                     <p>Position: {player.position}</p>
                     <p>Height: {player.height}</p>
