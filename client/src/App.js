@@ -9,6 +9,7 @@ import Home from './components/Home';
 import TeamsList from './components/TeamsList';
 import PlayersList from './components/PlayersList';
 import GamesList from './components/GamesList';
+import PlayerPage from './components/PlayerPage';
 
 const socket = io('http://localhost:5000');
 
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/teams" element={<TeamsList />} />
                 <Route path="/players" element={<PlayersList />} />
                 <Route path="/games" element={<GamesList />} />
+                <Route path="/players/:name" element={<PlayerPage />} />
             </Routes>
         </Router>
     );
