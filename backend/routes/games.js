@@ -58,4 +58,20 @@ router.get('/date/:date', async (req, res) => {
     }
 });
 
+router.get('/season/:season', async (req, res) => {
+    try {
+        const season = req.params.season;
+        const games = await Game.find({ season: { $regex: new RegExp(`^${season}$`, 'i') } });
+
+        if(!games || games.length === 0) {
+            return res.status(404).json({ error: 'Game not found' });
+        }
+
+        res.json(games);
+    } catch (err) {
+        console.error('Error fetching game', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router
