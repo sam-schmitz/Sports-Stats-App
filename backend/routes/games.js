@@ -32,4 +32,30 @@ router.get('/id/:id', async (req, res) => {
     }
 });
 
+router.get('/date/:date', async (req, res) => {
+    try {
+        const dateParam = req.params.date;
+
+        const start = new Date(dateParam);
+        const end = new Date(dateParam);
+        end.setUTCHours(23, 59, 59, 999);   //end of the date in UTC
+
+        const games = await Game.find({
+            date: {
+                $gte: start,
+                $lte: end
+            }
+        });
+
+        if (!games || games.length === 0) {
+            return res.status(404).json({ error: 'Game not found' });
+        }
+
+        res.json(games);
+    } catch (err) {
+        console.error('Error fetching game', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router
