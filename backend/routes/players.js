@@ -80,4 +80,20 @@ router.get('/position/:position', async (req, res) => {
     }
 });
 
+router.get('/nationality/:nationality', async (req, res) => {
+    try {
+        const nationality = req.params.nationality;
+        const players = await Player.find({ nationality: { $regex: new RegExp(`^${nationality}$`, 'i') } });
+
+        if (!players) {
+            return res.status(404).json({ error: 'Players not found' });
+        }
+
+        res.json(players);
+    } catch (err) {
+        console.error('Error fetching player', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router
