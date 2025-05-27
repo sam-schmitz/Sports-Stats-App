@@ -11,6 +11,7 @@ function GamesList() {
         axios.get('http://localhost:5000/games')
             .then(res => setGames(res.data))
             .catch(err => console.error('Error fetching games:', err));
+        console.log(games);
     }, []);
 
     return (
