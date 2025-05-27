@@ -53,12 +53,12 @@ const GameSchema = new mongoose.Schema({
         type: String,
         required: true  // ex: "2024-2025"
     },
-    home_team: {
+    home_team_id: {
         type: String,
         ref: 'Team',
         required: true
     },
-    away_team: {
+    away_team_id: {
         type: String,
         ref: 'Team',
         required: true
