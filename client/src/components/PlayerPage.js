@@ -7,28 +7,38 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function PlayerPage() {
-    const name = useParams();
-    const [player, setPlayer] = useState();
+    const name = useParams().name;
+    const [player, setPlayer] = useState(null);    
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/players/name/{name}`)
+        const uriName = encodeURIComponent(name);        
+        const uri = `http://localhost:5000/players/name/` + uriName;        
+        axios.get(uri)
             .then(res => setPlayer(res.data))
             .catch(err => console.error('Error fetching players:', err));
-    })
+    }, [name]);
 
 
     return (
         <div className="Player Page" >
             <h1> {name}</h1>
-            <p>Team: {player.team }</p>
-            <p>Number: {player.jersey_number}</p>
-            <p>Position: {player.position}</p>
-            <p>Height: {player.height}</p>
-            <p>Weight: {player.weight}</p>
-            <p>Nationality: {player.nationality}</p>
-            <p>Date of Birth: {player.dob}</p>
+            {player ? (
+                <>
+                    <p>Team: {player.team }</p>
+                    <p>Number: {player.jersey_number}</p>
+                    <p>Position: {player.position}</p>
+                    <p>Height: {player.height}</p>
+                    <p>Weight: {player.weight}</p>
+                    <p>Nationality: {player.nationality}</p>
+                    <p>Date of Birth: {player.dob}</p>
+                </>
+            ) : (
+                <p>Loading...</p>
+            )}
+            
         </div>
     );
 }
+
 
 export default PlayerPage;
