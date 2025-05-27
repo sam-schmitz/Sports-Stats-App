@@ -17,4 +17,20 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/name/:name', async (req, res) => {
+    try {
+        const name = req.params.name;
+        const team = await Team.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
+
+        if (!team) {
+            return res.status(404).json({ error: 'Team not found' });
+        }
+
+        res.json(team);
+    } catch (err) {
+        console.error('Error fetching team by name:', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router
