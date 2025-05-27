@@ -16,4 +16,20 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/id/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const game = await Game.findOne({ _id: { $regex: new RegExp(`^${id}$`, 'i') } });
+
+        if (!game) {
+            return res.status(404).json({ error: 'Game not found' });
+        }
+
+        res.json(game);
+    } catch (err) {
+        console.error('Error fetching game', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router
