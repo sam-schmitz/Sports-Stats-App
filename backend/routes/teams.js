@@ -49,4 +49,22 @@ router.get('/sport/:sport', async (req, res) => {
     }
 });
 
+router.get('/id/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const team = await Team.findOne({ _id: { $regex: new RegExp(`^${id}$`, 'i') } });
+
+        if (!team) {
+            return res.status(404).json({ error: 'Team not found' });
+        }
+
+        res.json(team);
+    } catch (err) {
+        console.error('Error fetching team data', err);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
+
+
+
 module.exports = router
