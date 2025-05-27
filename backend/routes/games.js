@@ -93,6 +93,23 @@ router.get('/team/:team', async (req, res) => {
         console.error('Error fetching game', err);
         res.status(500).json({ error: 'Server error' });
     }
-})
+});
+
+router.get('/sport/:sport', async (req, res) => {
+    try {
+        const sport = req.params.sport;
+        const games = await Game.find({ sport: { $regex: new RegExp(`^${sport}$`, 'i') } });
+
+        if (!games || games.length === 0) {
+            return res.status(404).json({ error: 'Game not found' });
+        }
+
+        res.json(games);
+    } catch (err) {
+        console.error('Error fetching game', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 
 module.exports = router
