@@ -33,8 +33,8 @@ formatGame = (event, teamIdMap) => {
     const homeTeamID = teamIdMap[event.strHomeTeam?.toLowerCase()];
     const awayTeamID = teamIdMap[event.strAwayTeam?.toLowerCase()];
     if (!homeTeamID || !awayTeamID) return null;
-    //const homeTeam = event.strHomeTeam?.toLowerCase();
-    //const awayTeam = event.strAwayTeam?.toLowerCase();
+    const homeTeam = event.strHomeTeam?.toLowerCase();
+    const awayTeam = event.strAwayTeam?.toLowerCase();
 
     //extract game_type
     let gameType = 'Regular Season';
@@ -56,8 +56,8 @@ formatGame = (event, teamIdMap) => {
         date: event.dateEvent ? new Date(event.dateEvent) : null,
         home_team_id: homeTeamID,
         away_team_id: awayTeamID,
-        //home_team: homeTeam,
-        //away_team: awayTeam,
+        home_team_name: homeTeam,
+        away_team_name: awayTeam,
         home_score: event.intHomeScore != null ? parseInt(event.intHomeScore) : null,
         away_score: event.intAwayScore != null ? parseInt(event.intAwayScore) : null,
         venue: event.strVenue,
