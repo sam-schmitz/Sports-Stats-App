@@ -24,7 +24,7 @@ function PlayerPage() {
             <h1> {name}</h1>
             {player ? (
                 <>
-                    <p>Team: <Link to={`/teams/${player.team_id}`}>{player.team_id}</Link></p>
+                    <p>Team: <Link to={`/teams/${player.team_name}`}>{player.team_name}</Link></p>
                     <p>Number: {player.jersey_number}</p>
                     <p>Position: {player.position}</p>
                     <p>Height: {player.height}</p>
