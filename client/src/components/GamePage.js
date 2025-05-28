@@ -20,20 +20,26 @@ function GamePage() {
 
     return (
         <div className="Game Page">
-            {game ? (
-                <>
-                    <p>Date: {game.date.slice(0, 10)}</p>
-                    <p>Season: {game.season}</p>
-                    <p>Home Team: {game.home_team_id}</p>
-                    <p>Away Team: {game.away_team_id}</p>
-                    <p>Score: {game.home_score} : {game.away_score}</p>
-                    <p>Game Type: {game.game_type}</p>
-                </>
-            ) : (
-                <>
-                    <p>Loading...</p>
-                </>
-            )}
+            <div className="container mt-3">
+                <div className="row">
+                    <div className="col-sm-6 col-md-4 justify-content-center" >
+                        {game ? (
+                            <>
+                                <p>Date: {game.date.slice(0, 10)}</p>
+                                <p>Season: {game.season}</p>
+                                <p>Home Team: {game.home_team_id}</p>
+                                <p>Away Team: {game.away_team_id}</p>
+                                <p>Score: {game.home_score} : {game.away_score}</p>
+                                <p>Game Type: {game.game_type}</p>
+                            </>
+                        ) : (
+                            <>
+                                <p>Loading...</p>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
