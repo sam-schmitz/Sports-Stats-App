@@ -18,13 +18,19 @@ function GamesList() {
     return (
         <div>
             <h2>NBA Games 2024-2025</h2>
-            <ul>
-                {games.map(game => (
-                    <li key={game._id}>
-                        <Link to={`/games/${game._id}` }>{game.date.slice(0, 10)} {game.home_team_name} vs {game.away_team_name}</Link>
-                    </li>
-                ))}
-            </ul>
+            <div className="container-fluid">
+                <div className="row gx-0">
+                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        <ul>
+                            {games.map(game => (
+                                <li key={game._id}>
+                                    <Link to={`/games/${game._id}` }>{game.date.slice(0, 10)} {game.home_team_name} vs {game.away_team_name}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

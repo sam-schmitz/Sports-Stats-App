@@ -20,9 +20,9 @@ function GamePage() {
 
     return (
         <div className="Game Page">
-            <div className="container mt-3">
-                <div className="row">
-                    <div className="col-sm-6 col-md-4 justify-content-center" >
+            <div className="container-fluid">
+                <div className="row gx-0">
+                    <div className="col-sm-6 col-md-4" style={{marginLeft: '5px', textAlign: 'left'} } >
                         {game ? (
                             <>
                                 <p>Date: {game.date.slice(0, 10)}</p>
