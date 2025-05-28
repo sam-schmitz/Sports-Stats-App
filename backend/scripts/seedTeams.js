@@ -22,8 +22,9 @@ const formatTeams = (teams) => {
         city: team.strStadiumLocation,
         conference: team.strLeague.includes('Eastern') ? 'Eastern' : 'Western',
         divison: 'Unknown', //TheSportsDB doesn't provide divison info
-        logoUrl: team.strTeamBadge,
-        stadium: team.strStadium
+        logoUrl: team.strLogo,
+        stadium: team.strStadium,
+        location: team.strLocation
     }));
 };
 
