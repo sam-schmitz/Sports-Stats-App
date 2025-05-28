@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function PlayersList() {
     const [players, setPlayers] = useState([]);
@@ -19,7 +20,7 @@ function PlayersList() {
             <ul>
                 {players.map(player => (
                     <li key={player._id}>
-                        {player.name}
+                        <Link to={`/players/${player.name}`}>{player.name}</Link>
                     </li>
                 ))}
             </ul>
