@@ -22,29 +22,36 @@ function PlayerPage() {
     return (
         <div className="Player Page" >
             <h1> {name}</h1>
-            {player ? (
-                <>
-                    <p>Team: <Link to={`/teams/${player.team_name}`}>{player.team_name}</Link></p>
-                    <p>Number: {player.jersey_number}</p>
-                    <p>Position: {player.position}</p>
-                    <p>Height: {player.height}</p>
-                    <p>Weight: {player.weight}</p>
-                    <p>Nationality: {player.nationality}</p>
-                    <p>Date of Birth: {player.dob}</p>
-                </>
-            ) : (
-                <p>Loading...</p>
-            )}
-            {player ? (
-                <>
-                    <img src={player.photoUrl} alt={name } width="200" />
-                </>
-            ) : (
-                <>
-                    <p>Loading Image...</p>
-                </>
-            )}
-            
+            <div className="container-fluid">
+                <div className="row gx-0">
+                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {player ? (
+                            <>
+                                <p>Team: <Link to={`/teams/${player.team_name}`}>{player.team_name}</Link></p>
+                                <p>Number: {player.jersey_number}</p>
+                                <p>Position: {player.position}</p>
+                                <p>Height: {player.height}</p>
+                                <p>Weight: {player.weight}</p>
+                                <p>Nationality: {player.nationality}</p>
+                                <p>Date of Birth: {player.dob.slice(0, 10)}</p>
+                            </>
+                        ) : (
+                            <p>Loading...</p>
+                        )}
+                    </div>
+                    <div className="col-sm-5 col-md-4" style={{ marginLeft: '5px', textAlign: 'center' }} >
+                        {player ? (
+                            <>
+                                <img src={player.photoUrl} alt={name } width="200" />
+                            </>
+                        ) : (
+                            <>
+                                <p>Loading Image...</p>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>            
         </div>
     );
 }
