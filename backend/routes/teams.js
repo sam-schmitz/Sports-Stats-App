@@ -73,7 +73,7 @@ router.get('/id/:id', async (req, res) => {
 router.get('/id/:id/players', async (req, res) => {
     try {
         const id = req.params.id;
-        const players = await getPlayers(teamID);
+        const players = await getPlayers(id);
 
         if (!players || players.length === 0) {
             return res.status(404).json({ error: 'No players found for this team' });
