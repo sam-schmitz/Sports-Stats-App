@@ -35,6 +35,15 @@ function PlayerPage() {
             ) : (
                 <p>Loading...</p>
             )}
+            {player ? (
+                <>
+                    <img src={player.photoUrl} alt={name } width="200" />
+                </>
+            ) : (
+                <>
+                    <p>Loading Image...</p>
+                </>
+            )}
             
         </div>
     );
