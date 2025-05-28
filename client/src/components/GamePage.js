@@ -2,10 +2,38 @@
 // By: Sam Schmitz
 // Displays information about a game
 
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
 function GamePage() {
+    const id = useParams().id;
+    const [game, setGame] = useState(null);
+
+    useEffect(() => {
+        const uriName = encodeURIComponent(id);
+        const uri = `http://localhost:5000/games/id/` + uriName;
+        axios.get(uri)
+            .then(res => setGame(res.data))
+            .catch(err => console.error('Error fetching game:', err));        
+    }, [id])
+
     return (
         <div className="Game Page">
-            <h1>Game Page</h1>
+            {game ? (
+                <>
+                    <p>Date: {game.date}</p>
+                    <p>Season: {game.season}</p>
+                    <p>Home Team: {game.home_team_id}</p>
+                    <p>Away Team: {game.away_team_id}</p>
+                    <p>Score: {game.home_score} : {game.away_score}</p>
+                    <p>Game Type: {game.game_type}</p>
+                </>
+            ) : (
+                <>
+                    <p>Loading...</p>
+                </>
+            )}
         </div>
     );
 }
