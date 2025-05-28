@@ -11,6 +11,7 @@ import PlayersList from './components/PlayersList';
 import GamesList from './components/GamesList';
 import PlayerPage from './components/PlayerPage';
 import TeamPage from './components/TeamPage';
+import GamePage from './components/GamePage';
 
 const socket = io('http://localhost:5000');
 
@@ -34,7 +35,8 @@ function App() {
                 <Route path="/players" element={<PlayersList />} />
                 <Route path="/games" element={<GamesList />} />
                 <Route path="/players/:name" element={<PlayerPage />} />
-                <Route path="teams/:name" element={<TeamPage /> } />
+                <Route path="teams/:name" element={<TeamPage />} />
+                <Route path="games/:id" element={<GamePage /> } />
             </Routes>
         </Router>
     );
