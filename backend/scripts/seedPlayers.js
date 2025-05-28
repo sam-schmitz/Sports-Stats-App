@@ -18,8 +18,8 @@ const formatPlayer = (p, teamId) => ({
     _id: p.idPlayer,
     name: p.strPlayer,
     team_id: teamId,
-    team_name: strTeam,
-    sport: strSport,    // will need to be updated when other sports are added. 
+    team_name: p.strTeam,
+    sport: p.strSport,    // will need to be updated when other sports are added. 
     nationality: p.strNationality,
     position: p.strPosition,
     dob: p.dateBorn ? new Date(p.dateBorn) : null,
