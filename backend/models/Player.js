@@ -23,6 +23,10 @@ const PlayerSchema = new mongoose.Schema({
         ref: 'Team',
         required: true
     },
+    team_name: {
+        type: String,
+        required: true
+    },
     position: {
         type: String    // ex: "SF"
     },
