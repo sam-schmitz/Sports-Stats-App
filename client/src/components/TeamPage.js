@@ -32,6 +32,15 @@ function TeamPage() {
                     <p>Loading...</p>
                 </>
             )}
+            {team ? (
+                <>
+                    <img src={team.logoUrl} alt={name } width="200" />
+                </>
+            ) : (
+                <>
+                    <p>Loading Image...</p>
+                </>
+            )}
         </div>
     );
 }
