@@ -3,7 +3,7 @@
 // Displays information about a player
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function PlayerPage() {
@@ -24,7 +24,7 @@ function PlayerPage() {
             <h1> {name}</h1>
             {player ? (
                 <>
-                    <p>Team: {player.team_id}</p>
+                    <p>Team: <Link to={`/teams/${player.team_id}`}>{player.team_id}</Link></p>
                     <p>Number: {player.jersey_number}</p>
                     <p>Position: {player.position}</p>
                     <p>Height: {player.height}</p>
