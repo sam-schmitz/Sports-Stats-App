@@ -5,6 +5,8 @@
 import './styles/App.css';
 import { io } from 'socket.io-client';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Home from './components/Home';
 import TeamsList from './components/TeamsList';
 import PlayersList from './components/PlayersList';
