@@ -69,6 +69,7 @@ router.get('/id/:id', async (req, res) => {
     }
 });
 
+// GET /teams/id/:id/players - get a teams players via the team id
 router.get('/id/:id/players', async (req, res) => {
     try {
         const id = req.params.id;
