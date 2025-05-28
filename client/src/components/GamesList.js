@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function GamesList() {
     const [games, setGames] = useState([]);
@@ -20,7 +21,7 @@ function GamesList() {
             <ul>
                 {games.map(game => (
                     <li key={game._id}>
-                        {game.date} {game.home_team} vs {game.away_team}
+                        <Link to={`/games/${game._id}` }>{game.date} {game.home_team_name} vs {game.away_team_name}</Link>
                     </li>
                 ))}
             </ul>
