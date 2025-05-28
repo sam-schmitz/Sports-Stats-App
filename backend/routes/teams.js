@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const Team = require('../models/Team');
-const Player = require('./models/Player');
+const Player = require('../models/Player');
 
 // GET /teams - get all teams
 router.get('/', async (req, res) => {
