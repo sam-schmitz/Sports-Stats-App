@@ -22,7 +22,7 @@ function GamePage() {
         <div className="Game Page">
             {game ? (
                 <>
-                    <p>Date: {game.date}</p>
+                    <p>Date: {game.date.slice(0, 10)}</p>
                     <p>Season: {game.season}</p>
                     <p>Home Team: {game.home_team_id}</p>
                     <p>Away Team: {game.away_team_id}</p>

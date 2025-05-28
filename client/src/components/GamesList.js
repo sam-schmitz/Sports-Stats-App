@@ -21,7 +21,7 @@ function GamesList() {
             <ul>
                 {games.map(game => (
                     <li key={game._id}>
-                        <Link to={`/games/${game._id}` }>{game.date} {game.home_team_name} vs {game.away_team_name}</Link>
+                        <Link to={`/games/${game._id}` }>{game.date.slice(0, 10)} {game.home_team_name} vs {game.away_team_name}</Link>
                     </li>
                 ))}
             </ul>
