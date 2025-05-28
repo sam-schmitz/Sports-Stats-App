@@ -18,14 +18,16 @@ const formatPlayer = (p, teamId) => ({
     _id: p.idPlayer,
     name: p.strPlayer,
     team_id: teamId,
-    sport: 'basketball',    // will need to be updated when other sports are added. 
+    team_name: strTeam,
+    sport: strSport,    // will need to be updated when other sports are added. 
     nationality: p.strNationality,
     position: p.strPosition,
     dob: p.dateBorn ? new Date(p.dateBorn) : null,
     height: p.strHeight,
     weight: p.strWeight,
     photoUrl: p.strCutout || p.strThumb,
-    description: p.strDescriptionEN
+    description: p.strDescriptionEN,
+    jersey_number: p.strNumber
 });
 
 const seed = async () => {
