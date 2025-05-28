@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function TeamsList() {
     const [teams, setTeams] = useState([]);
@@ -19,7 +20,7 @@ function TeamsList() {
             <ul>
                 {teams.map(team => (
                     <li key={team._id}>
-                        {team.name} ({team.abbreviation})
+                        <Link to={`/teams/${team.name}`}>{team.name} ({team.abbreviation})</Link>
                     </li>
                 ))}
             </ul>
