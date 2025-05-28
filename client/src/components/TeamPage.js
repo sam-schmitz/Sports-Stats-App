@@ -25,7 +25,7 @@ function TeamPage() {
                 <>
                     <p>Conference: {team.conference}</p>                 
                     <p>Location: {team.location}</p>
-                    <p>Stadium: {team.stadium</p>
+                    <p>Stadium: {team.stadium}</p>
                 </>
             ) : (
                 <>
