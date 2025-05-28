@@ -5,6 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const Team = require('../models/Team');
+const Player = require('./models/Player');
 
 // GET /teams - get all teams
 router.get('/', async (req, res) => {
@@ -17,6 +18,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// GET /teams/name/:name - get a team with a specific name
 router.get('/name/:name', async (req, res) => {
     try {
         const name = req.params.name;
@@ -33,6 +35,7 @@ router.get('/name/:name', async (req, res) => {
     }
 });
 
+// GET /teams/sport/:sport - get all teams with a specific sport
 router.get('/sport/:sport', async (req, res) => {
     try {
         const sport = req.params.sport;
@@ -49,6 +52,7 @@ router.get('/sport/:sport', async (req, res) => {
     }
 });
 
+// GET /teams/id/:id - get a team by id
 router.get('/id/:id', async (req, res) => {
     try {
         const id = req.params.id;
@@ -65,6 +69,19 @@ router.get('/id/:id', async (req, res) => {
     }
 });
 
+async function getPlayers(teamID) {
+    try {
+        const players = await Player.find({ team_id: { $regex: new RegExp(`^${teamID}$`, 'i') } });
 
+    if (!players) {
+        return null;
+    }
+
+    return players;
+    } catch (err) {
+        console.error('Error fetching players for team', err);
+        return null;
+    }
+}
 
 module.exports = router
