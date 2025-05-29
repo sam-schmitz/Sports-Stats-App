@@ -6,13 +6,16 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 function GamePage() {
     const id = useParams().id;
     const [game, setGame] = useState(null);
 
     useEffect(() => {
         const uriName = encodeURIComponent(id);
-        const uri = `http://localhost:5000/games/id/` + uriName;
+        const uri = API_BASE_URL + `/games/id/${uriName}`;
+        console.log(uri);
         axios.get(uri)
             .then(res => setGame(res.data))
             .catch(err => console.error('Error fetching game:', err));        
