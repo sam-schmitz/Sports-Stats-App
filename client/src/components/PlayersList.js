@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 function PlayersList() {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/players')
+        axios.get(API_BASE_URL + '/players')
             .then(res => setPlayers(res.data))
             .catch(err => console.error('Error fetching players:', err));
     }, []);
