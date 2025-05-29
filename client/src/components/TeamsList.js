@@ -17,13 +17,19 @@ function TeamsList() {
     return (
         <div>
             <h2>NBA Teams</h2>
-            <ul>
-                {teams.map(team => (
-                    <li key={team._id}>
-                        <Link to={`/teams/${team.name}`}>{team.name} ({team.abbreviation})</Link>
-                    </li>
-                ))}
-            </ul>
+            <div className="container-fluid">
+                <div className="row gx-0">
+                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        <ul>
+                            {teams.map(team => (
+                                <li key={team._id}>
+                                    <Link to={`/teams/${team.name}`}>{team.name} ({team.abbreviation})</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
