@@ -6,13 +6,15 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 function PlayerPage() {
     const name = useParams().name;
     const [player, setPlayer] = useState(null);    
 
     useEffect(() => {
         const uriName = encodeURIComponent(name);        
-        const uri = `http://localhost:5000/players/name/` + uriName;        
+        const uri = API_BASE_URL + `/players/name/${uriName}`;        
         axios.get(uri)
             .then(res => setPlayer(res.data))
             .catch(err => console.error('Error fetching players:', err));        
