@@ -31,41 +31,51 @@ function TeamPage() {
 
     return (
         <div className="TeamPage" >
-            <h1>{name}</h1>
-            {team ? (
-                <>
-                    <p>Conference: {team.conference}</p>                 
-                    <p>Location: {team.location}</p>
-                    <p>Stadium: {team.stadium}</p>
-                </>
-            ) : (
-                <>
-                    <p>Loading...</p>
-                </>
-            )}
-            {team ? (
-                <>
-                    <img src={team.logoUrl} alt={name } width="200" />
-                </>
-            ) : (
-                <>
-                    <p>Loading Image...</p>
-                </>
-            )}
-            {players.length > 0 ? (
-                <>
-                    <h3>Players</h3>
-                    <ul>
-                        {players.map(player => (
-                            <li key={player._id}>{player.name} - {player.position}</li>
-                        )) }
-                    </ul>
-                </>
-            ) : (
-                <>
-                    <p>Loading Players...</p>
-                </>
-            )}
+            <div className="container-fluid">
+                <div className="row gx-0">
+                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        <h1>{name}</h1>
+                        {team ? (
+                            <>
+                                <p>Conference: {team.conference}</p>                 
+                                <p>Location: {team.location}</p>
+                                <p>Stadium: {team.stadium}</p>
+                            </>
+                        ) : (
+                            <>
+                                <p>Loading...</p>
+                            </>
+                        )}
+                    </div>
+                    <div className="col-sm-5 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {team ? (
+                            <>
+                                <img src={team.logoUrl} alt={name } width="200" />
+                            </>
+                        ) : (
+                            <>
+                                <p>Loading Image...</p>
+                            </>
+                        )}
+                    </div>
+                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {players.length > 0 ? (
+                            <>
+                                <h3>Players</h3>
+                                <ul>
+                                    {players.map(player => (
+                                        <li key={player._id}>{player.name} - {player.position}</li>
+                                    )) }
+                                </ul>
+                            </>
+                        ) : (
+                            <>
+                                <p>Loading Players...</p>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
