@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 function TeamPage() {
     const name = useParams().name;
     const [team, setTeam] = useState(null);
@@ -13,7 +15,7 @@ function TeamPage() {
 
     useEffect(() => {
         const uriName = encodeURIComponent(name);
-        const uri = `http://localhost:5000/teams/name/` + uriName;
+        const uri = API_BASE_URL + `/teams/name/${uriName}`;
         axios.get(uri)
             .then(res => setTeam(res.data))
             .catch(err => console.error('Error fetching team:', err));      
