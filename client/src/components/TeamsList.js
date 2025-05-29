@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 function TeamsList() {
     const [teams, setTeams] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/teams')
+        axios.get(API_BASE_URL + '/teams')
             .then(res => setTeams(res.data))
             .catch(err => console.error('Error fetching teams:', err));
     }, []);
