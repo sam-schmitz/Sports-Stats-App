@@ -15,7 +15,9 @@ import PlayerPage from './components/PlayerPage';
 import TeamPage from './components/TeamPage';
 import GamePage from './components/GamePage';
 
-const socket = io('http://localhost:5000');
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+const socket = io(API_BASE_URL);
 
 function App() {
     socket.on('scoreUpdate', data => {
@@ -25,7 +27,7 @@ function App() {
     return (
         <Router>
             <nav style={{ marginBottom: '1rem' }}>
-                <Link to="/">Home</Link> |{" "}
+                <Link to="/Sports-Stats-App">Home</Link> |{" "}
                 <Link to="/teams">Teams</Link> |{" "}
                 <Link to="/players">Players</Link> |{" "}
                 <Link to="/games">Games</Link>
@@ -33,6 +35,7 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/Sports-Stats-App" element={<Home />} />
                 <Route path="/teams" element={<TeamsList />} />
                 <Route path="/players" element={<PlayersList />} />
                 <Route path="/games" element={<GamesList />} />
