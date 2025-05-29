@@ -5,7 +5,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config({ path: __dirname + '/.env' });    //use just .config(); if in backend folder
+require('dotenv').config();//({ path: __dirname + '/.env' });    //use just .config(); if in backend folder
 const http = require('http');
 const { Server } = require('socket.io');
 const teamsRouter = require('./routes/teams');
