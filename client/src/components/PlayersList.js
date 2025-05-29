@@ -17,13 +17,19 @@ function PlayersList() {
     return (
         <div>
             <h2>NBA Players</h2>
-            <ul>
-                {players.map(player => (
-                    <li key={player._id}>
-                        <Link to={`/players/${player.name}`}>{player.name}</Link>
-                    </li>
-                ))}
-            </ul>
+            <div className="container-fluid">
+                <div className="row gx-0">
+                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        <ul>
+                            {players.map(player => (
+                                <li key={player._id}>
+                                    <Link to={`/players/${player.name}`}>{player.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
