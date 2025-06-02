@@ -8,10 +8,41 @@ const Player = require('../models/Player');
 const Team = require('../models/Team');
 require('dotenv').config();
 
-const fetchPlayersForTeam = async (teamId) => {    
-    const url = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_players.php?id=${teamId}`;    
-    const res = await axios.get(url);
-    return res.data.player || [];
+const fetchPlayersForTeam = async (teamId, teamName, espnId) => { 
+    try {
+        const url = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${espnId}/roster`;
+        console.log(url);
+        const { data } = await axios.get(url);
+        const players = data.athletes;
+
+        const formattedPlayers = [];
+
+        for (const p of players) {            
+            formattedPlayers.push({
+                _id: p.id,
+                name: p.displayName,
+                team_id: teamId,
+                team_name: teamName,
+                sport: 'basketball',
+                nationality: p.birthPlace || null,
+                position: p.position.name,
+                dob: p.dateOfBirth,
+                height: p.height,   // inches (ex: 80)
+                weight: p.weight,
+                photoUrl: p.headshot?.href || null,
+                jersey_number: p.jersey,
+                salary: p.contracts[0]
+                    ? p.contracts[0].salary
+                    : null,
+                age: p.age
+            });
+        }
+
+        console.log(formattedPlayers);
+        return formattedPlayers;
+    } catch (err) {
+        console.error('Error fetching player data', err.message);
+    }
 };
 
 const formatPlayer = (p, teamId) => ({
@@ -34,6 +65,8 @@ const seed = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
 
+        /*
+        // Old code
         const nbaTeams = await Team.find({ sport: 'basketball' }).select('_id');
         const teamIds = nbaTeams.map(team => team._id);
 
@@ -58,6 +91,33 @@ const seed = async () => {
             
             console.log(`Seeded players for team ${teamId}`);
         }
+        */
+
+        const teams = await Team.find({ sport: 'basketball' }, '_id name espnId').lean();         
+
+        //await Player.deleteMany({ sport: 'basketball' });
+
+        for (const team of teams) {
+            console.log(team._id);
+            const players = await fetchPlayersForTeam(team._id, team.name, team.espnId);
+
+            if (!Array.isArray(players)) {
+                console.warn(`No players found for team ${teamId}`);
+                continue;
+            }
+
+            /*for (const p of players) {
+                const formatted = formatPlayer(p, teamId);
+                await Player.updateOne(
+                    { _id: formatted._id },
+                    { $set: formatted },
+                    { upsert: true }
+                );
+            }
+
+            console.log(`players seeded for team${teamId}`);*/
+        }
+
         console.log('All NBA players seeded successfully. ');
         mongoose.disconnect();
     } catch (err) {
