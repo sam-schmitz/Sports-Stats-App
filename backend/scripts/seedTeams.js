@@ -41,7 +41,7 @@ const fetchNBATeams = async () => {
                     : teamData.location,
                 logo: teamData.logos?.[0]?.href || null,
                 stadium: teamData.franchise.venue?.fullName || null,
-                espn_id: teamData.id
+                espnId: teamData.id
             });
         }        
 
