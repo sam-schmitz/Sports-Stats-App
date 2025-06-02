@@ -9,6 +9,7 @@ require('dotenv').config();
 
 const fetchNBATeams = async () => {
     try {
+        // Gather a list of nba teams and their ids
         const baseTeamUrl = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams';
         const { data } = await axios.get(baseTeamUrl);
         const teamList = data.sports[0].leagues[0].teams.map(t => t.team);
@@ -16,14 +17,17 @@ const fetchNBATeams = async () => {
         const detailedTeams = [];
 
         for (const team of teamList) {
+            // Create a url to get all of the needed data (specific to team)
             const id = team.id;
             const detailUrl = `${baseTeamUrl}/${id}`;            
 
             const teamRes = await axios.get(detailUrl);
             const teamData = teamRes.data.team
-            
+
+            // import divisions and conferences
             const meta = teamConferenceDivisionMap[teamData.abbreviation] || {};
-            
+
+            //format info to the MongoDB Model
             detailedTeams.push({
                 _id: teamData.id,
                 sport: 'basketball',
@@ -49,6 +53,7 @@ const fetchNBATeams = async () => {
     
 };
 
+// Hard coded conferences and divisions
 const teamConferenceDivisionMap = {
     BOS: { conference: 'Eastern', division: 'Atlantic' },
     BKN: { conference: 'Eastern', division: 'Atlantic' },
