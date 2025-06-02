@@ -47,6 +47,12 @@ const PlayerSchema = new mongoose.Schema({
     },
     photoUrl: {
         type: String
+    },
+    age: {
+        type: String
+    },
+    salary: {
+        type: String
     }
 }, { timestamps: true });
 
