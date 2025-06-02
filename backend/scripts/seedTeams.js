@@ -24,22 +24,23 @@ const fetchNBATeams = async () => {
 
         for (const team of teamList) {
             const id = team.id;
-            const detailUrl = `${baseTeamUrl}/${id}`;
-            console.log(detailUrl);
+            const detailUrl = `${baseTeamUrl}/${id}`;            
 
             const teamRes = await axios.get(detailUrl);
             const teamData = teamRes.data.team
 
+            const meta = teamConferenceDivisionMap[teamData.abbreviation] || {};
+            
             detailedTeams.push({
                 _id: teamData.id,
                 sport: 'basketball',
                 name: teamData.displayName,
                 abbreviation: teamData.abbreviation,
                 city: teamData.location,
-                conference: teamData.conference?.name || null,
-                division: teamData.division?.name || null,
+                conference: meta.conference || null,
+                division: meta.division || null,
                 stadium: teamData.franchise.venue?.fullName || null,
-                location: teamData.franchise.venue
+                location: teamData.franchise.venue.address
                     ? `${teamData.franchise.venue.address.city}, ${teamData.franchise.venue.address.state}`
                     : null,
                 logo: teamData.logos?.[0]?.href || null,
@@ -54,6 +55,44 @@ const fetchNBATeams = async () => {
     }
     
 };
+
+const teamConferenceDivisionMap = {
+    BOS: { conference: 'Eastern', division: 'Atlantic' },
+    BKN: { conference: 'Eastern', division: 'Atlantic' },
+    NYK: { conference: 'Eastern', division: 'Atlantic' },
+    PHI: { conference: 'Eastern', division: 'Atlantic' },
+    TOR: { conference: 'Eastern', division: 'Atlantic' },
+
+    CHA: { conference: 'Eastern', division: 'Central' },
+    CHI: { conference: 'Eastern', division: 'Central' },
+    CLE: { conference: 'Eastern', division: 'Central' },
+    DET: { conference: 'Eastern', division: 'Central' },
+    IND: { conference: 'Eastern', division: 'Central' },
+
+    ATL: { conference: 'Eastern', division: 'Southeast' },
+    CHA: { conference: 'Eastern', division: 'Southeast' },
+    MIA: { conference: 'Eastern', division: 'Southeast' },
+    ORL: { conference: 'Eastern', division: 'Southeast' },
+    WAS: { conference: 'Eastern', division: 'Southeast' },
+
+    DEN: { conference: 'Western', division: 'Northwest' },
+    MIN: { conference: 'Western', division: 'Northwest' },
+    OKC: { conference: 'Western', division: 'Northwest' },
+    POR: { conference: 'Western', division: 'Northwest' },
+    UTA: { conference: 'Western', division: 'Northwest' },
+
+    GSW: { conference: 'Western', division: 'Pacific' },
+    LAC: { conference: 'Western', division: 'Pacific' },
+    LAL: { conference: 'Western', division: 'Pacific' },
+    PHX: { conference: 'Western', division: 'Pacific' },
+    SAC: { conference: 'Western', division: 'Pacific' },
+
+    DAL: { conference: 'Western', division: 'Southwest' },
+    HOU: { conference: 'Western', division: 'Southwest' },
+    MEM: { conference: 'Western', division: 'Southwest' },
+    NOP: { conference: 'Western', division: 'Southwest' },
+    SAS: { conference: 'Western', division: 'Southwest' }
+}
 
 const formatTeams = (teams) => {
     return teams.map(team => ({
