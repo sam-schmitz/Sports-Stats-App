@@ -36,6 +36,9 @@ const TeamSchema = new mongoose.Schema({
     },
     stadium: {
         type: String
+    },
+    espnId: {
+        type: String
     }
 }, { timestamps: true });
 
