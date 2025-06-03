@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Sports-Stats-App/static/css/main.aecc3afd.css",
-    "main.js": "/Sports-Stats-App/static/js/main.0fa0c894.js",
+    "main.js": "/Sports-Stats-App/static/js/main.86b90cb0.js",
     "static/js/453.419a5d54.chunk.js": "/Sports-Stats-App/static/js/453.419a5d54.chunk.js",
     "index.html": "/Sports-Stats-App/index.html",
     "main.aecc3afd.css.map": "/Sports-Stats-App/static/css/main.aecc3afd.css.map",
-    "main.0fa0c894.js.map": "/Sports-Stats-App/static/js/main.0fa0c894.js.map",
+    "main.86b90cb0.js.map": "/Sports-Stats-App/static/js/main.86b90cb0.js.map",
     "453.419a5d54.chunk.js.map": "/Sports-Stats-App/static/js/453.419a5d54.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.aecc3afd.css",
-    "static/js/main.0fa0c894.js"
+    "static/js/main.86b90cb0.js"
   ]
 }
