@@ -77,6 +77,8 @@ const GameSchema = new mongoose.Schema({
     status: String,
     game_type: String,
     overtime: String,
+    conferenceCompetition: String,
+    winner: String,
     players: [PlayerStatSchema] // Embedded stats per player
 }, { timestamps: true });
 
