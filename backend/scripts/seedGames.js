@@ -14,7 +14,7 @@ const SEASON_YEAR = '2024-2025';
 const seasonDates = {
     "2024-2025": {
         start: "2024-10-22",
-        end: "2025-04-13"
+        end: "2025-04-14"
     },
     "2023-2024": {
         start: "2023-10-24",
@@ -57,7 +57,7 @@ const fetchGames = async (startDate, endDate) => {
 
         //const subFormattedGames = formatGame(game, teamIdMap);
 
-        if (subformattedGames !== null) {
+        if (subFormattedGames !== null) {
             formattedGames.push(...subFormattedGames);
         }
     }
@@ -67,43 +67,49 @@ const fetchGames = async (startDate, endDate) => {
 };
 
 const fetchGame = async (url, d) => {
-    console.log(d);
+    //console.log(d);
     const { data } = await axios.get(url);
 
     if (!data.events || data.events.length === 0) {
         return null;
     }
 
-    const events = data.events;
+    const events = data.events;    
 
     const formattedGames = [];
 
-    for (const event in events) {
+    for (const event of events) {
 
-        if (event.competitions.competitors[0].winner === true) {
-            const winner = event.competitions.competitors[0].team.displayName
+        //console.log(event.competitions[0].competitors);        //must use competitions[0] even though there will always be only 1 comp
+
+        let winner;
+
+        if (event.competitions[0].competitors[0].winner === true) {
+            winner = event.competitions[0].competitors[0].team.displayName
         } else {
-            const winner = event.competitions.competitors[1].team.displayName
+            winner = event.competitions[0].competitors[1].team.displayName
         }
+        //console.log('Winner found');
 
         const formattedGame = {
             _id: event.id,
             sport: 'basketball',
             date: d,
-            homeTeamID: event.competitions.competitors[0].id,
-            away_team_id: event.competitions.competitors[1].id,
-            home_team_name: event.competitions.competitors[0].team.displayName,
-            away_team_name: event.competitions.competitors[1].team.displayName,
-            home_score: event.competitions.competitors[0].score,
-            away_score: event.competitions.competitors[1].score,
-            venue: event.competitions.venue?.fullName || null,
-            status: event.competitions.status.type.name,
+            homeTeamID: event.competitions[0].competitors[0].id,
+            away_team_id: event.competitions[0].competitors[1].id,
+            home_team_name: event.competitions[0].competitors[0].team.displayName,
+            away_team_name: event.competitions[0].competitors[1].team.displayName,
+            home_score: event.competitions[0].competitors[0].score,
+            away_score: event.competitions[0].competitors[1].score,
+            venue: event.competitions[0].venue?.fullName || null,
+            status: event.competitions[0].status.type.name,
             season: SEASON_YEAR,
             game_type: 'Regular Season',
             overtime: null,
-            conferenceCompetition: event.competitions.conferenceCompetition,
+            conferenceCompetition: event.competitions[0].conferenceCompetition,
             winner: winner
         };
+        //console.log(formattedGame);
         formattedGames.push(formattedGame);
     }
     
