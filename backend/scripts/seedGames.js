@@ -53,19 +53,52 @@ const fetchGames = async (startDate, endDate) => {
         const formattedURL = baseUrl + `${year}${month}${day}`  // YYYYMMDD
         console.log(formattedURL);
 
-        const game = fetchGame(url);
+        const game = fetchGame(url, d);
 
-        const formattedGame = formatGame(game, teamIdMap);
+        const subFormattedGames = formatGame(game, teamIdMap);
 
-        formattedGames.push(formattedGame);
+        formattedGames.push(subFormattedGames);
     }
 
     return formattedGames
     
 };
 
-const fetchGame = async (url) => {
+const fetchGame = async (url, d) => {
+    const { data } = await axios.get(url);
+    const events = data.events;
+
+    const formattedGames = [];
+
+    for (const event in events) {
+        if (event.competitions.competitors[0].winner === true) {
+            const winner = event.competitions.competitors[0].team.displayName
+        } else {
+            const winner = event.competitions.competitors[1].team.displayName
+        }
+
+        const formattedGame = {
+            _id: event.id,
+            sport: 'basketball',
+            date: d,
+            homeTeamID: event.competitions.competitors[0].id,
+            away_team_id: event.competitions.competitors[1].id,
+            home_team_name: event.competitions.competitors[0].team.displayName,
+            away_team_name: event.competitions.competitors[1].team.displayName,
+            home_score: event.competitions.competitors[0].score,
+            away_score: event.competitions.competitors[1].score,
+            venue: event.competitions.venue?.fullName || null,
+            status: event.competitions.status.type.name,
+            season: SEASON_YEAR,
+            game_type: 'Regular Season',
+            overtime: null,
+            conferenceCompetition: event.competitions.conferenceCompetition,
+            winner: winner
+        };
+        formattedGames.push(formattedGame);
+    }
     
+    return formattedGames;
 }
 
 const getTeamIdMap = async () => {
