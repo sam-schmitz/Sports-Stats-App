@@ -11,6 +11,32 @@ require('dotenv').config();
 // Update to change which season is fetched
 const SEASON_YEAR = '2024-2025';
 
+const seasonDates = {
+    "2024-2025": {
+        start: "2024-10-22",
+        end: "2025-04-13"
+    },
+    "2023-2024": {
+        start: "2023-10-24",
+        end: "2023-04-14"
+    },
+    "2022-2023": {
+        start: "2022-10-18",
+        end: "2023-04-09"
+    },
+    "2021-2022": {
+        start: "2021-10-19",
+        end: "2022-04-10"
+    },
+    "2020-2021": {
+        start: "2020-12-22",
+        end: "2021-05-16"
+    },
+    "2019-2020": {
+        start: "2019-10-22",
+        end: "2020-03-11"   //suspended due to COVID
+    },
+}
 
 const fetchGames = async (startDate, endDate) => {
     const baseUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=`;  //Add a date on the end (ex: YYYYMMDD)
