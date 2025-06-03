@@ -25,7 +25,7 @@ function TeamsList() {
                         <ul>
                             {teams.map(team => (
                                 <li key={team._id}>
-                                    <Link to={`/teams/${team.name}`}>{team.name} ({team.abbreviation})</Link>
+                                    <Link to={`/Sports-Stats-App/teams/${team.name}`}>{team.name} ({team.abbreviation})</Link>
                                 </li>
                             ))}
                         </ul>

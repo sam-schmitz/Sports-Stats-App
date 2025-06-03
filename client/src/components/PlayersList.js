@@ -25,7 +25,7 @@ function PlayersList() {
                         <ul>
                             {players.map(player => (
                                 <li key={player._id}>
-                                    <Link to={`/players/${player.name}`}>{player.name}</Link>
+                                    <Link to={`/Sports-Stats-App/players/${player.name}`}>{player.name}</Link>
                                 </li>
                             ))}
                         </ul>

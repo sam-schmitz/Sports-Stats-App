@@ -29,7 +29,7 @@ function PlayerPage() {
                     <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {player ? (
                             <>
-                                <p>Team: <Link to={`/teams/${player.team_name}`}>{player.team_name}</Link></p>
+                                <p>Team: <Link to={`/Sports-Stats-App/teams/${player.team_name}`}>{player.team_name}</Link></p>
                                 <p>Number: {player.jersey_number}</p>
                                 <p>Position: {player.position}</p>
                                 <p>Height: {player.height}</p>

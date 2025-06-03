@@ -28,20 +28,20 @@ function App() {
         <Router>
             <nav style={{ marginBottom: '1rem' }}>
                 <Link to="/Sports-Stats-App">Home</Link> |{" "}
-                <Link to="/teams">Teams</Link> |{" "}
-                <Link to="/players">Players</Link> |{" "}
-                <Link to="/games">Games</Link>
+                <Link to="/Sports-Stats-App/teams">Teams</Link> |{" "}
+                <Link to="/Sports-Stats-App/players">Players</Link> |{" "}
+                <Link to="/Sports-Stats-App/games">Games</Link>
             </nav>
 
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/Sports-Stats-App" element={<Home />} />
-                <Route path="/teams" element={<TeamsList />} />
-                <Route path="/players" element={<PlayersList />} />
-                <Route path="/games" element={<GamesList />} />
-                <Route path="/players/:name" element={<PlayerPage />} />
-                <Route path="teams/:name" element={<TeamPage />} />
-                <Route path="games/:id" element={<GamePage /> } />
+                <Route path="/Sports-Stats-App/teams" element={<TeamsList />} />
+                <Route path="/Sports-Stats-App/players" element={<PlayersList />} />
+                <Route path="/Sports-Stats-App/games" element={<GamesList />} />
+                <Route path="/Sports-Stats-App/players/:name" element={<PlayerPage />} />
+                <Route path="/Sports-Stats-App/teams/:name" element={<TeamPage />} />
+                <Route path="/Sports-Stats-App/games/:id" element={<GamePage /> } />
             </Routes>
         </Router>
     );
