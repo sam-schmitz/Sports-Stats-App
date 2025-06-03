@@ -8,9 +8,9 @@ const Game = require('../models/Game');
 const Team = require('../models/Team');
 require('dotenv').config();
 
-// The NBA season ID for 2024-25 in TheSportsDB
+// Update to change which season is fetched
 const SEASON_YEAR = '2024-2025';
-const LEAGUE_NAME = 'NBA';
+
 
 const fetchGames = async (startDate, endDate) => {
     const baseUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=`;  //Add a date on the end (ex: YYYYMMDD)
@@ -20,6 +20,7 @@ const fetchGames = async (startDate, endDate) => {
     const formattedGames = [];
 
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        // Create specific url
         const year = d.getFullYear();
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
@@ -94,29 +95,25 @@ formatGame = (event, teamIdMap) => {
 const seed = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
-        const events = await fetchGames();        
+        console.log('Database connected');
 
-        /*
-        // Old Code
-        const games1 = await Game.find().limit(5);
-        console.log('Sample games: ', games1);        
+        console.log('Fetching Games...');        
+        const startDate = seasonDates[SEASON_YEAR].startDate;
+        const endDate = seasonDates[SEASON_YEAR].endDate;
+        const formattedGames = await fetchGames(startDate, endDate);        
+        console.log('All games fetched');
 
-        await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
-        console.log("deleted old games");
+        //await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
+        //console.log("deleted old games");
 
-        const formattedGames = events
-            .map(event => formatGame(event, teamIdMap))
-            .filter(game => game !== null);
-        //console.log(formattedGames[0]);        
-
+        console.log('Inserting Games into Database');
         await Game.insertMany(formattedGames)
-            .then(() => console.log('Games inserted successfully'))
+            .then(() => console.log('Games Inserted sucessfully'))
             .catch(err => {
-                console.error('Insert error:', err);
+                console.error('Insert error: ', err);
             });
 
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
-        */
 
         const games = await Game.find().limit(5);
         console.log('Sample games: ', games);        
