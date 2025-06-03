@@ -99,7 +99,7 @@ const seed = async () => {
 
         await Team.deleteMany({ sport: 'basketball' });
         await Team.insertMany(formatted);
-        console.log('NBA teams seeded successfully. ');
+        console.log('NBA teams seeded successfully. ');        
 
         await mongoose.disconnect();
     } catch (err) {

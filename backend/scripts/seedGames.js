@@ -41,7 +41,7 @@ const seasonDates = {
 const fetchGames = async (startDate, endDate) => {
     const baseUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=`;  //Add a date on the end (ex: YYYYMMDD)
 
-    const teamIdMap = await getTeamIdMap();
+    const teamIdMap = await getTeamIdMap();    
 
     const formattedGames = [];
 
@@ -61,8 +61,8 @@ const fetchGames = async (startDate, endDate) => {
             formattedGames.push(...subFormattedGames);
         }
     }
-
-    return formattedGames
+    //console.log(formattedGames);    
+    return formattedGames;
     
 };
 
@@ -98,11 +98,23 @@ const fetchGame = async (url, d, teamIdMap) => {
             return null;
         }
 
+        const homeTeamId = teamIdMap[home.id];
+        const awayTeamId = teamIdMap[away.id];
+
+        if (!homeTeamId || !awayTeamId) {
+
+            console.warn(`Missing home or away team id for game ${event.id}`);
+            //console.log(home);
+            console.log(home.id);
+            return null;
+        }
+        //console.log("Home Team: ", home.id, "homeTeamId", homeTeamId);
+
         const formattedGame = {
             _id: event.id,
             sport: 'basketball',
             date: d,
-            homeTeamID: teamIdMap[home.id],
+            home_team_id: teamIdMap[home.id],
             away_team_id: teamIdMap[away.id],
             home_team_name: home.team.displayName,
             away_team_name: away.team.displayName,
@@ -127,10 +139,11 @@ const getTeamIdMap = async () => {
     const teamIdMap = {};
     const teams = await Team.find({ sport: 'basketball' });
     teams.forEach(team => {
-        if (team.espn_id) {
-            teamIdMap[team.espn_id] = team._id;
+        if (team.espnId) {
+            teamIdMap[team.espnId] = team._id;
         }
     });
+    //console.log(teamIdMap);
     return teamIdMap;
 }
 
@@ -185,8 +198,8 @@ const seed = async () => {
         const end = seasonDates[SEASON_YEAR].end;
 
         const startDate = new Date(start);
-        const endDate = new Date(end);        
-        const formattedGames = await fetchGames(startDate, endDate);        
+        const endDate = new Date(end);        //change back to end
+        const formattedGames = await fetchGames(startDate, endDate);                
         console.log('All games fetched');
 
         await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
