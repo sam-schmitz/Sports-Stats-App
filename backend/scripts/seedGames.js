@@ -14,7 +14,7 @@ const SEASON_YEAR = '2024-2025';
 const seasonDates = {
     "2024-2025": {
         start: "2024-10-22",
-        end: "2025-04-14"
+        end: "2025-04-13"
     },
     "2023-2024": {
         start: "2023-10-24",
@@ -51,9 +51,9 @@ const fetchGames = async (startDate, endDate) => {
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
         const formattedURL = baseUrl + `${year}${month}${day}`  // YYYYMMDD
-        console.log(formattedURL);
+        //console.log(formattedURL);
 
-        const subFormattedGames = await fetchGame(formattedURL, d);
+        const subFormattedGames = await fetchGame(formattedURL, d, teamIdMap);
 
         //const subFormattedGames = formatGame(game, teamIdMap);
 
@@ -66,7 +66,7 @@ const fetchGames = async (startDate, endDate) => {
     
 };
 
-const fetchGame = async (url, d) => {
+const fetchGame = async (url, d, teamIdMap) => {
     //console.log(d);
     const { data } = await axios.get(url);
 
@@ -79,11 +79,9 @@ const fetchGame = async (url, d) => {
     const formattedGames = [];
 
     for (const event of events) {
-
         //console.log(event.competitions[0].competitors);        //must use competitions[0] even though there will always be only 1 comp
 
         let winner;
-
         if (event.competitions[0].competitors[0].winner === true) {
             winner = event.competitions[0].competitors[0].team.displayName
         } else {
@@ -91,16 +89,25 @@ const fetchGame = async (url, d) => {
         }
         //console.log('Winner found');
 
+        const competitors = event.competitions[0].competitors;
+        const home = competitors.find(c => c.homeAway === 'home');
+        const away = competitors.find(c => c.homeAway === 'away');
+
+        if (!home || !away || !home.id || !away.id) {
+            console.warn(`Missing home or away team for game ${event.id}`);
+            return null;
+        }
+
         const formattedGame = {
             _id: event.id,
             sport: 'basketball',
             date: d,
-            homeTeamID: event.competitions[0].competitors[0].id,
-            away_team_id: event.competitions[0].competitors[1].id,
-            home_team_name: event.competitions[0].competitors[0].team.displayName,
-            away_team_name: event.competitions[0].competitors[1].team.displayName,
-            home_score: event.competitions[0].competitors[0].score,
-            away_score: event.competitions[0].competitors[1].score,
+            homeTeamID: teamIdMap[home.id],
+            away_team_id: teamIdMap[away.id],
+            home_team_name: home.team.displayName,
+            away_team_name: away.team.displayName,
+            home_score: home.score,
+            away_score: away.score,
             venue: event.competitions[0].venue?.fullName || null,
             status: event.competitions[0].status.type.name,
             season: SEASON_YEAR,
@@ -117,12 +124,14 @@ const fetchGame = async (url, d) => {
 }
 
 const getTeamIdMap = async () => {
+    const teamIdMap = {};
     const teams = await Team.find({ sport: 'basketball' });
-    const map = {};
-    for (const team of teams) {
-        map[team.name.toLowerCase()] = team._id;
-    }
-    return map;
+    teams.forEach(team => {
+        if (team.espn_id) {
+            teamIdMap[team.espn_id] = team._id;
+        }
+    });
+    return teamIdMap;
 }
 
 formatGame = (event, teamIdMap) => {
@@ -176,25 +185,24 @@ const seed = async () => {
         const end = seasonDates[SEASON_YEAR].end;
 
         const startDate = new Date(start);
-        const endDate = new Date(end);
-        console.log(startDate, endDate);
+        const endDate = new Date(end);        
         const formattedGames = await fetchGames(startDate, endDate);        
         console.log('All games fetched');
 
-        //await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
-        //console.log("deleted old games");
+        await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
+        console.log("deleted old games");
 
-        /*console.log('Inserting Games into Database');
+        console.log('Inserting Games into Database');
         await Game.insertMany(formattedGames)
             .then(() => console.log('Games Inserted sucessfully'))
             .catch(err => {
                 console.error('Insert error: ', err);
             });
-            */
+            
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
 
-        //const games = await Game.find().limit(5);
-        //console.log('Sample games: ', games);        
+        const games = await Game.find().limit(5);
+        console.log('Sample games: ', games);        
 
         mongoose.disconnect();
     } catch (err) {
