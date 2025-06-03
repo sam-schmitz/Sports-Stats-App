@@ -12,11 +12,34 @@ require('dotenv').config();
 const SEASON_YEAR = '2024-2025';
 const LEAGUE_NAME = 'NBA';
 
-const fetchGames = async () => {
-    const url = `https://www.thesportsdb.com/api/v1/json/3/eventsseason.php?id=4387&s=${SEASON_YEAR}`;  //4387 = NBA ID
-    const response = await axios.get(url);
-    return response.data.events || [];
+const fetchGames = async (startDate, endDate) => {
+    const baseUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=`;  //Add a date on the end (ex: YYYYMMDD)
+
+    const teamIdMap = await getTeamIdMap();
+
+    const formattedGames = [];
+
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const formattedURL = baseUrl + `${year}${month}${day}`  // YYYYMMDD
+        console.log(formattedURL);
+
+        const game = fetchGame(url);
+
+        const formattedGame = formatGame(game, teamIdMap);
+
+        formattedGames.push(formattedGame);
+    }
+
+    return formattedGames
+    
 };
+
+const fetchGame = async (url) => {
+    
+}
 
 const getTeamIdMap = async () => {
     const teams = await Team.find({ sport: 'basketball' });
@@ -71,9 +94,10 @@ formatGame = (event, teamIdMap) => {
 const seed = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
-        const events = await fetchGames();
-        const teamIdMap = await getTeamIdMap();
+        const events = await fetchGames();        
 
+        /*
+        // Old Code
         const games1 = await Game.find().limit(5);
         console.log('Sample games: ', games1);        
 
@@ -92,6 +116,7 @@ const seed = async () => {
             });
 
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
+        */
 
         const games = await Game.find().limit(5);
         console.log('Sample games: ', games);        
