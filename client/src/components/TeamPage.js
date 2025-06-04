@@ -39,9 +39,9 @@ function TeamPage() {
                         <h1>{name}</h1>
                         {team ? (
                             <>
-                                <p>Conference: {team.conference}</p>                 
-                                <p>Location: {team.location}</p>
-                                <p>Stadium: {team.stadium}</p>
+                                <p><strong>Conference: </strong>{team.conference}</p>                 
+                                <p><strong>Location: </strong>{team.location}</p>
+                                <p><strong>Stadium: </strong>{team.stadium}</p>
                             </>
                         ) : (
                             <>
