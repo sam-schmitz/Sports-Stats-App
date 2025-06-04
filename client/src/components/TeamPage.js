@@ -17,13 +17,12 @@ function TeamPage() {
         const uriName = encodeURIComponent(name);
         const uri = API_BASE_URL + `/teams/name/${uriName}`;
         axios.get(uri)
-            .then(res => setTeam(res.data))
-            .catch(err => console.error('Error fetching team:', err));      
-        
+            .then(res => setTeam(res.data))            
+            .catch(err => console.error('Error fetching team:', err));              
     }, [name])
 
     useEffect(() => {
-        if (team && team._id) {            
+        if (team && team._id) {                  
             axios.get(API_BASE_URL + `/teams/id/${team._id}/players`)
                 .then(res => setPlayers(res.data))
                 .catch(err => console.error('Error fetching team players:', err));
