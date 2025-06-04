@@ -8,6 +8,12 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+const formatHeight = (inches) => {
+    const feet = Math.floor(inches / 12);
+    const remainingInches = inches % 12;
+    return `${feet}'${remainingInches}"`;
+};
+
 function PlayerPage() {
     const name = useParams().name;
     const [player, setPlayer] = useState(null);    
@@ -32,10 +38,12 @@ function PlayerPage() {
                                 <p>Team: <Link to={`/Sports-Stats-App/teams/${player.team_name}`}>{player.team_name}</Link></p>
                                 <p>Number: {player.jersey_number}</p>
                                 <p>Position: {player.position}</p>
-                                <p>Height: {player.height}</p>
-                                <p>Weight: {player.weight}</p>
+                                <p>Height: {formatHeight(player.height)}</p>
+                                <p>Weight: {player.weight} lbs</p>
                                 <p>Nationality: {player.nationality}</p>
                                 <p>Date of Birth: {player.dob.slice(0, 10)}</p>
+                                <p>Age: {player.age}</p>
+                                <p>Salary: ${player.salary}</p>
                             </>
                         ) : (
                             <p>Loading...</p>
