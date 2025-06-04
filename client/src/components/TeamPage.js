@@ -3,7 +3,7 @@
 // Displays information about a team
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -66,7 +66,9 @@ function TeamPage() {
                                 <h3>Players</h3>
                                 <ul>
                                     {players.map(player => (
-                                        <li key={player._id}>{player.name} - {player.position}</li>
+                                        <li key={player._id}>
+                                            <Link to={`/Sports-Stats-App/players/${player.name}` } >{player.name} - {player.position}</Link>
+                                        </li>
                                     )) }
                                 </ul>
                             </>
