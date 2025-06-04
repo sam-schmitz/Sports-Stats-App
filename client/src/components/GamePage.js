@@ -28,12 +28,12 @@ function GamePage() {
                     <div className="col-sm-6 col-md-4" style={{marginLeft: '5px', textAlign: 'left'} } >
                         {game ? (
                             <>
-                                <p>Date: {game.date.slice(0, 10)}</p>
-                                <p>Season: {game.season}</p>
-                                <p>Home Team: {game.home_team_id}</p>
-                                <p>Away Team: {game.away_team_id}</p>
-                                <p>Score: {game.home_score} : {game.away_score}</p>
-                                <p>Game Type: {game.game_type}</p>
+                                <p><strong>Date: </strong>{game.date.slice(0, 10)}</p>
+                                <p><strong>Season: </strong>{game.season}</p>
+                                <p><strong>Home Team: </strong>{game.home_team_id}</p>
+                                <p><strong>Away Team: </strong>{game.away_team_id}</p>
+                                <p><strong>Score: </strong>{game.home_score} : {game.away_score}</p>
+                                <p><strong>Game Type: </strong>{game.game_type}</p>
                             </>
                         ) : (
                             <>
