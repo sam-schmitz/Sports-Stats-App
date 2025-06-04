@@ -39,7 +39,7 @@ const fetchNBATeams = async () => {
                 location: teamData.franchise.venue.address
                     ? `${teamData.franchise.venue.address.city}, ${teamData.franchise.venue.address.state}`
                     : teamData.location,
-                logo: teamData.logos?.[0]?.href || null,
+                logoUrl: teamData.logos?.[0]?.href || null,
                 stadium: teamData.franchise.venue?.fullName || null,
                 espnId: teamData.id
             });
