@@ -23,9 +23,8 @@ function TeamPage() {
     }, [name])
 
     useEffect(() => {
-        if (team && team._id) {
-            console.log(`http://localhost:5000/teams/id/${team._id}/players`)
-            axios.get(`http://localhost:5000/teams/id/${team._id}/players`)
+        if (team && team._id) {            
+            axios.get(API_BASE_URL + `/teams/id/${team._id}/players`)
                 .then(res => setPlayers(res.data))
                 .catch(err => console.error('Error fetching team players:', err));
         }
