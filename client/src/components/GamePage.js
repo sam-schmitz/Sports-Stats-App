@@ -3,7 +3,7 @@
 // Displays information about a game
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -30,8 +30,8 @@ function GamePage() {
                             <>
                                 <p><strong>Date: </strong>{game.date.slice(0, 10)}</p>
                                 <p><strong>Season: </strong>{game.season}</p>
-                                <p><strong>Home Team: </strong>{game.home_team_name}</p>
-                                <p><strong>Away Team: </strong>{game.away_team_name}</p>
+                                <p><strong>Home Team: </strong><Link to={`/Sports-Stats-App/teams/${game.home_team_name}`} > {game.home_team_name}</Link></p>
+                                <p><strong>Away Team: </strong><Link to={`/Sports-Stats-App/teams/${game.away_team_name}`}> {game.away_team_name}</Link></p>
                                 <p><strong>Score: </strong>{game.home_score} : {game.away_score}</p>
                                 <p><strong>Winner: </strong>{game.winner}</p>
                                 <p><strong>Game Type: </strong>{game.game_type}</p>                                
