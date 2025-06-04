@@ -35,15 +35,15 @@ function PlayerPage() {
                     <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {player ? (
                             <>
-                                <p>Team: <Link to={`/Sports-Stats-App/teams/${player.team_name}`}>{player.team_name}</Link></p>
-                                <p>Number: {player.jersey_number}</p>
-                                <p>Position: {player.position}</p>
-                                <p>Height: {formatHeight(player.height)}</p>
-                                <p>Weight: {player.weight} lbs</p>
-                                <p>Nationality: {player.nationality}</p>
-                                <p>Date of Birth: {player.dob.slice(0, 10)}</p>
-                                <p>Age: {player.age}</p>
-                                <p>Salary: ${player.salary}</p>
+                                <p><strong>Team: </strong><Link to={`/Sports-Stats-App/teams/${player.team_name}`}>{player.team_name}</Link></p>
+                                <p><strong>Number: </strong>{player.jersey_number}</p>
+                                <p><strong>Position: </strong>{player.position}</p>
+                                <p><strong>Height: </strong>{formatHeight(player.height)}</p>
+                                <p><strong>Weight: </strong>{player.weight} lbs</p>
+                                <p><strong>Nationality: </strong>{player.nationality}</p>
+                                <p><strong>Date of Birth: </strong>{player.dob.slice(0, 10)}</p>
+                                <p><strong>Age: </strong>{player.age}</p>
+                                <p><strong>Salary: </strong>${player.salary}</p>
                             </>
                         ) : (
                             <p>Loading...</p>
