@@ -32,6 +32,9 @@ function TeamStats({ team }) {
             <p><strong>Average Rebounds: </strong>{team.avgRebounds}</p>
             <p><strong>Average Assists: </strong>{team.avgAssists}</p>
 
+            <p><strong>Points Leader: </strong><Link to={`/Sports-Stats-App/players/${team.pointsLeader}`}>{team.pointsLeader}</Link></p>
+            <p><strong>Rebounds Leader: </strong><Link to={`/Sports-Stats-App/players/${team.reboundsLeader}`}>{team.reboundsLeader}</Link></p>
+            <p><strong>Assists Leader: </strong><Link to={`/Sports-Stats-App/players/${team.assistsLeader}`}>{team.assistsLeader}</Link></p>
         </>
     );
 }
