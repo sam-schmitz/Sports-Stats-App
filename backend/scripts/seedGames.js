@@ -110,6 +110,9 @@ const fetchGame = async (url, d, teamIdMap) => {
         }
         //console.log("Home Team: ", home.id, "homeTeamId", homeTeamId);
 
+        const homeTeamStatSchema = getTeamStats(home);
+        const awayTeamStatSchema = getTeamStats(away);
+
         const formattedGame = {
             _id: event.id,
             sport: 'basketball',
@@ -126,7 +129,8 @@ const fetchGame = async (url, d, teamIdMap) => {
             game_type: 'Regular Season',
             overtime: null,
             conferenceCompetition: event.competitions[0].conferenceCompetition,
-            winner: winner
+            winner: winner,
+            teams: [homeTeamStatSchema, awayTeamStatSchema]
         };
         //console.log(formattedGame);
         formattedGames.push(formattedGame);
