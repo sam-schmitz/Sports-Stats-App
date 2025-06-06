@@ -45,26 +45,66 @@ function GamePage() {
                     </div>
                 </div>
                 <div className='row gx-0'>
-                    <div className='col-sm-6 col-md-4' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                    <div className='col-sm-6 col-md-6' style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {game ? (
                             <>
-                                <p>Team 1 Stats</p>
+                                <p>{game.teams[0].name}</p>
+                                <p><strong>Points: </strong>{game.teams[0].points}</p>
+                                <p><strong>Rebounds: </strong>{game.teams[0].rebounds}</p>
+                                <p><strong>Assists: </strong>{game.teams[0].avgRebounds}</p>
+
+                                <p><strong>Field Goal %: </strong>{game.teams[0].fieldGoalPct}%</p>
+                                <p><strong>Field Goals Made: </strong>{game.teams[0].fieldGoalsMade}</p>
+                                <p><strong>Field Goals Attempted: </strong>{game.teams[0].fieldGoalsAttempted}</p>
+                                
+                                <p><strong>Free Throw %: </strong>{game.teams[0].freeThrowPct}%</p>                                
+                                <p><strong>Free Throws Made: </strong>{game.teams[0].freeThrowsMade}</p>
+                                <p><strong>Free Throws Attempted: </strong>{game.teams[0].freeThrowsAttempted}</p>
+
+                                <p><strong>Three Point %: </strong>{game.teams[0].threePointPct}%</p>
+                                <p><strong>Three Point Field Goals Made: </strong>{game.teams[0].threePointFieldGoalsMade}</p>
+                                <p><strong>Three Point Field Goals Attempted: </strong>{game.teams[0].threePointFieldGoalsAttempted}</p>
+                                
+                                <p><strong>Average Points: </strong>{game.teams[0].avgPoints}</p>
+                                <p><strong>Average Rebounds: </strong>{game.teams[0].avgRebounds}</p>
+                                <p><strong>Average Assists: </strong>{game.teams[0].avgAssists}</p>                                
+
                             </>
                         ) : (
-                                <>
-                                    <p>Loading...</p>
-                                </>
+                            <>
+                                <p>Loading...</p>
+                            </>
                         )}
                     </div>
-                    <div className='col-sm-5 col-md-4' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                    <div className='col-sm-5 col-md-5' style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {game ? (
                             <>
-                                <p>Team 2 Stats</p>
+                                <p>{game.teams[1].name}</p>
+                                
+                                <p><strong>Points: </strong>{game.teams[1].points}</p>
+                                <p><strong>Rebounds: </strong>{game.teams[1].rebounds}</p>
+                                <p><strong>Assists: </strong>{game.teams[1].avgRebounds}</p>
+
+                                <p><strong>Field Goal %: </strong>{game.teams[1].fieldGoalPct}%</p>
+                                <p><strong>Field Goals Made: </strong>{game.teams[1].fieldGoalsMade}</p>
+                                <p><strong>Field Goals Attempted: </strong>{game.teams[1].fieldGoalsAttempted}</p>
+
+                                <p><strong>Free Throw %: </strong>{game.teams[1].freeThrowPct}%</p>
+                                <p><strong>Free Throws Made: </strong>{game.teams[1].freeThrowsMade}</p>
+                                <p><strong>Free Throws Attempted: </strong>{game.teams[1].freeThrowsAttempted}</p>
+
+                                <p><strong>Three Point %: </strong>{game.teams[1].threePointPct}%</p>
+                                <p><strong>Three Point Field Goals Made: </strong>{game.teams[1].threePointFieldGoalsMade}</p>
+                                <p><strong>Three Point Field Goals Attempted: </strong>{game.teams[1].threePointFieldGoalsAttempted}</p>
+
+                                <p><strong>Average Points: </strong>{game.teams[1].avgPoints}</p>
+                                <p><strong>Average Rebounds: </strong>{game.teams[1].avgRebounds}</p>
+                                <p><strong>Average Assists: </strong>{game.teams[1].avgAssists}</p>                                
                             </>
                         ) : (
-                                <>
-                                    <p>Loading...</p>
-                                </>
+                            <>
+                                <p>Loading...</p>
+                            </>
                         )}
                     </div>
                 </div>
