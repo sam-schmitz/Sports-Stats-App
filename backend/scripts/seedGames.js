@@ -109,9 +109,9 @@ const fetchGame = async (url, d, teamIdMap) => {
             return null;
         }
         //console.log("Home Team: ", home.id, "homeTeamId", homeTeamId);
-
+        
         const homeTeamStatSchema = getTeamStats(home, teamIdMap[home.id]);
-        const awayTeamStatSchema = getTeamStats(away, teamIdMap[away.id]);
+        const awayTeamStatSchema = getTeamStats(away, teamIdMap[away.id]);        
 
         const formattedGame = {
             _id: event.id,
@@ -139,14 +139,20 @@ const fetchGame = async (url, d, teamIdMap) => {
     return formattedGames;
 }
 
-getTeamStats = (team, id) => {
+getTeamStats = (team, id) => {   
+    if (!team.statistics) {
+        console.warn('Missing statistics');
+    } else if (!team.leaders) {
+        console.warn('Missing leaders');
+    };
     const statMap = Object.fromEntries(
         team.statistics.map(stat => [stat.name, parseFloat(stat.displayValue)])
     );
     const leaderMap = Object.fromEntries(
-        team.leaders.map(leader => [leader.name, leader.displayName])
-    );
-    const record = team.records.find(r => r.name === "overall");
+        (team.leaders || []).map(leader => [leader.name, leader.leaders[0].athlete.displayName])
+    );      
+    const record = team.records?.find(r => r.name === "overall") || null    
+    
 
     const formattedTeam = {
         team_id: id,
@@ -168,11 +174,11 @@ getTeamStats = (team, id) => {
         avgPoints: statMap.avgPoints,
         avgAssists: statMap.avgAssists,
         threePointFieldGoalPct: statMap.threePointFieldGoalPct,
-        pointsLeader: leaderMap.points,
-        reboundsLeader: leaderMap.rebounds,
-        assistsLeader: leaderMap.assists,
-        record: record.summary
-    };
+        pointsLeader: leaderMap?.points || null,
+        reboundsLeader: leaderMap?.rebounds || null,
+        assistsLeader: leaderMap?.assists || null,
+        record: record?.summary || null
+    };    
     return formattedTeam;
 };
 
@@ -252,7 +258,7 @@ const seed = async () => {
             .catch(err => {
                 console.error('Insert error: ', err);
             });
-            
+        
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
 
         const games = await Game.find().limit(5);
