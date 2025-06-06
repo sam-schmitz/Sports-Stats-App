@@ -16,7 +16,15 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
 
         const formattedPlayers = [];
 
-        for (const p of players) {            
+        for (const p of players) {    
+
+            // fetch career stats
+            const careerStats = fetchPlayerCareerStats();
+
+            // fetch season stats
+            const seasonStats = fetchPlayerSeasonStats();
+
+            // format data to mongo Player model
             formattedPlayers.push({
                 _id: p.id,
                 name: p.displayName,
@@ -33,7 +41,9 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
                 salary: p.contracts[0]
                     ? p.contracts[0].salary
                     : null,
-                age: p.age
+                age: p.age,
+                careerStats: careerStats,
+                seasonStats: seasonStats
             });
         }
 
