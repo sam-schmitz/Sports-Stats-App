@@ -110,8 +110,8 @@ const fetchGame = async (url, d, teamIdMap) => {
         }
         //console.log("Home Team: ", home.id, "homeTeamId", homeTeamId);
 
-        const homeTeamStatSchema = getTeamStats(home);
-        const awayTeamStatSchema = getTeamStats(away);
+        const homeTeamStatSchema = getTeamStats(home, teamIdMap[home.id]);
+        const awayTeamStatSchema = getTeamStats(away, teamIdMap[away.id]);
 
         const formattedGame = {
             _id: event.id,
@@ -139,6 +139,43 @@ const fetchGame = async (url, d, teamIdMap) => {
     return formattedGames;
 }
 
+getTeamStats = (team, id) => {
+    const statMap = Object.fromEntries(
+        team.statistics.map(stat => [stat.name, parseFloat(stat.displayValue)])
+    );
+    const leaderMap = Object.fromEntries(
+        team.leaders.map(leader => [leader.name, leader.displayName])
+    );
+    const record = team.records.find(r => r.name === "overall");
+
+    const formattedTeam = {
+        team_id: id,
+        name: team.team.displayName,
+        linescores: team.linescores, // needs to be updated
+        rebounds: statMap.rebounds,
+        avgRebounds: statMap.avgRebounds,
+        assists: statMap.assists,
+        fieldGoalsAttempted: statMap.fieldGoalsAttempted,
+        fieldGoalsMade: statMap.fieldGoalsMade,
+        fieldGoalPct: statMap.fieldGoalPct,
+        freeThrowPct: statMap.freeThrowPct,
+        freeThrowsAttempted: statMap.freeThrowsAttempted,
+        freeThrowsMade: statMap.freeThrowsMade,
+        points: statMap.points,
+        threePointPct: statMap.threePointPct,
+        threePointFieldGoalsAttempted: statMap.threePointFieldGoalsAttempted,
+        threePointFieldGoalsMade: statMap.threePointFieldGoalsMade,
+        avgPoints: statMap.avgPoints,
+        avgAssists: statMap.avgAssists,
+        threePointFieldGoalPct: statMap.threePointFieldGoalPct,
+        pointsLeader: leaderMap.points,
+        reboundsLeader: leaderMap.rebounds,
+        assistsLeader: leaderMap.assists,
+        record: record.summary
+    };
+    return formattedTeam;
+};
+
 const getTeamIdMap = async () => {
     const teamIdMap = {};
     const teams = await Team.find({ sport: 'basketball' });
@@ -149,7 +186,7 @@ const getTeamIdMap = async () => {
     });
     //console.log(teamIdMap);
     return teamIdMap;
-}
+};
 
 formatGame = (event, teamIdMap) => {
     // Get info about the teams from the event obj
