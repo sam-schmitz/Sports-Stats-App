@@ -44,6 +44,30 @@ function GamePage() {
                         )}
                     </div>
                 </div>
+                <div className='row gx-0'>
+                    <div className='col-sm-6 col-md-4' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {game ? (
+                            <>
+                                <p>Team 1 Stats</p>
+                            </>
+                        ) : (
+                                <>
+                                    <p>Loading...</p>
+                                </>
+                        )}
+                    </div>
+                    <div className='col-sm-5 col-md-4' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {game ? (
+                            <>
+                                <p>Team 2 Stats</p>
+                            </>
+                        ) : (
+                                <>
+                                    <p>Loading...</p>
+                                </>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
