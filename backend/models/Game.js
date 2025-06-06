@@ -35,6 +35,50 @@ const PlayerStatSchema = new mongoose.Schema({
     receiving_yards: Number
 }, { _id: false });  
 
+const TeamStatSchema = new mongoose.Schema({
+    team_id: {
+        type: String,
+        ref: 'Team',
+        required: true
+    },
+    name: String,
+    linescores: [
+        {
+            value: Number,
+            period: String
+        }
+    ],
+    rebounds: Number,
+    avgRebounds: Number,
+    assists: Number,
+    fieldGoalsAttempted: Number,
+    fieldGoalsMade: Number,
+    fieldGoalPct: Number,
+    freeThrowPct: Number,
+    freeThrowsAttempted: Number,
+    freeThrowsMade: Number,
+    points: Number,
+    threePointPct: Number,
+    threePointFieldGoalsAttempted: Number,
+    threePointFieldGoalsMade: Number,
+    avgPoints: Number,
+    avgAssists: Number,
+    threePointFieldGoalPct: Number,
+    pointsLeader: {
+        type: String,
+        ref: 'Player'
+    },
+    reboundsLeader: {
+        type: String,
+        ref: 'Player'
+    },
+    assistsLeader: {
+        type: String,
+        ref: 'Player'
+    },
+    record: String
+}, {_id: false}) ;
+
 const GameSchema = new mongoose.Schema({
     _id: {
         type: String,
@@ -79,7 +123,8 @@ const GameSchema = new mongoose.Schema({
     overtime: String,
     conferenceCompetition: String,
     winner: String,
-    players: [PlayerStatSchema] // Embedded stats per player
+    players: [PlayerStatSchema], // Embedded stats per player
+    teams: [TeamStatSchema]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Game', GameSchema);
