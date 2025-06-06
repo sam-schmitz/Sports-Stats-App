@@ -12,9 +12,11 @@ function TeamStats({ team }) {
     return (
         <>
             <p>{team.name}</p>
+
+            <h5><strong>Team Stats: </strong></h5>
             <p><strong>Points: </strong>{team.points}</p>
             <p><strong>Rebounds: </strong>{team.rebounds}</p>
-            <p><strong>Assists: </strong>{team.avgRebounds}</p>
+            <p><strong>Assists: </strong>{team.assists}</p>
 
             <p><strong>Field Goal %: </strong>{team.fieldGoalPct}%</p>
             <p><strong>Field Goals Made: </strong>{team.fieldGoalsMade}</p>
@@ -32,9 +34,19 @@ function TeamStats({ team }) {
             <p><strong>Average Rebounds: </strong>{team.avgRebounds}</p>
             <p><strong>Average Assists: </strong>{team.avgAssists}</p>
 
+            <h5><strong>Team Leaders: </strong></h5>
             <p><strong>Points Leader: </strong><Link to={`/Sports-Stats-App/players/${team.pointsLeader}`}>{team.pointsLeader}</Link></p>
             <p><strong>Rebounds Leader: </strong><Link to={`/Sports-Stats-App/players/${team.reboundsLeader}`}>{team.reboundsLeader}</Link></p>
             <p><strong>Assists Leader: </strong><Link to={`/Sports-Stats-App/players/${team.assistsLeader}`}>{team.assistsLeader}</Link></p>
+
+            <h5><strong>Scores By Period: </strong></h5>
+            <ul>
+                {team.linescores.map((score, index) => (
+                    <li key={index}>
+                        <p>{score.period}: {score.value}</p>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 }
