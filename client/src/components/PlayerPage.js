@@ -14,6 +14,20 @@ const formatHeight = (inches) => {
     return `${feet}'${remainingInches}"`;
 };
 
+function PlayerStats({ stats }) {
+    const [currentSeasonStats, setCurrentSeasonStats] = useState(stats.find(s => s.season === "2024"));
+    
+    return (
+        <>
+            <h5>Stats for {currentSeasonStats.season}: </h5>
+            <p><strong>Points: </strong>{currentSeasonStats.avgPoints.toFixed(2)}</p>
+            <p><strong>Assists: </strong>{currentSeasonStats.avgAssists.toFixed(2)}</p>
+            <p><strong>Offenseive Rebounds: </strong>{currentSeasonStats.avgOffensiveRebounds.toFixed(2)}</p>
+            <p><strong>Field Goal %: </strong>{currentSeasonStats.fieldGoalPct.toFixed(2)}</p>
+        </>
+    );
+}
+
 function PlayerPage() {
     const name = useParams().name;
     const [player, setPlayer] = useState(null);    
@@ -57,6 +71,19 @@ function PlayerPage() {
                         ) : (
                             <>
                                 <p>Loading Image...</p>
+                            </>
+                        )}
+                    </div>
+                </div>
+                <div className="row gx-0">
+                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {player ? (
+                            <>
+                                <PlayerStats stats={player.seasonStats} />
+                            </>
+                        ) : (
+                            <>
+                                <p>Loading Stats... </p>
                             </>
                         )}
                     </div>
