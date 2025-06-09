@@ -74,7 +74,7 @@ const SeasonStatSchema = new mongoose.Schema({
     pointsPerEstimatedPossessions: Number,
     threePointFieldGoalPct: Number,
     twoPointFieldGoalsMade: Number,
-    twoPointFieldGOalsAttempted: Number,
+    twoPointFieldGoalsAttempted: Number,
     avgTwoPointFieldGoalsMade: Number,
     avgTwoPointFieldGoalsAttempted: Number,
     twoPointFieldGoalPct: Number,
