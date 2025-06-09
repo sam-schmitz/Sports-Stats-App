@@ -25,12 +25,12 @@ const fetchPlayerSeasonStats = async (id, season) => {
 
         const general = data.splits.categories.find(c => c.name === "general").stats;
         const generalMap = Object.fromEntries(
-            general.map(stat => [stat.name, stat.displayValue])
+            general.map(stat => [stat.name, stat.value])
         );
 
         const offensive = data.splits.categories.find(c => c.name === "offensive").stats;
         const offensiveMap = Object.fromEntries(
-            offensive.map(stat => [stat.name, stat.displayValue])
+            offensive.map(stat => [stat.name, stat.value])
         );
 
         // format the stats into the propper schema structure
@@ -125,7 +125,7 @@ const fetchPlayerSeasonStats = async (id, season) => {
 
         return formattedStats;
     } catch (err) {
-        console.error(`Error fetching player id: ${id}'s stats for season: ${season}: err.message`);
+        console.error(`Error fetching player id: ${id}'s stats for season: ${season}:`, err.message);
     }
 };
 
@@ -142,10 +142,10 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
             const season = '2024'
 
             // fetch career stats
-            const careerStats = await fetchPlayerCareerStats(p._id);
+            //const careerStats = await fetchPlayerCareerStats(p._id);
 
             // fetch season stats
-            const seasonStats = await fetchPlayerSeasonStats(p._id, season);
+            const seasonStats = await fetchPlayerSeasonStats(p.id, season);
 
             // format data to mongo Player model
             formattedPlayers.push({
@@ -165,8 +165,9 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
                     ? p.contracts[0].salary
                     : null,
                 age: p.age,
-                careerStats: careerStats,
-                seasonStats: seasonStats
+                //careerStats: careerStats,
+                seasonStats: [seasonStats]
+
             });
         }
 
@@ -191,7 +192,7 @@ const seed = async () => {
             if (!Array.isArray(players)) {
                 console.warn(`No players found for team ${teamId}`);
                 continue;
-            }
+            }            
             
             await Player.insertMany(players);
 
@@ -199,6 +200,11 @@ const seed = async () => {
         }
 
         console.log('All NBA players seeded successfully. ');
+
+        // Display 5 sample players
+        const players = await Player.find().limit(5);
+        console.log('Sample games: ', players);        
+
         mongoose.disconnect();
     } catch (err) {
         console.error('Error seeding players:', err.message);

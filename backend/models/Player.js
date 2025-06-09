@@ -92,7 +92,7 @@ const SeasonStatSchema = new mongoose.Schema({
     avg48Turnovers: Number,
     p40: Number,
     a40: Number    
-}, { _id = false });
+}, { _id: false });
 
 const PlayerSchema = new mongoose.Schema({
     _id: {
@@ -143,7 +143,8 @@ const PlayerSchema = new mongoose.Schema({
     },
     salary: {
         type: String
-    }
+    },
+    seasonStats: [SeasonStatSchema]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Player', PlayerSchema);
