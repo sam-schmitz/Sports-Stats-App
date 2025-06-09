@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 
 //subschema for season stats
 const SeasonStatSchema = new mongoose.Schema({
+    season: {
+        type: String
+    },
     blocks: Number,
     defensiveRebounds: Number,
     steals: Number,

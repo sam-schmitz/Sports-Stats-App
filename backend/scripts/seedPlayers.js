@@ -35,6 +35,7 @@ const fetchPlayerSeasonStats = async (id, season) => {
 
         // format the stats into the propper schema structure
         const formattedStats = {
+            season: season,
             blocks: defensiveMap.blocks,
             defensiveRebounds: defensiveMap.defensiveRebounds,
             steals: defensiveMap.steals,
@@ -203,7 +204,8 @@ const seed = async () => {
 
         // Display 5 sample players
         const players = await Player.find().limit(5);
-        console.log('Sample games: ', players);        
+        console.log('Sample games: ', players);  
+        //console.log(players[1].seasonStats[0]);
 
         mongoose.disconnect();
     } catch (err) {
