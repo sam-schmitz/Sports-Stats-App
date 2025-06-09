@@ -16,8 +16,26 @@ const fetchPlayerSeasonStats = async (id, season) => {
         const url = `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/athletes/${id}/statistics?season=${season}&seasonType=2`;
         const { data } = await axios.get(url);
 
-        formattedStats = {
+        // Parse data into maps that pair stat name with it's value
 
+        const defensive = data.splits.categories.find(c => c.name === "defensive").stats;
+        const defensiveMap = Object.fromEntries(
+            defensive.map(stat => [stat.name, stat.displayValue])
+        );
+
+        const general = data.splits.categories.find(c => c.name === "general").stats;
+        const generalMap = Object.fromEntries(
+            general.map(stat => [stat.name, stat.displayValue])
+        );
+
+        const offensive = data.splits.categories.find(c => c.name === "offensive").stats;
+        const offensiveMap = Object.fromEntries(
+            offensive.map(stat => [stat.name, stat.displayValue])
+        );
+
+        // format the stats into the propper schema structure
+        formattedStats = {
+            
         };
 
         return formattedStats;
