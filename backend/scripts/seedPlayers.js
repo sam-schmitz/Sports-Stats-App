@@ -8,6 +8,24 @@ const Player = require('../models/Player');
 const Team = require('../models/Team');
 require('dotenv').config();
 
+const fetchPlayerSeasonStats = async (id, season) => {
+    // id  = number
+    // season = YYYY
+
+    try {
+        const url = `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/athletes/${id}/statistics?season=${season}&seasonType=2`;
+        const { data } = await axios.get(url);
+
+        formattedStats = {
+
+        };
+
+        return formattedStats;
+    } catch (err) {
+        console.error(`Error fetching player id: ${id}'s stats for season: ${season}: err.message`);
+    }
+};
+
 const fetchPlayersForTeam = async (teamId, teamName, espnId) => { 
     try {
         const url = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/${espnId}/roster`;        
@@ -18,11 +36,13 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
 
         for (const p of players) {    
 
+            const season = '2024'
+
             // fetch career stats
-            const careerStats = fetchPlayerCareerStats();
+            const careerStats = await fetchPlayerCareerStats(p._id);
 
             // fetch season stats
-            const seasonStats = fetchPlayerSeasonStats();
+            const seasonStats = await fetchPlayerSeasonStats(p._id, season);
 
             // format data to mongo Player model
             formattedPlayers.push({
