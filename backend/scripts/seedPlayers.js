@@ -34,7 +34,7 @@ const fetchPlayerCareerStats = async (id) => {
         return formattedStats;
 
     } catch (err) {
-        console.error(`Error fetching player id: ${id}'s stats for season: ${season}:`, err.message);
+        console.error(`Error fetching player id: ${id}'s stats for career:`, err.message);
     }
 }
 
@@ -64,7 +64,7 @@ const fetchPlayerSeasonStats = async (id, season) => {
         );
 
         // format the stats into the propper schema structure
-        const formattedStats = formattedStats(season, defensiveMap, generalMap, offensiveMap);
+        const formattedStats = formattSeasonStats(season, defensiveMap, generalMap, offensiveMap);
 
         return formattedStats;
     } catch (err) {
@@ -174,15 +174,19 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
 
         const formattedPlayers = [];
 
-        for (const p of players) {    
+        for (const p of players) {   
 
-            const season = '2024'
+            // fetch a player's season and career stats
 
-            // fetch career stats
-            //const careerStats = await fetchPlayerCareerStats(p._id);
+            playerSeasonStats = [];
 
-            // fetch season stats
-            const seasonStats = await fetchPlayerSeasonStats(p.id, season);
+            // Add career stats            
+            playerSeasonStats.push(await fetchPlayerCareerStats(p.id));
+
+            // Add season stats from 2019 season to 2024 season
+            for (let year = 2019; year <= 2024; year++) {                
+                playerSeasonStats.push(await fetchPlayerSeasonStats(p.id, year.toString()));
+            }           
 
             // format data to mongo Player model
             formattedPlayers.push({
@@ -203,7 +207,7 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
                     : null,
                 age: p.age,
                 //careerStats: careerStats,
-                seasonStats: [seasonStats]
+                seasonStats: playerSeasonStats
 
             });
         }
@@ -242,6 +246,7 @@ const seed = async () => {
         const players = await Player.find().limit(5);
         console.log('Sample games: ', players);  
         //console.log(players[1].seasonStats[0]);
+        //console.log(players[1].seasonStats[1]);
 
         mongoose.disconnect();
     } catch (err) {
