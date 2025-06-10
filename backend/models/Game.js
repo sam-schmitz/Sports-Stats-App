@@ -17,22 +17,26 @@ const PlayerStatSchema = new mongoose.Schema({
         required: true
     },
     name: String,
-    position: String,
-    minutes: Number,
     points: Number,
-    goals: Number,
+    rebounds: Number,
+    defensiveRebounds: Number,
+    offensiveRebounds: Number,
     assists: Number,
-    rebounds: Number,
-    steals: Number,
-    rebounds: Number,
     blocks: Number,
+    steals: Number,
+    minutes: Number,
+    fouls: Number,
+    fieldGoals: Number,
+    fieldGoalsAttempted: Number,
+    fieldGoalsMade: Number,
+    freeThrows: Number,
+    freeThrowPct: Number,
+    freeThrowsAttempted: Number,
+    freeThrowsMade: Number,
     turnovers: Number,
-    yellow_cards: Number,
-    red_cards: Number,
-    saves: Number,
-    passing_yards: Number,
-    rushing_yards: Number,
-    receiving_yards: Number
+    threePointPct: Number,
+    threePointFieldGoalsAttempted: Number,
+    threePointFieldGoalsMade: Number
 }, { _id: false });  
 
 const TeamStatSchema = new mongoose.Schema({
