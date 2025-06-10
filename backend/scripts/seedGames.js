@@ -111,7 +111,10 @@ const fetchGame = async (url, d, teamIdMap) => {
         //console.log("Home Team: ", home.id, "homeTeamId", homeTeamId);
         
         const homeTeamStatSchema = getTeamStats(home, teamIdMap[home.id]);
-        const awayTeamStatSchema = getTeamStats(away, teamIdMap[away.id]);        
+        const awayTeamStatSchema = getTeamStats(away, teamIdMap[away.id]);    
+
+        // Get the player stats for the game
+        const playerStats = await getPlayerStats(event.id);
 
         const formattedGame = {
             _id: event.id,
@@ -182,6 +185,53 @@ getTeamStats = (team, id) => {
     return formattedTeam;
 };
 
+const getPlayerStats = async () => {
+    // get the player stats from the api
+    const url = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`;
+    const { data } = await axios.get(url);
+
+    //
+    for (const team of data.boxscore.players) {
+        const team_id = team.id;
+
+        for (const athlete of team.statistics[0].athletes) {
+            const [fieldGoalsMade, fieldGoalsAttempted] = stats[1].split('-').map(Number);
+            const fieldGoals = fieldGoalsMade / fieldGoalsAttempted;
+
+            const [threePointsMade, threePointsAttempted] = stats[2].split('-').map(Number);
+            const threePoints = threePointsMade / threePointsAttempted;
+
+            const [freeThrowsMade, freeThrowsAttempeted] = stats[3].split('-').map(Number);
+            const freeThrows = freeThrowsMade / freeThrowsAttempeted;
+
+            const formattedPlayer = {
+                player_id: athlete.id,
+                team_id: team_id,
+                name: athlete.displayName,
+                points: stats[13],
+                rebounds: stats[6],
+                defensiveRebounds: stats[5],
+                offensiveRebounds: stats[4],
+                assists: stats[7],
+                blocks: stats[9],
+                steals: stats[8],
+                minutes: stats[0],
+                fouls: stats[11],
+                fieldGoals: fieldGoals,
+                fieldGoalsAttempted: fieldGoalsAttempted,
+                fieldGoalsMade: fieldGoalsMade,
+                freeThrows: freeThrows,               
+                freeThrowsAttempted: freeThrowsAttempeted,
+                freeThrowsMade: freeThrowsMade,
+                turnovers: stats[10],
+                threePoints: threePoints,
+                threePointFieldGoalsAttempted: threePointsAttempted,
+                threePointFieldGoalsMade: threePointsMade
+            }
+        }
+    }
+}
+
 const getTeamIdMap = async () => {
     const teamIdMap = {};
     const teams = await Team.find({ sport: 'basketball' });
@@ -192,47 +242,6 @@ const getTeamIdMap = async () => {
     });
     //console.log(teamIdMap);
     return teamIdMap;
-};
-
-formatGame = (event, teamIdMap) => {
-    // Get info about the teams from the event obj
-    //console.log(event.strHomeTeam?.toLowerCase());
-    const homeTeamID = teamIdMap[event.strHomeTeam?.toLowerCase()];
-    const awayTeamID = teamIdMap[event.strAwayTeam?.toLowerCase()];
-    if (!homeTeamID || !awayTeamID) return null;
-    const homeTeam = event.strHomeTeam?.toLowerCase();
-    const awayTeam = event.strAwayTeam?.toLowerCase();
-
-    //extract game_type
-    let gameType = 'Regular Season';
-    if (event.strDescriptionEN?.toLowerCase().includes('playoff')) {
-        gameType = 'Playoffs';
-    }
-
-    //Infer overtime (basic game)
-    let overtime = null;
-    const statusText = event.strDescriptionEN || event.strStatus || '';
-    const otMatch = statusText.match(/(\d?OT)/i);
-    if (otMatch) {
-        overtime = otMatch[1].toUpperCase();
-    }
-
-    return {
-        _id: event.idEvent,
-        sport: 'basketball',
-        date: event.dateEvent ? new Date(event.dateEvent) : null,
-        home_team_id: homeTeamID,
-        away_team_id: awayTeamID,
-        home_team_name: homeTeam,
-        away_team_name: awayTeam,
-        home_score: event.intHomeScore != null ? parseInt(event.intHomeScore) : null,
-        away_score: event.intAwayScore != null ? parseInt(event.intAwayScore) : null,
-        venue: event.strVenue,
-        status: event.strStatus,
-        season: SEASON_YEAR,
-        game_type: gameType,
-        overtime: overtime
-    };
 };
 
 const seed = async () => {

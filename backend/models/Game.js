@@ -29,12 +29,11 @@ const PlayerStatSchema = new mongoose.Schema({
     fieldGoals: Number,
     fieldGoalsAttempted: Number,
     fieldGoalsMade: Number,
-    freeThrows: Number,
-    freeThrowPct: Number,
+    freeThrows: Number,    
     freeThrowsAttempted: Number,
     freeThrowsMade: Number,
     turnovers: Number,
-    threePointPct: Number,
+    threePoints: Number,
     threePointFieldGoalsAttempted: Number,
     threePointFieldGoalsMade: Number
 }, { _id: false });  
