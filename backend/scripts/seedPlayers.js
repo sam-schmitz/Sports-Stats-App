@@ -8,6 +8,36 @@ const Player = require('../models/Player');
 const Team = require('../models/Team');
 require('dotenv').config();
 
+const fetchPlayerCareerStats = async (id) => {
+    try {
+        const url = `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/athletes/${id}/statistics`;
+        const { data } = await axios.get(url);
+
+        // Parse data into maps that pair stat name with it's value
+        const defensive = data.splits.categories.find(c => c.name === "defensive").stats;
+        const defensiveMap = Object.fromEntries(
+            defensive.map(stat => [stat.name, stat.displayValue])
+        );
+
+        const general = data.splits.categories.find(c => c.name === "general").stats;
+        const generalMap = Object.fromEntries(
+            general.map(stat => [stat.name, stat.value])
+        );
+
+        const offensive = data.splits.categories.find(c => c.name === "offensive").stats;
+        const offensiveMap = Object.fromEntries(
+            offensive.map(stat => [stat.name, stat.value])
+        );
+
+        const formattedStats = formattSeasonStats('career', defensiveMap, generalMap, offensiveMap);
+
+        return formattedStats;
+
+    } catch (err) {
+        console.error(`Error fetching player id: ${id}'s stats for season: ${season}:`, err.message);
+    }
+}
+
 const fetchPlayerSeasonStats = async (id, season) => {
     // id  = number
     // season = YYYY
