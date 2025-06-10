@@ -133,9 +133,11 @@ const fetchGame = async (url, d, teamIdMap) => {
             overtime: null,
             conferenceCompetition: event.competitions[0].conferenceCompetition,
             winner: winner,
-            teams: [homeTeamStatSchema, awayTeamStatSchema]
+            teams: [homeTeamStatSchema, awayTeamStatSchema],
+            players: playerStats
         };
         //console.log(formattedGame);
+        //console.log(`Game: ${formattedGame._id} formatted`);
         formattedGames.push(formattedGame);
     }
     
@@ -185,50 +187,76 @@ getTeamStats = (team, id) => {
     return formattedTeam;
 };
 
-const getPlayerStats = async () => {
-    // get the player stats from the api
-    const url = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`;
-    const { data } = await axios.get(url);
+const getPlayerStats = async (gameId) => {
+    try {
+        // get the player stats from the api
+        const url = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=${gameId}`;
+        const { data } = await axios.get(url);
 
-    //
-    for (const team of data.boxscore.players) {
-        const team_id = team.id;
+        // gather the player stats data
+        const formattedPlayers = [];
 
-        for (const athlete of team.statistics[0].athletes) {
-            const [fieldGoalsMade, fieldGoalsAttempted] = stats[1].split('-').map(Number);
-            const fieldGoals = fieldGoalsMade / fieldGoalsAttempted;
+        for (const team of data.boxscore.players) {
+            const teamId = team.team.id;
 
-            const [threePointsMade, threePointsAttempted] = stats[2].split('-').map(Number);
-            const threePoints = threePointsMade / threePointsAttempted;
+            for (const athlete of team.statistics[0].athletes) {
+                //console.log(athlete.stats);
 
-            const [freeThrowsMade, freeThrowsAttempeted] = stats[3].split('-').map(Number);
-            const freeThrows = freeThrowsMade / freeThrowsAttempeted;
+                if (athlete.stats.length === 0) {
+                    // athelte didn't play - no stats                    
+                    //console.warn(`No stats found for: ${athlete.athlete.id}`);
+                    continue;
+                }
 
-            const formattedPlayer = {
-                player_id: athlete.id,
-                team_id: team_id,
-                name: athlete.displayName,
-                points: stats[13],
-                rebounds: stats[6],
-                defensiveRebounds: stats[5],
-                offensiveRebounds: stats[4],
-                assists: stats[7],
-                blocks: stats[9],
-                steals: stats[8],
-                minutes: stats[0],
-                fouls: stats[11],
-                fieldGoals: fieldGoals,
-                fieldGoalsAttempted: fieldGoalsAttempted,
-                fieldGoalsMade: fieldGoalsMade,
-                freeThrows: freeThrows,               
-                freeThrowsAttempted: freeThrowsAttempeted,
-                freeThrowsMade: freeThrowsMade,
-                turnovers: stats[10],
-                threePoints: threePoints,
-                threePointFieldGoalsAttempted: threePointsAttempted,
-                threePointFieldGoalsMade: threePointsMade
+                const [fieldGoalsMade, fieldGoalsAttempted] = athlete.stats[1].split('-').map(Number);
+                let fieldGoals = 0;
+                if (fieldGoalsMade !== 0) {
+                    fieldGoals = fieldGoalsMade / fieldGoalsAttempted;
+                }
+                
+                const [threePointsMade, threePointsAttempted] = athlete.stats[2].split('-').map(Number);
+                let threePoints = 0;
+                if (threePointsMade !== 0) {
+                    threePoints = threePointsMade / threePointsAttempted;
+                }                
+
+                const [freeThrowsMade, freeThrowsAttempeted] = athlete.stats[3].split('-').map(Number);
+                let freeThrows = 0;
+                if (freeThrowsMade !== 0) {
+                    freeThrows = freeThrowsMade / freeThrowsAttempeted;
+                }                
+
+                const formattedPlayer = {
+                    player_id: athlete.athlete.id,
+                    team_id: teamId,
+                    name: athlete.athlete.displayName,
+                    points: athlete.stats[13],
+                    rebounds: athlete.stats[6],
+                    defensiveRebounds: athlete.stats[5],
+                    offensiveRebounds: athlete.stats[4],
+                    assists: athlete.stats[7],
+                    blocks: athlete.stats[9],
+                    steals: athlete.stats[8],
+                    minutes: athlete.stats[0],
+                    fouls: athlete.stats[11],
+                    fieldGoals: fieldGoals,
+                    fieldGoalsAttempted: fieldGoalsAttempted,
+                    fieldGoalsMade: fieldGoalsMade,
+                    freeThrows: freeThrows,
+                    freeThrowsAttempted: freeThrowsAttempeted,
+                    freeThrowsMade: freeThrowsMade,
+                    turnovers: athlete.stats[10],
+                    threePoints: threePoints,
+                    threePointFieldGoalsAttempted: threePointsAttempted,
+                    threePointFieldGoalsMade: threePointsMade
+                }                
+                formattedPlayers.push(formattedPlayer);
             }
         }
+
+        return formattedPlayers;
+    } catch (err) {
+        console.error("Error fetching player stats: ", err.message);
     }
 }
 
@@ -254,7 +282,7 @@ const seed = async () => {
         const end = seasonDates[SEASON_YEAR].end;
 
         const startDate = new Date(start);
-        const endDate = new Date(end);        //change back to end
+        const endDate = new Date(end);        
         const formattedGames = await fetchGames(startDate, endDate);                
         console.log('All games fetched');
 
@@ -265,13 +293,14 @@ const seed = async () => {
         await Game.insertMany(formattedGames)
             .then(() => console.log('Games Inserted sucessfully'))
             .catch(err => {
-                console.error('Insert error: ', err);
+                console.error('Insert error: ', err.message);
             });
         
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
 
         const games = await Game.find().limit(5);
-        console.log('Sample games: ', games);        
+        console.log('Sample games: ', games); 
+        console.log(games[0].players[0]);
 
         mongoose.disconnect();
     } catch (err) {
