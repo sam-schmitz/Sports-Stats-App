@@ -15,15 +15,43 @@ const formatHeight = (inches) => {
 };
 
 function PlayerStats({ stats }) {
-    const [currentSeasonStats, setCurrentSeasonStats] = useState(stats.find(s => s.season === "2024"));
+    const [currentSeasonStats, setCurrentSeasonStats] = useState(stats.find(s => s.season === "career"));
+    const seasons = ['career', '2019', '2020', '2021', '2022', '2023', '2024'];
+    console.log('stats 0: ', stats[0]);
+    console.log('stats 1: ', stats[1])
     
     return (
         <>
-            <h5>Stats for {currentSeasonStats.season}: </h5>
-            <p><strong>Points: </strong>{currentSeasonStats.avgPoints.toFixed(2)}</p>
-            <p><strong>Assists: </strong>{currentSeasonStats.avgAssists.toFixed(2)}</p>
-            <p><strong>Offenseive Rebounds: </strong>{currentSeasonStats.avgOffensiveRebounds.toFixed(2)}</p>
-            <p><strong>Field Goal %: </strong>{currentSeasonStats.fieldGoalPct.toFixed(2)}</p>
+            <div className="container-fluid">
+                <div className="row align-items-center">
+                    <div className="col-auto">
+                        <h5>Player Stats: </h5>
+                    </div>
+                    <div className="col-auto">
+                        <h5>Season: </h5>
+                        <select
+                            className="form-select"
+                            value={currentSeasonStats.season}
+                            onChange={(e) => setCurrentSeasonStats(stats.find(s => s.season === e.target.value))}
+                        >
+                            {seasons.map((season) => (
+                                <option key={season} value={season}>
+                                    {season === 'career'
+                                        ? 'Career'
+                                        : `${season}-${parseInt(season) + 1}`
+                                    }
+                                </option>
+                            )) }
+                        </select>
+                    </div>
+                    <div>
+                        <p><strong>Points: </strong>{currentSeasonStats.avgPoints.toFixed(2)}</p>
+                        <p><strong>Assists: </strong>{currentSeasonStats.avgAssists.toFixed(2)}</p>
+                        <p><strong>Offenseive Rebounds: </strong>{currentSeasonStats.avgOffensiveRebounds.toFixed(2)}</p>
+                        <p><strong>Field Goal %: </strong>{currentSeasonStats.fieldGoalPct.toFixed(2)}</p>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
