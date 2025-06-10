@@ -38,40 +38,6 @@ const fetchPlayerCareerStats = async (id) => {
     }
 }
 
-const fetchPlayerSeasonStats = async (id, season) => {
-    // id  = number
-    // season = YYYY
-
-    try {
-        const url = `https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/athletes/${id}/statistics?season=${season}&seasonType=2`;
-        const { data } = await axios.get(url);
-
-        // Parse data into maps that pair stat name with it's value
-
-        const defensive = data.splits.categories.find(c => c.name === "defensive").stats;
-        const defensiveMap = Object.fromEntries(
-            defensive.map(stat => [stat.name, stat.displayValue])
-        );
-
-        const general = data.splits.categories.find(c => c.name === "general").stats;
-        const generalMap = Object.fromEntries(
-            general.map(stat => [stat.name, stat.value])
-        );
-
-        const offensive = data.splits.categories.find(c => c.name === "offensive").stats;
-        const offensiveMap = Object.fromEntries(
-            offensive.map(stat => [stat.name, stat.value])
-        );
-
-        // format the stats into the propper schema structure
-        const formattedStats = formattSeasonStats(season, defensiveMap, generalMap, offensiveMap);
-
-        return formattedStats;
-    } catch (err) {
-        console.error(`Error fetching player id: ${id}'s stats for season: ${season}:`, err.message);
-    }
-};
-
 const formattSeasonStats = (season, defensiveMap, generalMap, offensiveMap) => {
     const formattedStats = {
         season: season,
@@ -182,11 +148,6 @@ const fetchPlayersForTeam = async (teamId, teamName, espnId) => {
 
             // Add career stats            
             playerSeasonStats.push(await fetchPlayerCareerStats(p.id));
-
-            // Add season stats from 2019 season to 2024 season
-            for (let year = 2019; year <= 2024; year++) {                
-                playerSeasonStats.push(await fetchPlayerSeasonStats(p.id, year.toString()));
-            }           
 
             // format data to mongo Player model
             formattedPlayers.push({
