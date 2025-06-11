@@ -114,10 +114,36 @@ function PlayerStats ({ players }) {
                 </div>
                 <div className='row'>
                     <div className='col-12 col-sm-6 col-md-6 col-lg-4 mb-3'>                        
-                        <p><strong>Points: </strong>{currentPlayer.points}</p>
+                        <p><strong>Minutes: </strong>{currentPlayer.minutes}</p>
+                        <p><strong>Points: </strong>{currentPlayer.points}</p>                        
                         <p><strong>Assists: </strong>{currentPlayer.assists}</p>
+                    </div>    
+
+                    <div className='col-12 col-sm-6 col-md-6 col-lg-4 mb-3'>
+                        <p><strong>Field Goal Pct: </strong>{(currentPlayer.fieldGoals * 100).toFixed(1)}%</p>
+                        <p><strong>Field Goals Made: </strong>{currentPlayer.fieldGoalsMade}</p>
+                        <p><strong>Field Goals Attempted: </strong>{currentPlayer.fieldGoalsAttempted}</p>
+                    </div>
+
+                    <div className='col-12 col-sm-6 col-md-6 col-lg-4 mb-3'>
+                        <p><strong>Three Point Pct: </strong>{(currentPlayer.threePoints * 100).toFixed(1)}%</p>
+                        <p><strong>Three Points Made: </strong>{currentPlayer.threePointFieldGoalsMade}</p>
+                        <p><strong>Three Points Attempted: </strong>{currentPlayer.threePointFieldGoalsAttempted}</p>
+                    </div>
+
+                    <div className='col-12 col-sm-6 col-md-6 col-lg-4 mb-3'>                        
+                        <p><strong>Free Throw Pct: </strong>{(currentPlayer.freeThrows * 100).toFixed(1)}%</p>
+                        <p><strong>Free Throws Made: </strong>{currentPlayer.freeThrowsMade}</p>
+                        <p><strong>Free Throws Attempted: </strong>{currentPlayer.freeThrowsAttempted}</p>
+                    </div>
+
+                    <div className='col-12 col-sm-6 col-md-6 col-lg-4 mb-3'>   
                         <p><strong>Rebounds: </strong>{currentPlayer.rebounds}</p>
-                    </div>                
+                        <p><strong>Offensive Rebounds: </strong>{currentPlayer.offensiveRebounds}</p>
+                        <p><strong>Defensive Rebounds: </strong>{currentPlayer.defensiveRebounds}</p>
+                    </div>
+
+
                 </div>
             </div>  
         </>
