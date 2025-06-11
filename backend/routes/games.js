@@ -8,7 +8,7 @@ const Game = require('../models/Game');
 // GET /games - get all games
 router.get('/', async (req, res) => {
     try {
-        const games = await Game.find();
+        const games = await Game.find().limit(100);
         res.json(games);
     } catch (err) {
         console.error('Error fetching games', err);
