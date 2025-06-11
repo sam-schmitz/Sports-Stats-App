@@ -18,7 +18,7 @@ const seasonDates = {
     },
     "2023-2024": {
         start: "2023-10-24",
-        end: "2023-04-14"
+        end: "2024-04-14"
     },
     "2022-2023": {
         start: "2022-10-18",
@@ -39,6 +39,7 @@ const seasonDates = {
 }
 
 const fetchGames = async (startDate, endDate) => {
+    //console.log(`Start: ${startDate}, End: ${endDate}`);
     const baseUrl = `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=`;  //Add a date on the end (ex: YYYYMMDD)
 
     const teamIdMap = await getTeamIdMap();    
@@ -206,6 +207,8 @@ const getPlayerStats = async (gameId) => {
                     // athelte didn't play - no stats                    
                     //console.warn(`No stats found for: ${athlete.athlete.id}`);
                     continue;
+                } else if (athlete.stats[0] === '-') {
+                    continue;
                 }
 
                 const [fieldGoalsMade, fieldGoalsAttempted] = athlete.stats[1].split('-').map(Number);
@@ -298,7 +301,7 @@ const seed = async () => {
         
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
 
-        const games = await Game.find().limit(5);
+        const games = await Game.find({sport: 'basketball', season: SEASON_YEAR}).limit(5);
         console.log('Sample games: ', games); 
         console.log(games[0].players[0]);
 
