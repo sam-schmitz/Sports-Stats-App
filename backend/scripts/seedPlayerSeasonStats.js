@@ -10,11 +10,11 @@ require('dotenv').config();
 const seasons = ['2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', '2024-2025'];
 
 
-const seed = () => {
+const seed = async () => {
     await mongoose.connect(process.env.MONGO_URI);
 
     // get a list of all players in the database
-    const players = await Player.find({ sport: basketball });
+    const players = await Player.find({ sport: 'basketball' });
 
     // for each one go through each season
     for (const player of players) {
@@ -22,7 +22,7 @@ const seed = () => {
         // for each season find every game played by the player
         for (const season of seasons) {
             const games = await Game.find({
-                sport: basketball,
+                sport: 'basketball',
                 season: season,
                 'players': {
                     $elemMatch: {
@@ -56,7 +56,8 @@ const seed = () => {
 
             // use each game to calculate total season stats
             for (const game of games) {
-                const stat = game.player_stats.find(ps => ps.player_id === player._id);
+                //console.log(game);
+                const stat = game.players.find(ps => ps.player_id === player._id);
 
                 SeasonStats.games += 1;
                 SeasonStats.points += stat.points;
@@ -73,7 +74,7 @@ const seed = () => {
                 SeasonStats.steals += stat.steals;
                 SeasonStats.blocks += stat.blocks;
                 SeasonStats.turnovers += stat.turnovers;
-                seasonStats.fouls += stat.fouls;
+                SeasonStats.fouls += stat.fouls;
                 // Add triple double and double double
             }
 
@@ -109,6 +110,7 @@ const seed = () => {
             player.seasonStats.push(SeasonStats);
         }
 
+        //console.log(player.seasonStats);
         await player.save();
     }
     
