@@ -125,6 +125,8 @@ function PlayerStats ({ players }) {
 }
 
 function GamePage() {
+
+    // -- Gather Game Information from the API --
     const id = useParams().id;
     const [game, setGame] = useState(null);
 
@@ -136,6 +138,9 @@ function GamePage() {
             .then(res => setGame(res.data))
             .catch(err => console.error('Error fetching game:', err));        
     }, [id])
+
+    // -- Stats displaying info --
+    const [activeTab, setActiveTab] = useState('team');
 
     return (
         <div className="Game Page">
@@ -160,25 +165,38 @@ function GamePage() {
                         )}
                     </div>
                 </div>
+                <ul className="nav nav-tabs mb-3">
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${activeTab === 'team' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('team') }
+                        >   
+                            Team Stats
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${activeTab === 'player' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('player') }
+                        >
+                            Player Stats
+                        </button>
+                    </li>
+                </ul>                
                 <div className='row gx-0'>
                     <div className='col-12' style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {game ? (
-                            <TeamStats teams={game.teams } />
+                                activeTab === 'team' ? (
+                                <TeamStats teams={game.teams} />
+                            ) : (
+                                <PlayerStats players={game.players} />
+                            )                                                        
                         ) : (
                             <>
-                                <p>Loading...</p>
+                                <p>Loading Stats...</p>
                             </>
                         )}
-                    </div>                    
-                    <div className='col-12' style={{ marginLeft: '5px', textAlign: 'left' }} >
-                        {game ? (
-                            <PlayerStats players={game.players} />
-                        ) : (
-                            <>
-                                <p>Loading...</p>
-                            </>
-                        )}
-                    </div> 
+                    </div>                                       
                 </div>
             </div>
         </div>
