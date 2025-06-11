@@ -73,6 +73,47 @@ function TeamStats({ teams }) {
     );
 }
 
+function PlayerStats ({ players }) {
+    const [currentPlayer, setCurrentPlayer] = useState(players[0]);
+
+    const playerNames = [];
+    players.forEach(player => {
+        playerNames.push(player.name);
+    });
+
+    return (
+        <>
+            <div className="container-fluid">
+                <div className="row align-items-center">
+                    <div className="col-auto">
+                        <h5>Player Stats: </h5>
+                    </div>
+                    <div className="col-auto">
+                        <h5>Players: </h5>
+                        <select
+                            className="form-select"
+                            value={currentPlayer.name}
+                            onChange={(e) => setCurrentPlayer(players.find(p => p.name === e.target.value))}
+                        >
+                            {playerNames.map((player) => (
+                                <option key={player} value={player}>
+                                    {player}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <p>{currentPlayer.name}</p>
+                        <p><strong>Points: </strong>{currentPlayer.points}</p>
+                        <p><strong>Assists: </strong>{currentPlayer.assists}</p>
+                        <p><strong>Rebounds: </strong>{currentPlayer.rebounds}</p>
+                    </div>
+                </div>
+            </div>  
+        </>
+    );
+}
+
 function GamePage() {
     const id = useParams().id;
     const [game, setGame] = useState(null);
@@ -119,6 +160,15 @@ function GamePage() {
                             </>
                         )}
                     </div>                    
+                    <div className='col-auto' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {game ? (
+                            <PlayerStats players={game.players} />
+                        ) : (
+                            <>
+                                <p>Loading...</p>
+                            </>
+                        )}
+                    </div> 
                 </div>
             </div>
         </div>
