@@ -33,7 +33,7 @@ const seed = async () => {
 
             // Create a black SeasonStatsSchema to keep track of season totals
             let SeasonStats = {
-                season: season,
+                season: season.split('-')[0],
                 games: 0,
                 points: 0,
                 assists: 0,
@@ -50,6 +50,7 @@ const seed = async () => {
                 blocks: 0,
                 turnovers: 0,
                 fouls: 0,
+                minutes: 0,
                 doubleDouble: 0,
                 tripleDouble: 0
             };
@@ -69,12 +70,13 @@ const seed = async () => {
                 SeasonStats.freeThrowsMade += stat.freeThrowsMade;
                 SeasonStats.freeThrowsAttempted += stat.freeThrowsAttempted;
                 SeasonStats.rebounds += stat.rebounds;
-                SeasonStats.offensiveRebounds += stat.offensiveRebound;
+                SeasonStats.offensiveRebounds += stat.offensiveRebounds;
                 SeasonStats.defensiveRebounds += stat.defensiveRebounds;
                 SeasonStats.steals += stat.steals;
                 SeasonStats.blocks += stat.blocks;
                 SeasonStats.turnovers += stat.turnovers;
                 SeasonStats.fouls += stat.fouls;
+                SeasonStats.minutes += stat.minutes
                 // Add triple double and double double
             }
 
@@ -89,12 +91,35 @@ const seed = async () => {
                 SeasonStats.avgTurnovers = SeasonStats.turnovers / SeasonStats.games;
                 SeasonStats.avgFouls = SeasonStats.fouls / SeasonStats.games;
                 SeasonStats.avgMinutes = SeasonStats.minutes / SeasonStats.games;
+
                 SeasonStats.avgFieldGoalsMade = SeasonStats.fieldGoalsMade / SeasonStats.games;
                 SeasonStats.avgFieldGoalsAttempted = SeasonStats.fieldGoalsAttempted / SeasonStats.games;
+                if (SeasonStats.fieldGoalsMade > 0) {
+                    SeasonStats.fieldGoalPct = SeasonStats.fieldGoalsMade / SeasonStats.fieldGoalsAttempted;
+                } else {
+                    SeasonStats.fieldGoalPct = 0;
+                }
+                
+
                 SeasonStats.avgThreePointsMade = SeasonStats.threePointsMade / SeasonStats.games;
                 SeasonStats.avgThreePointsAttempted = SeasonStats.threePointsAttempted / SeasonStats.games;
+                if (SeasonStats.threePointsMade > 0) {
+                    SeasonStats.threePointsPct = SeasonStats.threePointsMade / SeasonStats.threePointsAttempted;
+                } else {
+                    SeasonStats.threePointsPct = 0;
+                }
+                
+
                 SeasonStats.avgFreeThrowsMade = SeasonStats.freeThrowsMade / SeasonStats.games;
                 SeasonStats.avgFreeThrowsAttempted = SeasonStats.freeThrowsAttempted / SeasonStats.games;
+                if (SeasonStats.freeThrowsMade > 0) {
+                    SeasonStats.freeThrowPct = SeasonStats.freeThrowsMade / SeasonStats.freeThrowsAttempted;
+                } else {
+                    SeasonStats.freeThrowPct = 0;
+                }
+                
+
+                SeasonStats.avgPoints = SeasonStats.points / SeasonStats.games;
                 // Assist turnover ratio
                 // Steal Foul Ratio
                 // block foul Ratio
@@ -104,13 +129,37 @@ const seed = async () => {
                 // true shooting pct
                 // shooting efficiency 
                 // scoring efficiency
-            }            
+            } else {
+                SeasonStats.avgDefensiveRebounds = 0;
+                SeasonStats.avgOffensiveRebounds = 0;
+                SeasonStats.avgRebounds = 0;
+                SeasonStats.avgBlocks = 0;
+                SeasonStats.avgSteals = 0;
+                SeasonStats.avgAssists = 0;
+                SeasonStats.avgTurnovers = 0;
+                SeasonStats.avgFouls = 0;
+                SeasonStats.avgMinutes = 0;
+
+                SeasonStats.avgFieldGoalsMade = 0;
+                SeasonStats.avgFieldGoalsAttempted = 0;
+                SeasonStats.fieldGoalPct = 0;
+
+                SeasonStats.avgThreePointsMade = 0;
+                SeasonStats.avgThreePointsAttempted = 0;
+                SeasonStats.threePointsPct = 0;
+
+                SeasonStats.avgFreeThrowsMade = 0;
+                SeasonStats.avgFreeThrowsAttempted = 0;
+                SeasonStats.freeThrowPct = 0;
+
+                SeasonStats.avgPoints = 0;
+            }        
 
             // add the created schemas to player's model
             player.seasonStats.push(SeasonStats);
         }
 
-        //console.log(player.seasonStats);
+        //console.log(player.seasonStats);        
         await player.save();
     }
     
