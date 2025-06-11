@@ -14,61 +14,74 @@ function TeamStats({ teams }) {
 
     return (
         <>
-            <div className="container-fluid">
-                <div className="row align-items-center">
-                    <div className="col-auto">
-                        <h5>Team Stats: </h5>
-                    </div>
-                    <div className="col-auto">
-                        <h5>Teams: </h5>
-                        <select
-                            className="form-select"
-                            value={currentTeam.name}
-                            onChange={(e) => setCurrentTeam(teams.find(t => t.name === e.target.value))}
-                        >
-                            {teamsNames.map((team) => (
-                                <option key={team} value={team}>
-                                    {team}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+            <div className="container-fluid">      
+                <div className="d-flex justify-content-between align-items-center mb-2">              
+                    <h5 className="mb-0">Team Stats: </h5>                                  
+                    <select
+                        className="form-select w-auto"
+                        value={currentTeam.name}
+                        onChange={(e) => setCurrentTeam(teams.find(t => t.name === e.target.value))}
+                    >
+                        {teamsNames.map((team) => (
+                            <option key={team} value={team}>
+                                {team}
+                            </option>
+                        ))}
+                    </select>                    
                 </div>
+                <div className='row'>
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                        <p><strong>Points: </strong>{currentTeam.points}</p>
+                        <p><strong>Rebounds: </strong>{currentTeam.rebounds}</p>
+                        <p><strong>Assists: </strong>{currentTeam.assists}</p>
+                    </div>
+
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                        <p><strong>Field Goal %: </strong>{currentTeam.fieldGoalPct}%</p>
+                        <p><strong>Field Goals Made: </strong>{currentTeam.fieldGoalsMade}</p>
+                        <p><strong>Field Goals Attempted: </strong>{currentTeam.fieldGoalsAttempted}</p>    
+                    </div>
+
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                        <p><strong>Free Throw %: </strong>{currentTeam.freeThrowPct}%</p>
+                        <p><strong>Free Throws Made: </strong>{currentTeam.freeThrowsMade}</p>
+                        <p><strong>Free Throws Attempted: </strong>{currentTeam.freeThrowsAttempted}</p>
+                    </div>
+
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                        <p><strong>Three Point %: </strong>{currentTeam.threePointPct}%</p>
+                        <p><strong>Three Point Field Goals Made: </strong>{currentTeam.threePointFieldGoalsMade}</p>
+                        <p><strong>Three Point Field Goals Attempted: </strong>{currentTeam.threePointFieldGoalsAttempted}</p>
+                    </div>
+
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                        <p><strong>Average Points: </strong>{currentTeam.avgPoints}</p>
+                        <p><strong>Average Rebounds: </strong>{currentTeam.avgRebounds}</p>
+                        <p><strong>Average Assists: </strong>{currentTeam.avgAssists}</p>
+                    </div>
+
+                </div>
+                <div className='row'>
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                        <h5><strong>Team Leaders: </strong></h5>
+                        <p><strong>Points Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.pointsLeader}`}>{currentTeam.pointsLeader}</Link></p>
+                        <p><strong>Rebounds Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.reboundsLeader}`}>{currentTeam.reboundsLeader}</Link></p>
+                        <p><strong>Assists Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.assistsLeader}`}>{currentTeam.assistsLeader}</Link></p>
+                    </div>
+
+                    <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+                        <h5><strong>Scores By Period: </strong></h5>
+                        <ul>
+                            {currentTeam.linescores.map((score, index) => (
+                                <li key={index}>
+                                    <p>{score.period}: {score.value}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>                
             </div>            
             
-            <p><strong>Points: </strong>{currentTeam.points}</p>
-            <p><strong>Rebounds: </strong>{currentTeam.rebounds}</p>
-            <p><strong>Assists: </strong>{currentTeam.assists}</p>
-
-            <p><strong>Field Goal %: </strong>{currentTeam.fieldGoalPct}%</p>
-            <p><strong>Field Goals Made: </strong>{currentTeam.fieldGoalsMade}</p>
-            <p><strong>Field Goals Attempted: </strong>{currentTeam.fieldGoalsAttempted}</p>
-
-            <p><strong>Free Throw %: </strong>{currentTeam.freeThrowPct}%</p>
-            <p><strong>Free Throws Made: </strong>{currentTeam.freeThrowsMade}</p>
-            <p><strong>Free Throws Attempted: </strong>{currentTeam.freeThrowsAttempted}</p>
-
-            <p><strong>Three Point %: </strong>{currentTeam.threePointPct}%</p>
-            <p><strong>Three Point Field Goals Made: </strong>{currentTeam.threePointFieldGoalsMade}</p>
-            <p><strong>Three Point Field Goals Attempted: </strong>{currentTeam.threePointFieldGoalsAttempted}</p>
-
-            <p><strong>Average Points: </strong>{currentTeam.avgPoints}</p>
-            <p><strong>Average Rebounds: </strong>{currentTeam.avgRebounds}</p>
-            <p><strong>Average Assists: </strong>{currentTeam.avgAssists}</p>
-
-            <h5><strong>Team Leaders: </strong></h5>
-            <p><strong>Points Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.pointsLeader}`}>{currentTeam.pointsLeader}</Link></p>
-            <p><strong>Rebounds Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.reboundsLeader}`}>{currentTeam.reboundsLeader}</Link></p>
-            <p><strong>Assists Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.assistsLeader}`}>{currentTeam.assistsLeader}</Link></p>
-
-            <h5><strong>Scores By Period: </strong></h5>
-            <ul>
-                {currentTeam.linescores.map((score, index) => (
-                    <li key={index}>
-                        <p>{score.period}: {score.value}</p>
-                    </li>
-                ))}
-            </ul>
         </>
     );
 }
@@ -84,30 +97,27 @@ function PlayerStats ({ players }) {
     return (
         <>
             <div className="container-fluid">
-                <div className="row align-items-center">
-                    <div className="col-auto">
-                        <h5>Player Stats: </h5>
-                    </div>
-                    <div className="col-auto">
-                        <h5>Players: </h5>
-                        <select
-                            className="form-select"
-                            value={currentPlayer.name}
-                            onChange={(e) => setCurrentPlayer(players.find(p => p.name === e.target.value))}
-                        >
-                            {playerNames.map((player) => (
-                                <option key={player} value={player}>
-                                    {player}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <p>{currentPlayer.name}</p>
+                <div className="d-flex justify-content-between align-items-center mb-2">              
+                    <h5 className="mb-0">Player Stats: </h5>
+                                            
+                    <select
+                        className="form-select w-auto"
+                        value={currentPlayer.name}
+                        onChange={(e) => setCurrentPlayer(players.find(p => p.name === e.target.value))}
+                    >
+                        {playerNames.map((player) => (
+                            <option key={player} value={player}>
+                                {player}
+                            </option>
+                        ))}
+                    </select>                    
+                </div>
+                <div className='row'>
+                    <div className='col-12 col-sm-6 col-md-6 col-lg-4 mb-3'>                        
                         <p><strong>Points: </strong>{currentPlayer.points}</p>
                         <p><strong>Assists: </strong>{currentPlayer.assists}</p>
                         <p><strong>Rebounds: </strong>{currentPlayer.rebounds}</p>
-                    </div>
+                    </div>                
                 </div>
             </div>  
         </>
@@ -151,7 +161,7 @@ function GamePage() {
                     </div>
                 </div>
                 <div className='row gx-0'>
-                    <div className='col-auto' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                    <div className='col-12' style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {game ? (
                             <TeamStats teams={game.teams } />
                         ) : (
@@ -160,7 +170,7 @@ function GamePage() {
                             </>
                         )}
                     </div>                    
-                    <div className='col-auto' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                    <div className='col-12' style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {game ? (
                             <PlayerStats players={game.players} />
                         ) : (
