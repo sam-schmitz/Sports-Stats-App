@@ -8,40 +8,62 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
-function TeamStats({ team }) {
+function TeamStats({ teams }) {
+    const [currentTeam, setCurrentTeam] = useState(teams[0]);
+    const teamsNames = [teams[0].name, teams[1].name];
+
     return (
         <>
-            <p>{team.name}</p>
+            <div className="container-fluid">
+                <div className="row align-items-center">
+                    <div className="col-auto">
+                        <h5>Team Stats: </h5>
+                    </div>
+                    <div className="col-auto">
+                        <h5>Teams: </h5>
+                        <select
+                            className="form-select"
+                            value={currentTeam.name}
+                            onChange={(e) => setCurrentTeam(teams.find(t => t.name === e.target.value))}
+                        >
+                            {teamsNames.map((team) => (
+                                <option key={team} value={team}>
+                                    {team}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+            </div>            
+            
+            <p><strong>Points: </strong>{currentTeam.points}</p>
+            <p><strong>Rebounds: </strong>{currentTeam.rebounds}</p>
+            <p><strong>Assists: </strong>{currentTeam.assists}</p>
 
-            <h5><strong>Team Stats: </strong></h5>
-            <p><strong>Points: </strong>{team.points}</p>
-            <p><strong>Rebounds: </strong>{team.rebounds}</p>
-            <p><strong>Assists: </strong>{team.assists}</p>
+            <p><strong>Field Goal %: </strong>{currentTeam.fieldGoalPct}%</p>
+            <p><strong>Field Goals Made: </strong>{currentTeam.fieldGoalsMade}</p>
+            <p><strong>Field Goals Attempted: </strong>{currentTeam.fieldGoalsAttempted}</p>
 
-            <p><strong>Field Goal %: </strong>{team.fieldGoalPct}%</p>
-            <p><strong>Field Goals Made: </strong>{team.fieldGoalsMade}</p>
-            <p><strong>Field Goals Attempted: </strong>{team.fieldGoalsAttempted}</p>
+            <p><strong>Free Throw %: </strong>{currentTeam.freeThrowPct}%</p>
+            <p><strong>Free Throws Made: </strong>{currentTeam.freeThrowsMade}</p>
+            <p><strong>Free Throws Attempted: </strong>{currentTeam.freeThrowsAttempted}</p>
 
-            <p><strong>Free Throw %: </strong>{team.freeThrowPct}%</p>
-            <p><strong>Free Throws Made: </strong>{team.freeThrowsMade}</p>
-            <p><strong>Free Throws Attempted: </strong>{team.freeThrowsAttempted}</p>
+            <p><strong>Three Point %: </strong>{currentTeam.threePointPct}%</p>
+            <p><strong>Three Point Field Goals Made: </strong>{currentTeam.threePointFieldGoalsMade}</p>
+            <p><strong>Three Point Field Goals Attempted: </strong>{currentTeam.threePointFieldGoalsAttempted}</p>
 
-            <p><strong>Three Point %: </strong>{team.threePointPct}%</p>
-            <p><strong>Three Point Field Goals Made: </strong>{team.threePointFieldGoalsMade}</p>
-            <p><strong>Three Point Field Goals Attempted: </strong>{team.threePointFieldGoalsAttempted}</p>
-
-            <p><strong>Average Points: </strong>{team.avgPoints}</p>
-            <p><strong>Average Rebounds: </strong>{team.avgRebounds}</p>
-            <p><strong>Average Assists: </strong>{team.avgAssists}</p>
+            <p><strong>Average Points: </strong>{currentTeam.avgPoints}</p>
+            <p><strong>Average Rebounds: </strong>{currentTeam.avgRebounds}</p>
+            <p><strong>Average Assists: </strong>{currentTeam.avgAssists}</p>
 
             <h5><strong>Team Leaders: </strong></h5>
-            <p><strong>Points Leader: </strong><Link to={`/Sports-Stats-App/players/${team.pointsLeader}`}>{team.pointsLeader}</Link></p>
-            <p><strong>Rebounds Leader: </strong><Link to={`/Sports-Stats-App/players/${team.reboundsLeader}`}>{team.reboundsLeader}</Link></p>
-            <p><strong>Assists Leader: </strong><Link to={`/Sports-Stats-App/players/${team.assistsLeader}`}>{team.assistsLeader}</Link></p>
+            <p><strong>Points Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.pointsLeader}`}>{currentTeam.pointsLeader}</Link></p>
+            <p><strong>Rebounds Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.reboundsLeader}`}>{currentTeam.reboundsLeader}</Link></p>
+            <p><strong>Assists Leader: </strong><Link to={`/Sports-Stats-App/players/${currentTeam.assistsLeader}`}>{currentTeam.assistsLeader}</Link></p>
 
             <h5><strong>Scores By Period: </strong></h5>
             <ul>
-                {team.linescores.map((score, index) => (
+                {currentTeam.linescores.map((score, index) => (
                     <li key={index}>
                         <p>{score.period}: {score.value}</p>
                     </li>
@@ -88,24 +110,15 @@ function GamePage() {
                     </div>
                 </div>
                 <div className='row gx-0'>
-                    <div className='col-sm-6 col-md-6' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                    <div className='col-auto' style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {game ? (
-                            <TeamStats team={game.teams[0] } />
+                            <TeamStats teams={game.teams } />
                         ) : (
                             <>
                                 <p>Loading...</p>
                             </>
                         )}
-                    </div>
-                    <div className='col-sm-5 col-md-5' style={{ marginLeft: '5px', textAlign: 'left' }} >
-                        {game ? (
-                            <TeamStats team={game.teams[1] } />
-                        ) : (
-                            <>
-                                <p>Loading...</p>
-                            </>
-                        )}
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>
