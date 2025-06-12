@@ -14,11 +14,52 @@ const formatHeight = (inches) => {
     return `${feet}'${remainingInches}"`;
 };
 
+
+function PlayedGames({games }) {
+    const [currentSeason, setCurrentSeason] = useState('2024-2025');
+    const seasons = ['2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', '2024-2025'];
+    
+    const filteredGames = games.filter(game => game.season === currentSeason);
+
+    return (
+        <>
+            <div className="container-fluid">
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h5 className="mb-0">Played Games: </h5>
+                    <select
+                        className="form-select w-auto"
+                        value={currentSeason}
+                        onChange={(e) => setCurrentSeason(e.target.value)}
+                    >
+                        {seasons.map((season) => (
+                            <option key={season} value={season}>
+                                {season}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <ul>
+                        {filteredGames.length > 0 ? (
+                            filteredGames.map(game => (
+                                <li key={game._id}>
+                                    <Link to={`/Sports-Stats-App/games/${game._id}`}>
+                                        {game.date.slice(0, 10)} - {game.home_team_name} vs {game.away_team_name}
+                                    </Link>
+                                </li>
+                            ))
+                        ) : (
+                                <p>No games found for this player in {currentSeason}. </p>
+                        )}
+                    </ul>
+                </div>
+            </div>
+        </>
+    );
+}
 function PlayerStats({ stats }) {
     const [currentSeasonStats, setCurrentSeasonStats] = useState(stats.find(s => s.season === "career"));
-    const seasons = ['career', '2019', '2020', '2021', '2022', '2023', '2024'];
-    console.log('stats 0: ', stats[0]);
-    console.log('stats 1: ', stats[1])
+    const seasons = ['career', '2019', '2020', '2021', '2022', '2023', '2024'];    
     
     return (
         <>
@@ -59,7 +100,9 @@ function PlayerStats({ stats }) {
 function PlayerPage() {
     const name = useParams().name;
     const [player, setPlayer] = useState(null);    
+    const [playerGames, setPlayerGames] = useState([]);
 
+    // Gather player data from the API
     useEffect(() => {
         const uriName = encodeURIComponent(name);        
         const uri = API_BASE_URL + `/players/name/${uriName}`;        
@@ -67,6 +110,21 @@ function PlayerPage() {
             .then(res => setPlayer(res.data))
             .catch(err => console.error('Error fetching players:', err));        
     }, [name]);
+
+    // Gather the games the player was in from the API
+    useEffect(() => {        
+        if (!player?._id) {
+            //console.log(player._id);
+            return;
+        }
+        
+        const uri = `${API_BASE_URL}/games/player/${player._id}`;        
+        axios.get(uri)
+            .then(res => {                
+                setPlayerGames(res.data);                
+            })            
+            .catch(err => console.error('Error fetching player games: ', err));                
+    }, [player?._id]);
 
     const [activeTab, setActiveTab] = useState('stats');
 
@@ -129,7 +187,7 @@ function PlayerPage() {
                             activeTab === 'stats' ? (
                                 <PlayerStats stats={player.seasonStats} />
                             ) : (
-                                <p>Games Played</p>
+                                <PlayedGames games={playerGames} />
                             )
                         ) : (
                             <>
