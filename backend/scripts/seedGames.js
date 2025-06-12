@@ -62,7 +62,8 @@ const fetchGames = async (startDate, endDate) => {
             formattedGames.push(...subFormattedGames);
         }
     }
-    //console.log(formattedGames);    
+    //console.log(formattedGames);  
+    //console.log(`From inside FetchGames() Date 0: ${formattedGames[0].date} Date 20: ${formattedGames[20].date}`);
     return formattedGames;
     
 };
@@ -120,7 +121,7 @@ const fetchGame = async (url, d, teamIdMap) => {
         const formattedGame = {
             _id: event.id,
             sport: 'basketball',
-            date: d,
+            date: new Date(d),
             home_team_id: teamIdMap[home.id],
             away_team_id: teamIdMap[away.id],
             home_team_name: home.team.displayName,
@@ -138,7 +139,7 @@ const fetchGame = async (url, d, teamIdMap) => {
             players: playerStats
         };
         //console.log(formattedGame);
-        //console.log(`Game: ${formattedGame._id} formatted`);
+        //console.log(`Game: ${formattedGame._id} formatted, Date: ${formattedGame.date}`);
         formattedGames.push(formattedGame);
     }
     
@@ -279,7 +280,7 @@ const seed = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Database connected');
-
+        
         console.log('Fetching Games...');        
         const start = seasonDates[SEASON_YEAR].start;
         const end = seasonDates[SEASON_YEAR].end;
@@ -288,7 +289,8 @@ const seed = async () => {
         const endDate = new Date(end);        
         const formattedGames = await fetchGames(startDate, endDate);                
         console.log('All games fetched');
-
+        //console.log(`From inside seed() Date 0: ${formattedGames[0].date} Date 20: ${formattedGames[20].date}`);
+        
         await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
         console.log("deleted old games");
 
@@ -300,10 +302,10 @@ const seed = async () => {
             });
         
         console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
-
+        
         const games = await Game.find({sport: 'basketball', season: SEASON_YEAR}).limit(5);
         console.log('Sample games: ', games); 
-        console.log(games[0].players[0]);
+        //console.log(games[0].players[0]);
 
         mongoose.disconnect();
     } catch (err) {
