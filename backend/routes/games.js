@@ -127,4 +127,19 @@ router.get('/gameType/:gameType', async (req, res) => {
     }
 });
 
+router.get('/player/:player', async (req, res) => {
+    try {
+        const player_id = req.params.player;
+        const games = await Game.find({
+            'players.player_id': player_id,
+            sport: 'basketball'
+        });
+
+        res.json(games);
+    } catch (err) {
+        console.error('Error fetching games: ', err);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
+
 module.exports = router
