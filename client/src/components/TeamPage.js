@@ -48,6 +48,8 @@ function TeamPage() {
         }
     }, [team]);
 
+    const [activeTab, setActiveTab] = useState('roster');
+
     return (
         <div className="TeamPage" >
             <div className="container-fluid">
@@ -77,16 +79,40 @@ function TeamPage() {
                             </>
                         )}
                     </div>
-                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
-                        {players.length > 0 ? (
-                            <PlayersList players={players } />
+                </div>
+                <ul className="nav nav-tabs mb-3">
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${activeTab === 'roster' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('roster')}
+                        >
+                            Roster
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${activeTab === 'games' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('games')}
+                        >
+                            Played Games
+                        </button>
+                    </li>
+                </ul>
+                <div className='row gx-0'>
+                    <div className='col-12' style={{ marginLeft: '5px', textAlign: 'left' }} >
+                        {team ? (
+                            activeTab === 'roster' ? (
+                                <PlayersList players={players} />
+                            ) : (
+                                <p>Played Games</p>
+                            )
                         ) : (
                             <>
-                                <p>Loading Players...</p>
+                                <p>Loading Stats...</p>
                             </>
                         )}
                     </div>
-                </div>
+                </div>    
             </div>
         </div>
     );
