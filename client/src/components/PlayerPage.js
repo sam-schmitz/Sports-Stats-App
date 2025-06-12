@@ -68,6 +68,8 @@ function PlayerPage() {
             .catch(err => console.error('Error fetching players:', err));        
     }, [name]);
 
+    const [activeTab, setActiveTab] = useState('stats');
+
 
     return (
         <div className="Player Page" >
@@ -103,19 +105,39 @@ function PlayerPage() {
                         )}
                     </div>
                 </div>
-                <div className="row gx-0">
-                    <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
+                <ul className="nav nav-tabs mb-3">
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${activeTab === 'stats' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('stats')}
+                        >
+                            Player Stats
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${activeTab === 'games' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('games')}
+                        >
+                            Played Games
+                        </button>
+                    </li>
+                </ul> 
+                <div className='row gx-0'>
+                    <div className='col-12' style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {player ? (
-                            <>
+                            activeTab === 'stats' ? (
                                 <PlayerStats stats={player.seasonStats} />
-                            </>
+                            ) : (
+                                <p>Games Played</p>
+                            )
                         ) : (
                             <>
-                                <p>Loading Stats... </p>
+                                <p>Loading Stats...</p>
                             </>
                         )}
                     </div>
-                </div>
+                </div>                
             </div>            
         </div>
     );
