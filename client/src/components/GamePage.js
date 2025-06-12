@@ -29,6 +29,9 @@ function TeamStats({ teams }) {
                         ))}
                     </select>                    
                 </div>
+                <div>
+                    <p><strong>Team Page: </strong><Link to={`/Sports-Stats-App/teams/${currentTeam.name}`}>{currentTeam.name}</Link></p>
+                </div>
                 <div className='row'>
                     <div className="col-12 col-sm-6 col-md-6 col-lg-4 mb-3">
                         <p><strong>Points: </strong>{currentTeam.points}</p>
@@ -111,6 +114,9 @@ function PlayerStats ({ players }) {
                             </option>
                         ))}
                     </select>                    
+                </div>
+                <div>
+                    <p><strong>Player Page: </strong><Link to={`/Sports-Stats-App/players/${currentPlayer.name}`}>{currentPlayer.name}</Link></p>
                 </div>
                 <div className='row'>
                     <div className='col-12 col-sm-6 col-md-6 col-lg-4 mb-3'>                        
