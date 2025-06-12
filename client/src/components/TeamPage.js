@@ -8,6 +8,48 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+function PlayedGames({ games }) {
+    const [currentSeason, setCurrentSeason] = useState('2024-2025');
+    const seasons = ['2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', '2024-2025'];
+
+    const filteredGames = games.filter(game => game.season === currentSeason);
+
+    return (
+        <>
+            <div className="container-fluid">
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h5 className="mb-0">Played Games: </h5>
+                    <select
+                        className="form-select w-auto"
+                        value={currentSeason}
+                        onChange={(e) => setCurrentSeason(e.target.value)}
+                    >
+                        {seasons.map((season) => (
+                            <option key={season} value={season}>
+                                {season}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <ul>
+                        {filteredGames.length > 0 ? (
+                            filteredGames.map(game => (
+                                <li key={game._id}>
+                                    <Link to={`/Sports-Stats-App/games/${game._id}`}>
+                                        {game.date.slice(0, 10)} - {game.home_team_name} vs {game.away_team_name}
+                                    </Link>
+                                </li>
+                            ))
+                        ) : (
+                            <p>No games found for this team in {currentSeason}. </p>
+                        )}
+                    </ul>
+                </div>
+            </div>
+        </>
+    );
+}
 function PlayersList({players }) {
     return (
         <>
@@ -31,6 +73,7 @@ function TeamPage() {
     const name = useParams().name;
     const [team, setTeam] = useState(null);
     const [players, setPlayers] = useState([]);
+    const [teamGames, setTeamGames] = useState([]);
 
     useEffect(() => {
         const uriName = encodeURIComponent(name);
@@ -47,6 +90,16 @@ function TeamPage() {
                 .catch(err => console.error('Error fetching team players:', err));
         }
     }, [team]);
+
+    useEffect(() => {
+        if (team && team._id) {            
+            axios.get(`${API_BASE_URL}/games/team/${team._id}`)
+                .then(res => {                    
+                    setTeamGames(res.data);
+                })
+                .catch(err => console.error('Error fetching team games: ', err));
+        }
+    }, [team])
 
     const [activeTab, setActiveTab] = useState('roster');
 
@@ -104,7 +157,7 @@ function TeamPage() {
                             activeTab === 'roster' ? (
                                 <PlayersList players={players} />
                             ) : (
-                                <p>Played Games</p>
+                                    <PlayedGames games={teamGames} />
                             )
                         ) : (
                             <>
