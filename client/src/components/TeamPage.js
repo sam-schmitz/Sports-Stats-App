@@ -8,6 +8,25 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+function PlayersList({players }) {
+    return (
+        <>
+            <h5>Roster: </h5>
+            {(players.length > 0) ? (
+                <ul>
+                    {players.map(player => (
+                        <li key={player._id}>
+                            <Link to={`/Sports-Stats-App/players/${player.name}`} >{player.name} - {player.position}</Link>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>Loading PLayers </p>
+            ) }            
+        </>
+    );
+}
+
 function TeamPage() {
     const name = useParams().name;
     const [team, setTeam] = useState(null);
@@ -32,7 +51,7 @@ function TeamPage() {
     return (
         <div className="TeamPage" >
             <div className="container-fluid">
-                <div className="row gx-0">
+                <div className="row">
                     <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
                         <h1>{name}</h1>
                         {team ? (
@@ -60,16 +79,7 @@ function TeamPage() {
                     </div>
                     <div className="col-sm-6 col-md-4" style={{ marginLeft: '5px', textAlign: 'left' }} >
                         {players.length > 0 ? (
-                            <>
-                                <h3>Players</h3>
-                                <ul>
-                                    {players.map(player => (
-                                        <li key={player._id}>
-                                            <Link to={`/Sports-Stats-App/players/${player.name}` } >{player.name} - {player.position}</Link>
-                                        </li>
-                                    )) }
-                                </ul>
-                            </>
+                            <PlayersList players={players } />
                         ) : (
                             <>
                                 <p>Loading Players...</p>
