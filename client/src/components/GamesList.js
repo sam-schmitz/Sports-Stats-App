@@ -8,7 +8,7 @@ import Fuse from "fuse.js";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
-function SearchBar({ games }) {
+function SearchBar({ games, onSearch }) {
     const [query, setQuery] = useState('');
     const [gamesList, setGamesList] = useState([]);
     const [pages, setPages] = useState([{ name: "Home", path: "/Sports-Stats-App/" }]);
@@ -50,6 +50,12 @@ function SearchBar({ games }) {
         setSuggestions([]);
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSearch?.(query);
+        setSuggestions([]);
+    }
+
     const handleKeyDown = (e) => {
         if (e.key === "ArrowDown") {
             setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
@@ -65,15 +71,18 @@ function SearchBar({ games }) {
     return (
         <>
             <div className="searchbar-container" style={{ position: "relative" }}>
-                <input
-                    ref={inputRef}
-                    type="text"
-                    value={query}
-                    placeholder="Search..."
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    style={{ width: "200px", padding: "8px" }}
-                />
+                <form onSubmit={handleSubmit }>
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={query}
+                        placeholder="Search..."
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        style={{ width: "200px", padding: "8px" }}
+                    />
+                    <button type="submit">Search</button>
+                </form>
                 {suggestions.length > 0 && (
                     <ul className="dropdown" style={{
                         position: "absolute",
@@ -106,15 +115,30 @@ function SearchBar({ games }) {
         </>
     );
 }
+
 function GamesList() {
     const [games, setGames] = useState([]);
 
-    useEffect(() => {
-        axios.get(API_BASE_URL + '/games')
-            .then(res => setGames(res.data))
-            .catch(err => console.error('Error fetching games:', err));
-        console.log(games);
+    useEffect(() => {             
+        fetchGames(1);
     }, []);
+
+    function fetchGames(page = 1, search = '') {
+        if (page === 1) {
+            axios.get(`${API_BASE_URL}/games?page=${page}&limit=100&search=${search}`)
+                .then(res => setGames(res.data))
+                .catch(err => console.error('Error fetching games:', err));
+        } else {
+            axios.get(`${API_BASE_URL}/games?page=${page}&limit=100&search=${search}`)
+                .then(res => setGames([...games, ...res.data]))
+                .catch(err => console.error('Error fetching games:', err));
+        }
+        
+    }
+
+    const handleSearch = (query) => {
+        fetchGames(1, query);
+    }
 
     return (
         <div>
@@ -122,7 +146,10 @@ function GamesList() {
             <div className="container-fluid">
                 <div>
                     {games ? (
-                        <SearchBar games={games} />
+                        <SearchBar
+                            games={games}
+                            onSearch={handleSearch }
+                        />
                     ) : (
                         <p>Loading Games...</p>
                     )}
@@ -132,7 +159,9 @@ function GamesList() {
                         <ul>
                             {games.map(game => (
                                 <li key={game._id}>
-                                    <Link to={`/Sports-Stats-App/games/${game._id}` }>{game.date.slice(0, 10)} {game.home_team_name} vs {game.away_team_name}</Link>
+                                    <Link to={`/Sports-Stats-App/games/${game._id}`}>
+                                        {game.date.slice(0, 10)} {game.home_team_name} vs {game.away_team_name}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
