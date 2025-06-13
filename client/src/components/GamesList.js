@@ -12,17 +12,21 @@ function SearchBar({ games, onSearch }) {
     const [query, setQuery] = useState('');
     const [gamesList, setGamesList] = useState([]);
     const [pages, setPages] = useState([{ name: "Home", path: "/Sports-Stats-App/" }]);
+    const [teamsList, setTeamsList] = useState([]);
 
-    const fuse = new Fuse(pages, { keys: ["name"], threshold: 0.3 });
+    const fuse = new Fuse([...teamsList, ...pages], { keys: ["name"], threshold: 0.3 });
     const [suggestions, setSuggestions] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const navigate = useNavigate();
     const inputRef = useRef(null);    
 
+    // set gamesList to match games
     useEffect(() => {
         setGamesList(games);
+        // maybe update fuse?
     }, [games]);
 
+    // When gamesList is updated update pages with the games in gamesList
     useEffect(() => {
         if (gamesList.length > 0) {
             setPages([
@@ -35,6 +39,20 @@ function SearchBar({ games, onSearch }) {
         }
     }, [gamesList]);
 
+    // get a list of all of the teams in the database
+    useEffect(() => {
+        axios.get(`${API_BASE_URL}/teams`)
+            .then(res => {
+                const teamNames = res.data.map((team) => ({
+                    name: team.name,
+                    path: team.name
+                }));
+                setTeamsList(teamNames);
+            })
+            .catch(err => console.error('Error fetching teams list:', err));
+    }, [])
+
+    // When the query is updated update the suggestions
     useEffect(() => {
         if (query) {
             setSuggestions(fuse.search(query).map((result) => result.item));
@@ -44,18 +62,25 @@ function SearchBar({ games, onSearch }) {
         setSelectedIndex(-1);
     }, [query]);
 
+    // When a suggestion is selected take the user to the cooresponding page and reset the searchbar
     const handleSelect = (path) => {
-        navigate(path);
+        if (pages.some(page => page.path === path)) {            
+            navigate(path);
+        } else {
+            onSearch(path);
+        }
         setQuery("")
         setSuggestions([]);
     }
 
+    // When a query is submitted ask GamesList to fetch from the database
     const handleSubmit = (e) => {
         e.preventDefault();
         onSearch?.(query);
         setSuggestions([]);
     }
 
+    // Allows the user to key through the suggestions
     const handleKeyDown = (e) => {
         if (e.key === "ArrowDown") {
             setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
