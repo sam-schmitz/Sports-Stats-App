@@ -5,14 +5,27 @@ const express = require('express');
 const router = express.Router();
 const Game = require('../models/Game');
 
-// GET /games - get all games
-router.get('/', async (req, res) => {
+// GET /games?search=<term>&page=<number>&limit=<number>
+router.get("/", async (req, res) => {
     try {
-        const games = await Game.find().limit(100);
+        const { search, page = 1, limit = 100 } = req.query;
+        const filter = {};
+
+        if (search) {
+            // search by home or away team
+            filter.$or = [
+                { home_team_name: { $regex: search, $options: "i" } },
+                { away_team_name: { $regex: search, $options: "i" } }
+            ];
+        }
+
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+        const games = await Game.find(filter).skip(skip).limit(parseInt(limit));
+
         res.json(games);
     } catch (err) {
-        console.error('Error fetching games', err);
-        res.status(500).json({ error: `Server error` });
+        console.error('Error fetching games: ', err);
+        res.status(500).json({ error: `Server Error` });
     }
 })
 
