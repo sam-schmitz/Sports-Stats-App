@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
+import stadiumImages from './StadiumImages.json';
+
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 function TeamStats({ teams }) {
@@ -161,6 +163,7 @@ function GamePage() {
     // -- Gather Game Information from the API --
     const id = useParams().id;
     const [game, setGame] = useState(null);
+    const [imageLink, setImageLink] = useState(null);
 
     useEffect(() => {
         const uriName = encodeURIComponent(id);
@@ -171,6 +174,15 @@ function GamePage() {
             .catch(err => console.error('Error fetching game:', err));        
     }, [id])
 
+    useEffect(() => {
+        if (game !== null) {
+            const stadium = stadiumImages.find(v => v.venue === game.venue);
+            console.log(game.venue);
+            const imageUrl = stadium ? stadium.image : null;
+            setImageLink(imageUrl);
+        }
+    }, [game])
+
     // -- Stats displaying info --
     const [activeTab, setActiveTab] = useState('team');
 
@@ -178,7 +190,7 @@ function GamePage() {
         <div className="Game Page">
             <div className="container-fluid">
                 <div className="row gx-0">
-                    <div className="col-sm-6 col-md-4" style={{marginLeft: '5px', textAlign: 'left'} } >
+                    <div className="col-6 col-md-4 px-1" style={{ textAlign: 'left' }} >
                         {game ? (
                             <>
                                 <p><strong>Date: </strong>{game.date.slice(0, 10)}</p>
@@ -195,6 +207,24 @@ function GamePage() {
                                 <p>Loading...</p>
                             </>
                         )}
+                    </div>
+                    <div className="col-6 col-md-4 px-1"  >
+                        {imageLink ? (
+                            <>
+                                <div className="d-flex justify-content-center align-items-center">
+                                    <img
+                                        src={imageLink}
+                                        alt="Stadium Image"
+                                        width="200"
+                                        className="d-block mx-auto"
+                                    />
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <p>Loading...</p>
+                            </>
+                        )}                        
                     </div>
                 </div>
                 <ul className="nav nav-tabs mb-3">

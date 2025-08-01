@@ -25,7 +25,7 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/United_Center_1.jpg/1024px-United_Center_1.jpg"
   },
   {
-    "venue": "Rocket Mortgage FieldHouse",
+    "venue": "Rocket Arena",
     "team": "Cleveland Cavaliers",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Rocket_Mortgage_FieldHouse_2022_%28cropped%29.png/1024px-Rocket_Mortgage_FieldHouse_2022_%28cropped%29.png"
   },
@@ -50,7 +50,7 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Chase_Center.jpg/1024px-Chase_Center.jpg"
   },
   {
-    "venue": "Toyota Center",
+    "venue": "Toyota Center (Houston)",
     "team": "Houston Rockets",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Toyota_Center_entr.jpg/1024px-Toyota_Center_entr.jpg"
   },
@@ -60,12 +60,12 @@
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Bankers_Life_Fieldhouse%2C_Indian%C3%A1polis%2C_Estados_Unidos%2C_2012-10-22%2C_DD_02.jpg/1024px-Bankers_Life_Fieldhouse%2C_Indian%C3%A1polis%2C_Estados_Unidos%2C_2012-10-22%2C_DD_02.jpg"
   },
   {
-    "venue": "Crypto.com Arena",
+    "venue": "crypto.com Arena",
     "team": "Los Angeles Lakers",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Crypto.com_Arena_exterior_2023.jpg/1024px-Crypto.com_Arena_exterior_2023.jpg"
   },
   {
-    "venue": "Crypto.com Arena",
+    "venue": "crypto.com Arena",
     "team": "Los Angeles Clippers",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Crypto.com_Arena_exterior_2023.jpg/1024px-Crypto.com_Arena_exterior_2023.jpg"
   },
@@ -82,7 +82,7 @@
   {
     "venue": "Fiserv Forum",
     "team": "Milwaukee Bucks",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Fiserv_Forum_exterior.jpg"
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Milwaukee_July_2022_022_%28Fiserv_Forum%29.jpg/1024px-Milwaukee_July_2022_022_%28Fiserv_Forum%29.jpg"
   },
   {
     "venue": "Target Center",
