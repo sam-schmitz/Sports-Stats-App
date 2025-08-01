@@ -1,0 +1,152 @@
+[
+  {
+    "venue": "State Farm Arena",
+    "team": "Atlanta Hawks",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/State_Farm_%28Philips%29_Arena%2C_Atlanta%2C_GA_%2846558861525%29_-_2019.jpg/1024px-State_Farm_%28Philips%29_Arena%2C_Atlanta%2C_GA_%2846558861525%29_-_2019.jpg"
+  },
+  {
+    "venue": "TD Garden",
+    "team": "Boston Celtics",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/TD_Garden_%28crop%29.JPG/1024px-TD_Garden_%28crop%29.JPG"
+  },
+  {
+    "venue": "Barclays Center",
+    "team": "Brooklyn Nets",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Barclays_Center_Boston_Celtics-Brooklyn_Nets_2012.jpg/1024px-Barclays_Center_Boston_Celtics-Brooklyn_Nets_2012.jpg"
+  },
+  {
+    "venue": "Spectrum Center",
+    "team": "Charlotte Hornets",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Spectrum_Center_2018.jpg/1024px-Spectrum_Center_2018.jpg"
+  },
+  {
+    "venue": "United Center",
+    "team": "Chicago Bulls",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/United_Center_1.jpg/1024px-United_Center_1.jpg"
+  },
+  {
+    "venue": "Rocket Mortgage FieldHouse",
+    "team": "Cleveland Cavaliers",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Rocket_Mortgage_FieldHouse_2022_%28cropped%29.png/1024px-Rocket_Mortgage_FieldHouse_2022_%28cropped%29.png"
+  },
+  {
+    "venue": "American Airlines Center",
+    "team": "Dallas Mavericks",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/American_Airlines_Center_August_2015.jpg/1024px-American_Airlines_Center_August_2015.jpg"
+  },
+  {
+    "venue": "Ball Arena",
+    "team": "Denver Nuggets",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Ball_Arena_exterior_2022.jpg/1024px-Ball_Arena_exterior_2022.jpg"
+  },
+  {
+    "venue": "Little Caesars Arena",
+    "team": "Detroit Pistons",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Little_Caesars_Arena_panorama.jpg/1024px-Little_Caesars_Arena_panorama.jpg"
+  },
+  {
+    "venue": "Chase Center",
+    "team": "Golden State Warriors",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Chase_Center.jpg/1024px-Chase_Center.jpg"
+  },
+  {
+    "venue": "Toyota Center",
+    "team": "Houston Rockets",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Toyota_Center_entr.jpg/1024px-Toyota_Center_entr.jpg"
+  },
+  {
+    "venue": "Gainbridge Fieldhouse",
+    "team": "Indiana Pacers",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Bankers_Life_Fieldhouse%2C_Indian%C3%A1polis%2C_Estados_Unidos%2C_2012-10-22%2C_DD_02.jpg/1024px-Bankers_Life_Fieldhouse%2C_Indian%C3%A1polis%2C_Estados_Unidos%2C_2012-10-22%2C_DD_02.jpg"
+  },
+  {
+    "venue": "Crypto.com Arena",
+    "team": "Los Angeles Lakers",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Crypto.com_Arena_exterior_2023.jpg/1024px-Crypto.com_Arena_exterior_2023.jpg"
+  },
+  {
+    "venue": "Crypto.com Arena",
+    "team": "Los Angeles Clippers",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Crypto.com_Arena_exterior_2023.jpg/1024px-Crypto.com_Arena_exterior_2023.jpg"
+  },
+  {
+    "venue": "FedExForum",
+    "team": "Memphis Grizzlies",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/FedExForum_2015.jpg/1024px-FedExForum_2015.jpg"
+  },
+  {
+    "venue": "Kaseya Center",
+    "team": "Miami Heat",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Kaseya_Center_Downtown_Miami_FL%2C_5_April_2024.jpg/1024px-Kaseya_Center_Downtown_Miami_FL%2C_5_April_2024.jpg"
+  },
+  {
+    "venue": "Fiserv Forum",
+    "team": "Milwaukee Bucks",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Fiserv_Forum_exterior.jpg"
+  },
+  {
+    "venue": "Target Center",
+    "team": "Minnesota Timberwolves",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Target_Center_exterior_02.jpg/1024px-Target_Center_exterior_02.jpg"
+  },
+  {
+    "venue": "Smoothie King Center",
+    "team": "New Orleans Pelicans",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/New_Orleans_Arena%2C_exterior_view%2C_10_January_2022_%28cropped%29.jpg/1024px-New_Orleans_Arena%2C_exterior_view%2C_10_January_2022_%28cropped%29.jpg"
+  },
+  {
+    "venue": "Madison Square Garden",
+    "team": "New York Knicks",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Madison_Square_Garden_%28MSG%29_-_Full_%2848124330357%29.jpg/1024px-Madison_Square_Garden_%28MSG%29_-_Full_%2848124330357%29.jpg"
+  },
+  {
+    "venue": "Paycom Center",
+    "team": "Oklahoma City Thunder",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Paycom_Center_exterior_aerial_view.jpg/1024px-Paycom_Center_exterior_aerial_view.jpg"
+  },
+  {
+    "venue": "Kia Center",
+    "team": "Orlando Magic",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Kia_Center_12-22-24.jpg/1024px-Kia_Center_12-22-24.jpg"
+  },
+  {
+    "venue": "Wells Fargo Center",
+    "team": "Philadelphia 76ers",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Wells_Fargo_Center_-_2019_OWL_Grand_Finals.jpg/1024px-Wells_Fargo_Center_-_2019_OWL_Grand_Finals.jpg"
+  },
+  {
+    "venue": "PHX Arena",
+    "team": "Phoenix Suns",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Footprint_Center_2022.jpg/1024px-Footprint_Center_2022.jpg"
+  },
+  {
+    "venue": "Moda Center",
+    "team": "Portland Trail Blazers",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Modacenter2019.jpg/1024px-Modacenter2019.jpg"
+  },
+  {
+    "venue": "Golden 1 Center",
+    "team": "Sacramento Kings",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Golden_1_Center_2017.jpg/1024px-Golden_1_Center_2017.jpg"
+  },
+  {
+    "venue": "Frost Bank Center",
+    "team": "San Antonio Spurs",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Texasdd.JPG/1024px-Texasdd.JPG"
+  },
+  {
+    "venue": "Scotiabank Arena",
+    "team": "Toronto Raptors",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Scotiabank_Arena_-_2018_%28cropped%29.jpg/1024px-Scotiabank_Arena_-_2018_%28cropped%29.jpg"
+  },
+  {
+    "venue": "Delta Center",
+    "team": "Utah Jazz",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Delta_Center_2023.jpg/1024px-Delta_Center_2023.jpg"
+  },
+  {
+    "venue": "Capital One Arena",
+    "team": "Washington Wizards",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Capital_One_Arena_-_Washington%2C_D.C.jpg/1024px-Capital_One_Arena_-_Washington%2C_D.C.jpg"
+  }
+]
