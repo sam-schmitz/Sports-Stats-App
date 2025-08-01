@@ -14,7 +14,7 @@ function SearchBar({ games, onSearch }) {
     const [pages, setPages] = useState([{ name: "Home", path: "/Sports-Stats-App/" }]);
     const [teamsList, setTeamsList] = useState([]);
 
-    const fuse = new Fuse([...teamsList, ...pages], { keys: ["name"], threshold: 0.3 });
+    const fuse = new Fuse([...teamsList, ...pages, 2025, 2024, 2023, 2022, 2021, 2020, 2019], { keys: ["name"], threshold: 0.3 });
     const [suggestions, setSuggestions] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const navigate = useNavigate();

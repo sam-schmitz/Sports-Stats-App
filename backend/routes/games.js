@@ -9,14 +9,22 @@ const Game = require('../models/Game');
 router.get("/", async (req, res) => {
     try {
         const { search, page = 1, limit = 100 } = req.query;
-        const filter = {};
+        const filter = {};        
 
         if (search) {
-            // search by home or away team
-            filter.$or = [
-                { home_team_name: { $regex: search, $options: "i" } },
-                { away_team_name: { $regex: search, $options: "i" } }
-            ];
+            const year = parseInt(search);
+            if (!isNaN(year)) {
+                start = new Date(`${year}-01-01`);
+                end = new Date(`${year + 1}-01-01`);
+                filter.date = { $gte: start, $lt: end };                
+            } else {
+                // search by home or away team
+                filter.$or = [
+                    { home_team_name: { $regex: search, $options: "i" } },
+                    { away_team_name: { $regex: search, $options: "i" } }                    
+                ];
+            }
+            
         }
 
         const skip = (parseInt(page) - 1) * parseInt(limit);
