@@ -13,10 +13,22 @@ router.get("/", async (req, res) => {
 
         if (search) {
             const year = parseInt(search);
-            if (!isNaN(year)) {
+            if (!isNaN(year) && search.length === 4) {
                 start = new Date(`${year}-01-01`);
                 end = new Date(`${year + 1}-01-01`);
                 filter.date = { $gte: start, $lt: end };                
+            } else if (!NaN(year) && search.length === 6){
+                let y = parseInt(search.slice(0, 4));
+                let m = parseInt(seach.slice(4, 6));
+                if (m === 12) {
+                    start = new Date(`${y}-${m}-01`);
+                    end = new Date(`${y}-01-01`);
+                    filter.date = { $gte: start, $lt: end };                
+                } else {
+                    start = new Date(`${y}-${m}-01`);
+                    end = new Date(`${y}-${m + 1}-01`);
+                    filter.date = { $gte: start, $lt: end };                
+                }
             } else {
                 // search by home or away team
                 filter.$or = [
