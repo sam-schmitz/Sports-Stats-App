@@ -53,7 +53,7 @@ function SearchBar({ games, onSearch }) {
     }, [])
 
     // When the query is updated update the suggestions
-    useEffect(() => {
+    useEffect(() => {        
         if (query) {
             setSuggestions(fuse.search(query).map((result) => result.item));
         } else {
@@ -64,8 +64,13 @@ function SearchBar({ games, onSearch }) {
 
     // When a suggestion is selected take the user to the cooresponding page and reset the searchbar
     const handleSelect = (path) => {
+        const isYearMonthFormat = /^\d{4}-\d{2}$/.test(path);        
+
         if (pages.some(page => page.path === path)) {            
             navigate(path);
+        } else if (isYearMonthFormat) {
+            const withoutDash = path.slice(0, 4) + path.slice(5);            
+            onSearch(withoutDash);
         } else {
             onSearch(path);
         }
@@ -76,7 +81,15 @@ function SearchBar({ games, onSearch }) {
     // When a query is submitted ask GamesList to fetch from the database
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch?.(query);
+
+        const isYearMonthFormat = /^\d{4}-\d{2}$/.test(query);
+        if (isYearMonthFormat) {
+            const withoutDash = query.slice(0, 4) + query.slice(5);
+            onSearch?.(withoutDash);
+        } else {
+            onSearch?.(query);
+        }
+        
         setSuggestions([]);
     }
 
