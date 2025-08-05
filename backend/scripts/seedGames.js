@@ -10,31 +10,68 @@ require('dotenv').config();
 
 // Update to change which season is fetched
 const SEASON_YEAR = '2024-2025';
+const SEASON_TYPE = 'Regular Season';
 
 const seasonDates = {
     "2024-2025": {
-        start: "2024-10-22",
-        end: "2025-04-13"
+        "Regular Season": {
+            start: "2024-10-22",
+            end: "2025-04-13"
+        },
+        "Post Season": {
+            start: "2025-04-15",
+            end: "2025-06-22"
+        }
     },
     "2023-2024": {
-        start: "2023-10-24",
-        end: "2024-04-14"
+        "Regular Season": {
+            start: "2023-10-24",
+            end: "2024-04-14"
+        },
+        "Post Season": {
+            start: "2024-04-20",
+            end: "2024-06-17"
+        }
     },
     "2022-2023": {
-        start: "2022-10-18",
-        end: "2023-04-09"
+        "Regular Season": {
+            start: "2022-10-18",
+            end: "2023-04-09"
+        },
+        "Post Season": {
+            start: "2023-04-15",
+            end: "2023-06-12"
+        }
     },
     "2021-2022": {
-        start: "2021-10-19",
-        end: "2022-04-10"
+        "Regular Season": {
+            start: "2021-10-19",
+            end: "2022-04-10"
+        },
+        "Post Season": {
+            start: "2022-04-16",
+            end: "2022-06-16"
+        }
     },
     "2020-2021": {
-        start: "2020-12-22",
-        end: "2021-05-16"
+        "Regular Season": {
+            start: "2020-12-22",
+            end: "2021-05-16"
+        },
+        "Post Season": {
+            start: "2021-05-22",
+            end: "2021-07-20"
+        }
     },
     "2019-2020": {
-        start: "2019-10-22",
-        end: "2020-03-11"   //suspended due to COVID
+        "Regular Season": {
+            start: "2019-10-22",
+            end: "2020-08-14"   //suspended due to COVID
+        },
+        "Post Season": {
+            start: "2020-08-17",
+            end: "2020-10-11"
+        }
     },
 }
 
@@ -131,7 +168,7 @@ const fetchGame = async (url, d, teamIdMap) => {
             venue: event.competitions[0].venue?.fullName || null,
             status: event.competitions[0].status.type.name,
             season: SEASON_YEAR,
-            game_type: 'Regular Season',
+            game_type: SEASON_TYPE,
             overtime: null,
             conferenceCompetition: event.competitions[0].conferenceCompetition,
             winner: winner,
