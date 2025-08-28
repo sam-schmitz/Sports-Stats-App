@@ -9,6 +9,7 @@ const SeasonStatSchema = new mongoose.Schema({
     season: {
         type: String
     },
+    season_type: String,
     blocks: Number,
     defensiveRebounds: Number,
     steals: Number,
