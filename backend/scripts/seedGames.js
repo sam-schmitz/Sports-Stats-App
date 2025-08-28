@@ -319,8 +319,8 @@ const seed = async () => {
         console.log('Database connected');
         
         console.log('Fetching Games...');        
-        const start = seasonDates[SEASON_YEAR].start;
-        const end = seasonDates[SEASON_YEAR].end;
+        const start = seasonDates[SEASON_YEAR][SEASON_TYPE].start;
+        const end = seasonDates[SEASON_YEAR][SEASON_TYPE].end;
 
         const startDate = new Date(start);
         const endDate = new Date(end);        
@@ -328,7 +328,7 @@ const seed = async () => {
         console.log('All games fetched');
         //console.log(`From inside seed() Date 0: ${formattedGames[0].date} Date 20: ${formattedGames[20].date}`);
         
-        await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR });
+        await Game.deleteMany({ sport: 'basketball', season: SEASON_YEAR, game_type: SEASON_TYPE });
         console.log("deleted old games");
 
         console.log('Inserting Games into Database');
@@ -338,9 +338,9 @@ const seed = async () => {
                 console.error('Insert error: ', err.message);
             });
         
-        console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}.`);
+        console.log(`Seeded ${formattedGames.length} games for ${SEASON_YEAR}, ${SEASON_TYPE}.`);
         
-        const games = await Game.find({sport: 'basketball', season: SEASON_YEAR}).limit(5);
+        const games = await Game.find({sport: 'basketball', season: SEASON_YEAR, game_type: SEASON_TYPE}).limit(5);
         console.log('Sample games: ', games); 
         //console.log(games[0].players[0]);
 
