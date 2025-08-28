@@ -34,6 +34,7 @@ const seed = async () => {
             // Create a black SeasonStatsSchema to keep track of season totals
             let SeasonStats = {
                 season: season.split('-')[0],
+                season_type: 'Overall',
                 games: 0,
                 points: 0,
                 assists: 0,

@@ -10,7 +10,7 @@ require('dotenv').config();
 
 // Update to change which season is fetched
 const SEASON_YEAR = '2024-2025';
-const SEASON_TYPE = 'Regular Season';
+const SEASON_TYPE = 'Post Season';
 
 const seasonDates = {
     "2024-2025": {
