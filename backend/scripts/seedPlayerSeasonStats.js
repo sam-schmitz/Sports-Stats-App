@@ -9,10 +9,12 @@ require('dotenv').config();
 
 const seasons = ['2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', '2024-2025'];
 
-const SEASON_TYPE = 'Overall';  // Overall, Regualr Season, or Post Season
+const SEASON_TYPE = 'Post Season';  // Overall, Regualr Season, or Post Season
 
 
 const seed = async () => {
+    console.log(`Calculating season stats`);
+    console.log(`Using season type: ${SEASON_TYPE}`);
     await mongoose.connect(process.env.MONGO_URI);
 
     // get a list of all players in the database
