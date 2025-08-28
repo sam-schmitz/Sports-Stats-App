@@ -9,6 +9,8 @@ require('dotenv').config();
 
 const seasons = ['2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', '2024-2025'];
 
+const SEASON_TYPE = 'Overall';  // Overall, Regualr Season, or Post Season
+
 
 const seed = async () => {
     await mongoose.connect(process.env.MONGO_URI);
@@ -34,7 +36,7 @@ const seed = async () => {
             // Create a black SeasonStatsSchema to keep track of season totals
             let SeasonStats = {
                 season: season.split('-')[0],
-                season_type: 'Overall',
+                season_type: SEASON_TYPE,
                 games: 0,
                 points: 0,
                 assists: 0,
@@ -58,27 +60,29 @@ const seed = async () => {
 
             // use each game to calculate total season stats
             for (const game of games) {
-                //console.log(game);
-                const stat = game.players.find(ps => ps.player_id === player._id);
+                if (game.game_type == SEASON_TYPE || SEASON_TYPE == 'Overall') {
+                    //console.log(game);
+                    const stat = game.players.find(ps => ps.player_id === player._id);
 
-                SeasonStats.games += 1;
-                SeasonStats.points += stat.points;
-                SeasonStats.assists += stat.assists;
-                SeasonStats.fieldGoalsMade += stat.fieldGoalsMade;
-                SeasonStats.fieldGoalsAttempted += stat.fieldGoalsAttempted;
-                SeasonStats.threePointsMade += stat.fieldGoalsMade;
-                SeasonStats.threePointsAttempted += stat.fieldGoalsAttempted;
-                SeasonStats.freeThrowsMade += stat.freeThrowsMade;
-                SeasonStats.freeThrowsAttempted += stat.freeThrowsAttempted;
-                SeasonStats.rebounds += stat.rebounds;
-                SeasonStats.offensiveRebounds += stat.offensiveRebounds;
-                SeasonStats.defensiveRebounds += stat.defensiveRebounds;
-                SeasonStats.steals += stat.steals;
-                SeasonStats.blocks += stat.blocks;
-                SeasonStats.turnovers += stat.turnovers;
-                SeasonStats.fouls += stat.fouls;
-                SeasonStats.minutes += stat.minutes
-                // Add triple double and double double
+                    SeasonStats.games += 1;
+                    SeasonStats.points += stat.points;
+                    SeasonStats.assists += stat.assists;
+                    SeasonStats.fieldGoalsMade += stat.fieldGoalsMade;
+                    SeasonStats.fieldGoalsAttempted += stat.fieldGoalsAttempted;
+                    SeasonStats.threePointsMade += stat.fieldGoalsMade;
+                    SeasonStats.threePointsAttempted += stat.fieldGoalsAttempted;
+                    SeasonStats.freeThrowsMade += stat.freeThrowsMade;
+                    SeasonStats.freeThrowsAttempted += stat.freeThrowsAttempted;
+                    SeasonStats.rebounds += stat.rebounds;
+                    SeasonStats.offensiveRebounds += stat.offensiveRebounds;
+                    SeasonStats.defensiveRebounds += stat.defensiveRebounds;
+                    SeasonStats.steals += stat.steals;
+                    SeasonStats.blocks += stat.blocks;
+                    SeasonStats.turnovers += stat.turnovers;
+                    SeasonStats.fouls += stat.fouls;
+                    SeasonStats.minutes += stat.minutes
+                    // Add triple double and double double
+                }                
             }
 
             // calculate stats that need to be calculated
