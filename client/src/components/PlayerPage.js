@@ -19,9 +19,9 @@ function PlayedGames({games }) {
     const [currentSeason, setCurrentSeason] = useState('2024-2025');
     const seasons = ['2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', '2024-2025'];
     const [currSeasonType, setCurrSeasonType] = useState(['Post Season', 'Regular Season']);
-    const season_types = [['Post Season', 'Regular Season'], ['Post Season'], ['Regular Season']];
+    const season_types = [['Overall', 'Post Season', 'Regular Season'], ['Post Season'], ['Regular Season']];
     
-    const filteredGames = games.filter(game => (game.season === currentSeason && currSeasonType.includes(game.season_type)));
+    const filteredGames = games.filter(game => (game.season === currentSeason && currSeasonType.includes(game.game_type)));    
 
     return (
         <>
@@ -36,6 +36,19 @@ function PlayedGames({games }) {
                         {seasons.map((season) => (
                             <option key={season} value={season}>
                                 {season}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                    <select
+                        className="form-select w-auto"
+                        value={currSeasonType[0]}
+                        onChange={(e) => setCurrSeasonType(e.target.value)}
+                    >
+                        {season_types.map((type) => (
+                            <option key={type[0]} value={type}>
+                                {type[0]}
                             </option>
                         ))}
                     </select>
