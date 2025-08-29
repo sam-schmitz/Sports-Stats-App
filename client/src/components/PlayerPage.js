@@ -18,8 +18,10 @@ const formatHeight = (inches) => {
 function PlayedGames({games }) {
     const [currentSeason, setCurrentSeason] = useState('2024-2025');
     const seasons = ['2019-2020', '2020-2021', '2021-2022', '2022-2023', '2023-2024', '2024-2025'];
+    const [currSeasonType, setCurrSeasonType] = useState(['Post Season', 'Regular Season']);
+    const season_types = [['Post Season', 'Regular Season'], ['Post Season'], ['Regular Season']];
     
-    const filteredGames = games.filter(game => game.season === currentSeason);
+    const filteredGames = games.filter(game => (game.season === currentSeason && currSeasonType.includes(game.season_type)));
 
     return (
         <>
