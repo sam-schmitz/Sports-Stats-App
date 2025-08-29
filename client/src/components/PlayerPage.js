@@ -75,6 +75,8 @@ function PlayedGames({games }) {
 function PlayerStats({ stats }) {
     const [currentSeasonStats, setCurrentSeasonStats] = useState(stats.find(s => s.season === "career"));
     const seasons = ['career', '2019', '2020', '2021', '2022', '2023', '2024'];    
+    const [currSeasonType, setCurrSeasonType] = useState('Overall');
+    const season_types = ['Overall', 'Regular Season', 'Post Season'];
     
     return (
         <>
@@ -88,7 +90,7 @@ function PlayerStats({ stats }) {
                         <select
                             className="form-select"
                             value={currentSeasonStats.season}
-                            onChange={(e) => setCurrentSeasonStats(stats.find(s => s.season === e.target.value))}
+                            onChange={(e) => setCurrentSeasonStats(stats.find(s => s.season === e.target.value && s.season_type === currSeasonType))}
                         >
                             {seasons.map((season) => (
                                 <option key={season} value={season}>
