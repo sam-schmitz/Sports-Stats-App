@@ -28,31 +28,31 @@ function PlayedGames({games }) {
             <div className="container-fluid">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                     <h5 className="mb-0">Played Games: </h5>
-                    <select
-                        className="form-select w-auto"
-                        value={currentSeason}
-                        onChange={(e) => setCurrentSeason(e.target.value)}
-                    >
-                        {seasons.map((season) => (
-                            <option key={season} value={season}>
-                                {season}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                    <select
-                        className="form-select w-auto"
-                        value={currSeasonType[0]}
-                        onChange={(e) => setCurrSeasonType(e.target.value)}
-                    >
-                        {season_types.map((type) => (
-                            <option key={type[0]} value={type}>
-                                {type[0]}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                    <div style={{minWidth: "150px"} }>                       
+                        <select
+                            className="form-select flex-fill"
+                            value={currentSeason}
+                            onChange={(e) => setCurrentSeason(e.target.value)}
+                        >
+                            {seasons.map((season) => (
+                                <option key={season} value={season}>
+                                    {season}
+                                </option>
+                            ))}
+                        </select>
+                        <select
+                            className="form-select flex-fill"
+                            value={currSeasonType[0]}
+                            onChange={(e) => setCurrSeasonType(e.target.value)}
+                        >
+                            {season_types.map((type) => (
+                                <option key={type[0]} value={type}>
+                                    {type[0]}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>                
                 <div>
                     <ul>
                         {filteredGames.length > 0 ? (
