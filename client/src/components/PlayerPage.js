@@ -110,6 +110,17 @@ function PlayerStats({ stats }) {
                                 </option>
                             )) }
                         </select>
+                        <select
+                            className="form-select"
+                            value={currSeasonType}
+                            onChange={(e) => setCurrSeasonType(e.target.value)}
+                        >
+                            {season_types.map((type) => (
+                                <option key={type} value={type} >
+                                    {type}
+                                </option>
+                            )) }
+                        </select>
                     </div>
                     <div>                        
                         <p><strong>Points: </strong>{currentStats.avgPoints.toFixed(2)}</p>
