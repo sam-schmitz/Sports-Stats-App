@@ -90,12 +90,9 @@ function PlayerStats({ stats }) {
     return (
         <>
             <div className="container-fluid">
-                <div className="row align-items-center">
-                    <div className="col-auto">
-                        <h5>Player Stats: </h5>
-                    </div>
-                    <div className="col-auto">
-                        <h5>Season: </h5>
+                <div className="d-flex justify-content-between align-items-center mb-2">                    
+                    <h5 className="mb-0">Player Stats: </h5>                    
+                    <div style={{ minWidth: "150px" }}>
                         <select
                             className="form-select"
                             value={currentSeason}
@@ -109,7 +106,7 @@ function PlayerStats({ stats }) {
                                     }
                                 </option>
                             )) }
-                        </select>
+                        </select>                        
                         <select
                             className="form-select"
                             value={currSeasonType}
@@ -121,13 +118,13 @@ function PlayerStats({ stats }) {
                                 </option>
                             )) }
                         </select>
-                    </div>
-                    <div>                        
-                        <p><strong>Points: </strong>{currentStats.avgPoints.toFixed(2)}</p>
-                        <p><strong>Assists: </strong>{currentStats.avgAssists.toFixed(2)}</p>
-                        <p><strong>Offenseive Rebounds: </strong>{currentStats.avgOffensiveRebounds.toFixed(2)}</p>
-                        <p><strong>Field Goal %: </strong>{currentStats.fieldGoalPct.toFixed(2)}</p>
-                    </div>
+                    </div>                    
+                </div>
+                <div>
+                    <p><strong>Points: </strong>{currentStats.avgPoints.toFixed(2)}</p>
+                    <p><strong>Assists: </strong>{currentStats.avgAssists.toFixed(2)}</p>
+                    <p><strong>Offenseive Rebounds: </strong>{currentStats.avgOffensiveRebounds.toFixed(2)}</p>
+                    <p><strong>Field Goal %: </strong>{currentStats.fieldGoalPct.toFixed(2)}</p>
                 </div>
             </div>
         </>
