@@ -36,11 +36,11 @@ router.get("/", async (req, res) => {
                 let d = parseInt(search.slice(7, 9));
 
                 //get the start and end dates for the search
-                start = new Date(`${y}-${m}-${d}`);
-                end = new Date(start);
-                end.setDate(end.getDate() + 1); //the day after start
-
-                filterDate = { $gte: start, $lt: end }
+                end = new Date(`${y}-${m}-${d}`);
+                start = new Date(end);
+                start.setDate(start.getDate() - 1); //the day before end
+                
+                filter.date = { $gte: start, $lt: end }
             } else {
                 // search by home or away team
                 filter.$or = [
@@ -52,7 +52,7 @@ router.get("/", async (req, res) => {
         }
 
         const skip = (parseInt(page) - 1) * parseInt(limit);
-        const games = await Game.find(filter).skip(skip).limit(parseInt(limit));
+        const games = await Game.find(filter).skip(skip).limit(parseInt(limit));        
 
         res.json(games);
     } catch (err) {
