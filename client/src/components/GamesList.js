@@ -82,8 +82,8 @@ function SearchBar({ games, onSearch }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const isYearMonthFormat = /^\d{4}-\d{2}$/.test(query);
-        const isYearMonthDayFormat = /^\d{4}-\d{2}-\d{2}$/.test(query);
+        const isYearMonthFormat = /^\d{4}[- ]\d{2}$/.test(query);
+        const isYearMonthDayFormat = /^\d{4}[- ]\d{2}[- ]\d{2}$/.test(query);
         //if it was just a year then onSearch would be passed the unedited query (no slicing)
 
         if (isYearMonthDayFormat) {
@@ -167,7 +167,7 @@ function GamesList() {
         fetchGames(1);
     }, []);
 
-    function fetchGames(page = 1, search = '') {
+    function fetchGames(page = 1, search = '') {        
         if (page === 1) {
             axios.get(`${API_BASE_URL}/games?page=${page}&limit=100&search=${search}`)
                 .then(res => setGames(res.data))
