@@ -83,10 +83,16 @@ function SearchBar({ games, onSearch }) {
         e.preventDefault();
 
         const isYearMonthFormat = /^\d{4}-\d{2}$/.test(query);
-        if (isYearMonthFormat) {
-            const withoutDash = query.slice(0, 4) + query.slice(5);
+        const isYearMonthDayFormat = /^\d{4}-\d{2}-\d{2}$/.test(query);
+        //if it was just a year then onSearch would be passed the unedited query (no slicing)
+
+        if (isYearMonthDayFormat) {
+            let withoutDash = query.slice(0, 4) + query.slice(5, 7) + query.slice(8);
             onSearch?.(withoutDash);
-        } else {
+        } else if (isYearMonthFormat) {
+            let withoutDash = query.slice(0, 4) + query.slice(5);
+            onSearch?.(withoutDash);
+        }  else {
             onSearch?.(query);
         }
         
