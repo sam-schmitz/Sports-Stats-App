@@ -16,19 +16,31 @@ router.get("/", async (req, res) => {
             if (!isNaN(year) && search.length === 4) {
                 start = new Date(`${year}-01-01`);
                 end = new Date(`${year + 1}-01-01`);
-                filter.date = { $gte: start, $lt: end };                
-            } else if (!isNaN(year) && search.length === 6){
+                filter.date = { $gte: start, $lt: end };
+            } else if (!isNaN(year) && search.length === 6) {
                 let y = parseInt(search.slice(0, 4));
                 let m = parseInt(search.slice(4, 6));
                 if (m === 12) {
                     start = new Date(`${y}-${m}-01`);
                     end = new Date(`${y}-01-01`);
-                    filter.date = { $gte: start, $lt: end };                
+                    filter.date = { $gte: start, $lt: end };
                 } else {
                     start = new Date(`${y}-${m}-01`);
                     end = new Date(`${y}-${m + 1}-01`);
-                    filter.date = { $gte: start, $lt: end };                
+                    filter.date = { $gte: start, $lt: end };
                 }
+            } else if (!isNaN(year) && search.length === 8) {
+                // parse the year, month, date from the search query
+                let y = parseInt(search.slice(0, 4));
+                let m = parseInt(search.slice(4, 6));
+                let d = parseInt(search.slice(7, 9));
+
+                //get the start and end dates for the search
+                start = new Date(`${y}-${m}-${d}`);
+                end = new Date(start);
+                end.setDate(end.getDate() + 1); //the day after start
+
+                filterDate = { $gte: start, $lt: end }
             } else {
                 // search by home or away team
                 filter.$or = [
