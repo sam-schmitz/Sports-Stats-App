@@ -8,6 +8,10 @@
 <h2>Release Notes </h2>
 <ul>
   <li>
+    <h4>Version 1.0</h4>
+    <p><strong>Description: </strong>This update adds support for post vs regular season stats as well as release ready looks for componenets. Games can now be categorized as post or regular season. This allows the backend to calculate post, regular and overall season stats. Player page was updated to allow the user to view these new stats. Images were added to the home page and game pages. The search bar for the game list was updated to support search by date. These changes help to add more visual features to the web app and more specific stats to the players. </p>
+  </li>
+  <li>
     <h4>Version 0.3</h4>
     <p><strong>Description: </strong>This update brings major changes to the amount of data collected and the UI. Games now collect info about each player's performance within that game. That data is used to calculate a player's stats over a season. The database was also updated with games stretching back to the 2019-20 season. On the client side, player, game, and team pages now include a tab system to organize the data being displayed. Player pages display their stats and the games they played in. Team pages display the team's stats and the games on their schedule. Game pages display both team and player stats. Search bars were also added to game, player, and team pages to help the user better find what they were looking for. </p>
   </li>
